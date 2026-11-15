@@ -286,8 +286,10 @@
   .gf-slide__fallback { right: 8%; }
   .gf-slide__fallback svg { width: 160px; height: 160px; }
   .gf-orbit { right: -8%; opacity: 0.45; }
-  .gf-hero__arrow--prev { left: 12px; }
-  .gf-hero__arrow--next { right: 12px; }
+  /* 화살표가 좌우 가운데에 있으면 텍스트(라벨·제목)와 겹치므로, 하단 오른쪽 인디케이터 줄로 모음 */
+  .gf-hero__arrow { top: auto; bottom: 30px; margin-top: 0; }
+  .gf-hero__arrow--prev { left: auto; right: 84px; }
+  .gf-hero__arrow--next { right: 24px; }
 }
 
 /* Mobile */
