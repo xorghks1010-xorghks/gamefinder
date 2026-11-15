@@ -79,7 +79,7 @@
 - 개발용 URL 파라미터: `index.html?mock=slow|empty|error` → 예시 데이터/로딩/빈/오류 상태 확인
 - 모션 검증 스크립트: 헤드리스 `--screenshot`은 가상 시간 때문에 transition·rAF 가 멈춰 부정확함 → Chrome `--remote-debugging-port` + Node(v26, 내장 WebSocket)로 실제 시간 측정 (예: 스크래치패드 `cdp.js`, 재작성 필요)
 - 로컬 화면 확인 방법: Chrome 헤드리스는 창 폭이 약 500px 아래로 안 줄어서 모바일은 `390px` 폭 iframe에 넣어 찍어야 정확함
-- git: `plan.md`, `gamefinder-project-plan.html` 변경분과 `gamefinder/` 폴더 전체가 아직 **커밋되지 않음**
+- git: `gamefinder/` 안에 **전용 저장소**가 있음 (`cd gamefinder && git log`). 첫 커밋 `56304f9` (2026-11-15), 로컬 전용(GitHub 미연결). 기획서·진행 기록의 **작업용 원본은 상위 폴더**(`plan.md`, `gamefinder-project-plan.html`, `gamefinder-progress.md`)이고, 저장소 `gamefinder/docs/`에는 커밋 시점 **복사본**이 들어 있음 → 다음 커밋 때 상위 원본을 `docs/`에 다시 복사해서 함께 커밋할 것 (`progress.md`는 이름이 다름). 상위 저장소(my-portfolio)에서는 `gamefinder/`가 별도 저장소라 추적하지 않음
 - 백업: `gamefinder-backup-2026-11-15/` = **9차(다크 톤) 작업 직전** 버전 (모션·AI 데모 포함, 다크 톤 미포함). 이전 백업은 삭제하고 새로 만듦. `gamefinder.7z`는 11/10 옛 압축본(그대로 둠)
 - `CLAUDE.md`의 포트폴리오(스타일 D) 내용은 **별개 작업**이다. 이번 gamefinder 작업과 섞지 말 것. (`style-d-dark.html`은 반응형 CSS만 보완해 둠)
 
@@ -90,3 +90,4 @@
 - **2026-11-15 (이어서 2)** — AI 섹션 인터랙티브 데모(8차) 구현·검증, plan.md 04-3 수정.
 - **2026-11-15 (이어서 3)** — 백업을 현재 버전으로 교체 후 9차 전체 다크 톤 적용·검증, plan.md 04-2 색상 표 갱신.
 - **2026-11-15 (이어서 4)** — 다크 톤 후속 확인(오류·빈·실데이터 화면) 완료, 소소한 색 수정, Hero 이미지 preload/preconnect 적용.
+- **2026-11-15 (이어서 5)** — gamefinder 전용 git 저장소 생성, 첫 커밋(31개 파일).
