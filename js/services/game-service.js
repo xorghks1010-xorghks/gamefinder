@@ -133,6 +133,33 @@
     return 'https://cdn.cloudflare.steamstatic.com/steam/apps/' + appId + '/' + file;
   }
 
+  // ---------- 편집 선정 "국내 인기작" (인기 TOP 5 에 2개 섞음) ----------
+  // 실시간 순위 데이터가 없어 사람이 고른 목록입니다(2026-11 기준 국내 대표 온라인 게임, 모두 Steam 에서 서비스).
+  // 앞에서부터 TOP 5 에 쓰며, 이미 Steam 순위에 있는 게임은 건너뜁니다. 화면에는 순위 숫자 대신 'KR' 로 표시합니다.
+  var KR_PICKS = [
+    { appId: '578080',  title: 'PUBG: BATTLEGROUNDS',   genre: 'Shooter' },
+    { appId: '1599340', title: 'Lost Ark',              genre: 'ARPG' },
+    { appId: '582660',  title: 'Black Desert',          genre: 'MMORPG' },
+    { appId: '216150',  title: 'MapleStory',            genre: 'MMORPG' },
+    { appId: '495910',  title: 'Dungeon Fighter Online', genre: 'Fighting' }
+  ];
+  var KR_PICK_COUNT = 2;
+
+  function krGame(p) {
+    return {
+      id: p.appId,
+      title: p.title,
+      coverImage: steamCover(p.appId),
+      heroImage: steamArt(p.appId, 'library_hero.jpg'),
+      headerImage: steamArt(p.appId, 'header.jpg'),
+      thumbImage: '',
+      genres: [p.genre],
+      platforms: ['pc'],
+      origin: 'KR',            // 카드에 '국내' 표시, 순위 숫자 대신 'KR'
+      note: ''
+    };
+  }
+
   function baseGame(d) {
     return {
       id: d.steamAppID,
@@ -157,14 +184,18 @@
     return Promise.all([getJson(q + '&pageNumber=0'), getJson(q + '&pageNumber=1'), getFtg()]).then(function (res) {
       var pool = uniqueGames(res[0].concat(res[1]));
       pool.sort(function (a, b) { return b.steamRatingCount - a.steamRatingCount; });
-      // 인기 순위는 Steam 리뷰 수 기준이라 FreeToGame(인기 지표 없음)과 섞지 않고, 장르만 보강
-      return fillGenres(pool.slice(0, 5).map(function (d, i) {
+      // 순위(1위~)는 Steam 리뷰 수 기준 실제 순위만 사용. 국내 게임은 순위가 아니라 '편집 선정'으로 마지막 자리에 섞음.
+      var steamTitles = {};
+      pool.slice(0, 5).forEach(function (d) { steamTitles[normTitle(d.title)] = true; });
+      var picks = KR_PICKS.filter(function (p) { return !steamTitles[normTitle(p.title)]; }).slice(0, KR_PICK_COUNT).map(krGame);
+      var steam = fillGenres(pool.slice(0, 5 - picks.length).map(function (d, i) {
         var g = baseGame(d);
         g.ranking = i + 1;
         g.ratingPercent = parseInt(d.steamRatingPercent, 10);
         g.note = reviewNote(d);
         return g;
       }), res[2]);
+      return steam.concat(picks);
     });
   }
 

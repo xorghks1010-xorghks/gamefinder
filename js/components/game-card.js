@@ -78,16 +78,17 @@
   // ---------- 인기 순위 카드 ----------
   function rank(g, i) {
     var n = g.ranking || (i + 1);
+    var kr = g.origin === 'KR';                       // 편집 선정 국내 인기작: 순위 숫자 대신 'KR'
     var score = scoreText(g);
     return (
       '<li class="gf-item gf-item--rank gf-item--r' + (i + 1) + '">' +
         '<a class="gf-card gf-card--rank" href="' + href(g) + '" data-game-id="' + esc(g.id) + '">' +
           media(g, 'rank', i) +
           '<span class="gf-card__shade"></span>' +
-          '<span class="gf-card__rank" aria-hidden="true">' + pad(n) + '</span>' +
+          '<span class="gf-card__rank" aria-hidden="true">' + (kr ? 'KR' : pad(n)) + '</span>' +
           (score ? '<span class="gf-card__chip"><span class="gf-card__star">' + STAR + '</span>' + score + '</span>' : '') +
           '<div class="gf-card__info">' +
-            '<h3 class="gf-card__title"><span class="sr-only">' + n + '위 </span>' + esc(g.title) + '</h3>' +
+            '<h3 class="gf-card__title"><span class="sr-only">' + (kr ? '국내 인기작 ' : n + '위 ') + '</span>' + esc(g.title) + '</h3>' +
             '<p class="gf-card__meta">' + metaLine(g) + '</p>' +
           '</div>' +
         '</a>' +
