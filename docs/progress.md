@@ -48,6 +48,19 @@
 - 검증: Chrome 원격제어로 실제 클릭 → 선택/분석중/결과/해제 상태와 JS 오류 없음 확인, 1440px·390px 화면 확인
 - 나중에 할 일: 실제 AI 추천 페이지(`#/ai`)를 만들면 이 데모의 문구·결과와 톤을 맞출 것. 추천 이유 문구는 직접 쓴 예시이니 필요하면 수정
 
+## 12차: 국내 온라인 게임 데이터 합치기 (FreeToGame, 2026-11-15)
+
+- 요구: **국내 온라인 게임 전용 섹션은 만들지 말고**, 기존 섹션에 비교해서 함께 넣기
+- 데이터: **FreeToGame**(`https://www.freetogame.com/api/games?platform=pc`) — 무료·키 불필요·CORS 허용. **조건: 출처 링크 표기**(푸터 `.gf-footer__credit`에 링크 추가함). 국내 게임 약 41개(메이플스토리·로스트아크·리니지2·마비노기·Aion 2 등), 단 **무료(F2P) 게임만**, 설명 영어, 인기 지표 없음
+- **합친 곳**
+  - **최신 게임**: 최근 1년 내 출시된 국내 PC 게임(개발사·퍼블리셔가 국내 회사)을 **최대 3개**, Steam 목록의 3·6·8번째 자리에 섞음(출시일로만 정렬하면 맨 끝으로 밀려 스크롤해야 보여서). 카드 메타에 `· 국내` 표시. 현재 예: Vampir, Aion 2, RF Online Next. Steam과 제목이 같은 게임은 Steam 쪽만 사용(중복 제거, `normTitle`)
+  - **장르 보강**: 제목이 같은 Steam 게임(예: Counter-Strike 2, PUBG)에 FreeToGame 장르를 채움(인기·최신 목록)
+- **합치지 않은 곳**: 인기 TOP 5(Steam 리뷰 수 기준이라 FreeToGame과 비교 불가), 할인(FreeToGame은 무료 게임이라 해당 없음)
+- 구현: `game-service.js`(`fetchCached` 일반화, `getFtg`, `domesticRecent`, `fillGenres`, `KR_COMPANY` 정규식, `DOMESTIC_MAX=3`, `DOMESTIC_WINDOW_DAYS=365`), `game-card.js`(`origin==='KR'`이면 `국내`), `main.js`(최신 섹션 안내 문구), `footer.js`(출처 링크)
+- **FreeToGame 실패 시 안전**: 요청이 막혀도 `[]`로 대체되어 Steam 8개만 정상 표시됨(차단 테스트로 확인)
+- 주의: 국내 판별은 개발사·퍼블리셔 이름 정규식(`KR_COMPANY`)이라 틀릴 수 있음(Guild Wars는 제외 목록에 있음). 국내 게임 이미지는 FreeToGame 썸네일(365×206)
+- 나중에: 국내 모바일 게임은 iTunes Search API(키 불필요, CORS 허용), 장르·이미지 보강은 RAWG(무료 키, 출처 링크 필수)를 후보로 검토. 게임트릭스(PC방 순위)는 공개 API 근거를 못 찾아 사용하지 않음
+
 ## 11차: 이미지 교체 → **원복됨** (2026-11-15)
 
 > **현재 상태: 원복 완료.** Hero·장르 이미지는 다시 Steam 아트워크를 쓰고 `assets/` 폴더는 없음. 아래는 당시 시도한 내용이며, 다시 하고 싶으면 커밋 `e3aa040`에 SVG 10장과 코드 변경이 그대로 남아 있음(`git show e3aa040`). 원복 커밋으로 되돌렸으므로 필요하면 `git revert <원복 커밋>`으로 재적용 가능.
@@ -86,7 +99,7 @@
 3. **이미지 라이선스**: `data/hero-slides.js`(Hero 3장)·`data/mock/games.js`(장르 타일 7장)의 Steam 아트워크는 개발용 임시. 공개 상태이므로 배포 전 사용 조건 확인/교체 필요. (자체 제작 SVG로 교체해 본 적 있으나 **사용자 요청으로 원복**함 — 11차 참고)
 4. **`footer.css`에 `prefers-reduced-motion` 없음** — footer에 애니메이션이 없으면 그대로 두어도 됨
 5. **아직 없는 페이지** (현재 라우트는 `#/` 만 구현, 나머지는 "준비 중" 안내): 게임 찾기(`#/find`), 인기 순위(`#/rank`), 신작(`#/new`), 할인(`#/sale`), AI 추천(`#/ai`), 검색(`#/search`), 게임 상세(`#/game/:id`) — 구현 시 `js/components/route-notice.js`의 `IMPLEMENTED` 배열에 추가
-6. **데이터**: 장르 정보는 CheapShark에 없어 카드에 장르가 비어 있음 → RAWG/IGDB 연동 시 `game-service.js`의 `genres` 채우기. 인기 순위는 실제 순위가 아니라 "Metacritic 75+ / Steam 긍정 80%+ 중 리뷰 수 순" 기준
+6. **데이터**: 장르 정보는 CheapShark에 없음 → 12차에서 FreeToGame과 제목이 겹치는 게임만 부분 보강. 전체를 채우려면 RAWG/IGDB 연동 필요(`game-service.js`의 `genres`). 인기 순위는 실제 순위가 아니라 "Metacritic 75+ / Steam 긍정 80%+ 중 리뷰 수 순" 기준
 
 ## 배포 (GitHub Pages)
 
@@ -116,3 +129,4 @@
 - **2026-11-15 (이어서 7)** — 키보드·태블릿 점검(10차) 완료, 태블릿 Hero 화살표 겹침 수정.
 - **2026-11-15 (이어서 8)** — 11차 이미지 교체: Hero·장르 이미지를 자체 제작 SVG 10장으로 교체(게임 표지는 유지).
 - **2026-11-15 (이어서 9)** — 사용자 요청으로 11차 이미지 교체를 원복(Hero·장르 모두 Steam 아트워크로 복구, `assets/` 삭제). 이력은 `e3aa040`에 보존.
+- **2026-11-15 (이어서 10)** — 12차: FreeToGame 국내 온라인 게임을 최신 게임 목록에 합치고 장르 보강, 출처 링크 추가.

@@ -64,7 +64,7 @@
   function metaLine(g) {
     var platforms = (g.platforms || []).map(GF.gameService.platformShortName).join(' · ');
     var left = (g.genres && g.genres.length) ? g.genres.join(', ') : (g.note || '');
-    return esc([left, platforms].filter(Boolean).join(' · '));
+    return esc([left, platforms, g.origin === 'KR' ? '국내' : ''].filter(Boolean).join(' · '));
   }
 
   function scoreText(g) {

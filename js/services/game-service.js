@@ -31,8 +31,8 @@
   }
 
   // ---------- 공통: 요청 + 세션 캐시 ----------
-  function getJson(path) {
-    var key = 'gf:' + path;
+  function fetchCached(url, label, trim) {
+    var key = 'gf:' + url;
     try {
       var hit = JSON.parse(sessionStorage.getItem(key) || 'null');
       if (hit && Date.now() - hit.t < CACHE_TTL) return Promise.resolve(hit.d);
@@ -41,15 +41,74 @@
     // 응답이 없을 때 로딩이 끝나지 않도록 10초 후 중단 → 섹션이 오류 상태(다시 시도)로 전환됨
     var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
     var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, TIMEOUT) : null;
-    return fetch(API + path, ctrl ? { signal: ctrl.signal } : undefined).then(function (res) {
+    return fetch(url, ctrl ? { signal: ctrl.signal } : undefined).then(function (res) {
       clearTimeout(timer);
-      if (!res.ok) throw new Error('CheapShark ' + res.status);
+      if (!res.ok) throw new Error(label + ' ' + res.status);
       return res.json();
     }).then(function (data) {
       if (!Array.isArray(data)) throw new Error('unexpected response');
+      if (trim) data = data.map(trim);   // 저장 용량을 줄이기 위해 필요한 필드만 남김
       try { sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), d: data })); } catch (e) { /* noop */ }
       return data;
     }, function (err) { clearTimeout(timer); throw err; });
+  }
+
+  function getJson(path) { return fetchCached(API + path, 'CheapShark'); }
+
+  // ---------- FreeToGame: 국내 온라인 게임 보강 (https://www.freetogame.com) ----------
+  // 무료·키 불필요·CORS 허용. 이용 조건: 출처 링크 표기(푸터에 표시). 실패해도 메인 목록은 CheapShark 만으로 동작해야 하므로 항상 [] 로 대체.
+  var FTG_URL = 'https://www.freetogame.com/api/games?platform=pc';
+  // 국내 개발사·퍼블리셔 (개발사 또는 퍼블리셔 이름에 포함). Guild Wars 2 는 NCsoft 퍼블리싱이지만 해외 개발작이라 제외.
+  var KR_COMPANY = /nexon|ncsoft|\bnc\b|krafton|netmarble|kakao|neople|smilegate|com2us|pearl abyss|gravity|\bkog\b|shift up|devsisters|webzen|wemade|actoz|joycity|gamevil|nhn|hanbit|ndoors|bluehole|blue hole/i;
+  var KR_EXCLUDE = /guild wars/i;
+  var DOMESTIC_MAX = 3;                  // 최신 목록에 섞는 국내 게임 최대 개수
+  var DOMESTIC_WINDOW_DAYS = 365;        // 이 기간 안에 출시된 국내 게임만 "최신"으로 취급
+
+  function normTitle(t) { return String(t || '').toLowerCase().replace(/[^a-z0-9가-힣]/g, ''); }
+
+  function getFtg() {
+    return fetchCached(FTG_URL, 'FreeToGame', function (g) {
+      return { id: g.id, title: g.title, thumbnail: g.thumbnail, genre: g.genre, platform: g.platform,
+               publisher: g.publisher, developer: g.developer, release_date: g.release_date };
+    }).catch(function () { return []; });
+  }
+
+  // 같은 제목의 Steam 게임에 FreeToGame 장르를 채움 (CheapShark 는 장르를 주지 않음)
+  function fillGenres(games, ftg) {
+    var byTitle = {};
+    ftg.forEach(function (x) { byTitle[normTitle(x.title)] = x.genre; });
+    games.forEach(function (g) {
+      var genre = byTitle[normTitle(g.title)];
+      if (genre && (!g.genres || !g.genres.length)) g.genres = [genre];
+    });
+    return games;
+  }
+
+  // 최근 1년 내 출시된 국내 PC 게임 → 목록용 Game 객체 (최신 순, steamTitles 와 겹치면 제외)
+  function domesticRecent(ftg, steamTitles) {
+    var now = Date.now();
+    return ftg.filter(function (x) {
+      if (!/Windows/.test(x.platform || '')) return false;
+      if (!(KR_COMPANY.test(x.developer || '') || KR_COMPANY.test(x.publisher || ''))) return false;
+      if (KR_EXCLUDE.test(x.title)) return false;
+      if (steamTitles[normTitle(x.title)]) return false;
+      var t = new Date(x.release_date + 'T00:00:00').getTime();
+      return t <= now && now - t <= DOMESTIC_WINDOW_DAYS * 86400000;
+    }).sort(function (a, b) { return a.release_date < b.release_date ? 1 : -1; })
+      .slice(0, DOMESTIC_MAX).map(function (x) {
+        return {
+          id: 'ftg-' + x.id,
+          title: x.title,
+          coverImage: '',
+          headerImage: x.thumbnail,        // 가로형(365x206) — 최신 카드의 가로 이미지 자리에 사용
+          thumbImage: '',
+          genres: x.genre ? [x.genre] : [],
+          platforms: ['pc'],
+          releaseDate: x.release_date,
+          origin: 'KR',                    // 카드에 '국내' 표시
+          note: '국내 온라인 게임'
+        };
+      });
   }
 
   function steamCover(appId) {
@@ -95,34 +154,44 @@
   // ---------- 목록별 조회 ----------
   function livePopular() {
     var q = '/deals?storeID=1&sortBy=Metacritic&metacritic=75&steamRating=80&pageSize=60';
-    return Promise.all([getJson(q + '&pageNumber=0'), getJson(q + '&pageNumber=1')]).then(function (pages) {
-      var pool = uniqueGames(pages[0].concat(pages[1]));
+    return Promise.all([getJson(q + '&pageNumber=0'), getJson(q + '&pageNumber=1'), getFtg()]).then(function (res) {
+      var pool = uniqueGames(res[0].concat(res[1]));
       pool.sort(function (a, b) { return b.steamRatingCount - a.steamRatingCount; });
-      return pool.slice(0, 5).map(function (d, i) {
+      // 인기 순위는 Steam 리뷰 수 기준이라 FreeToGame(인기 지표 없음)과 섞지 않고, 장르만 보강
+      return fillGenres(pool.slice(0, 5).map(function (d, i) {
         var g = baseGame(d);
         g.ranking = i + 1;
         g.ratingPercent = parseInt(d.steamRatingPercent, 10);
         g.note = reviewNote(d);
         return g;
-      });
+      }), res[2]);
     });
   }
 
   function liveLatest() {
     var q = '/deals?storeID=1&sortBy=Release&steamRating=70&pageSize=60';
     var now = Date.now() / 1000;
-    return Promise.all([getJson(q + '&pageNumber=0'), getJson(q + '&pageNumber=1')]).then(function (pages) {
+    return Promise.all([getJson(q + '&pageNumber=0'), getJson(q + '&pageNumber=1'), getFtg()]).then(function (res) {
       // 정렬 상단에는 미래 날짜(잘못된 값 포함)가 섞여 있어 오늘 이전만 사용
-      var pool = uniqueGames(pages[0].concat(pages[1])).filter(function (d) {
+      var all = uniqueGames(res[0].concat(res[1]));
+      var pool = all.filter(function (d) {
         return d.releaseDate > 0 && d.releaseDate <= now && parseInt(d.steamRatingCount, 10) >= 50;
       });
       pool.sort(function (a, b) { return b.releaseDate - a.releaseDate; });
-      return pool.slice(0, 8).map(function (d) {   // 가로 갤러리라 8개
+      // 국내 온라인 게임(FreeToGame)을 최대 3개 섞음: Steam 에 이미 있는 제목은 Steam 쪽만 사용
+      var steamTitles = {};
+      all.forEach(function (d) { steamTitles[normTitle(d.title)] = true; });
+      var domestic = domesticRecent(res[2], steamTitles);
+      var steam = fillGenres(pool.slice(0, 8 - domestic.length).map(function (d) {   // 가로 갤러리라 총 8개
         var g = baseGame(d);
         g.releaseDate = toIsoDate(d.releaseDate);
         g.note = reviewNote(d);
         return g;
-      });
+      }), res[2]);
+      // 출시일 순으로만 정렬하면 국내 게임이 맨 끝으로 밀려 스크롤해야 보이므로, Steam 최신 순 목록의 3·6·8번째 자리에 끼워 넣음
+      var out = steam.slice();
+      [2, 5, 7].forEach(function (pos, k) { if (domestic[k]) out.splice(Math.min(pos, out.length), 0, domestic[k]); });
+      return out;
     });
   }
 

@@ -27,7 +27,7 @@
       viewAllRouteId: 'new',
       layout: 'gallery',
       sampleNote: MOCK ? SAMPLE + '출시일은 Steam 스토어 기준이며, 실제 최신 출시 목록과 다를 수 있습니다.' : '',
-      note: '데이터: CheapShark · Steam. 출시일 기준 최신 PC 게임이며, 리뷰가 50개 미만인 게임은 제외했습니다.',
+      note: '데이터: CheapShark · Steam · FreeToGame. 출시일 기준 최신 PC 게임이며(Steam은 리뷰 50개 미만 제외), 최근 1년 내 출시된 국내 온라인 게임을 최대 3개 사이사이에 함께 표시합니다(‘국내’ 표시, 날짜는 각 카드 참고).',
       load: svc.getLatestGames
     }),
     GF.createGameSection(document.getElementById('sale'), {

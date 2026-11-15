@@ -23,7 +23,7 @@
           '</div>' +
           '<div class="gf-footer__bottom">' +
             '<p class="gf-footer__copy">© ' + new Date().getFullYear() + ' GameFinder</p>' +
-            '<p class="gf-footer__credit">게임 데이터: CheapShark · 이미지: Steam (저작권은 각 게임 권리자에게 있습니다)</p>' +
+            '<p class="gf-footer__credit">게임 데이터: CheapShark · <a href="https://www.freetogame.com" target="_blank" rel="noopener noreferrer">FreeToGame</a> · 이미지: Steam, FreeToGame (저작권은 각 게임 권리자에게 있습니다)</p>' +
           '</div>' +
         '</div>' +
       '</footer>';
