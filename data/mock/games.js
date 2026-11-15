@@ -79,16 +79,18 @@
   ];
 
   // Open World 는 장르가 아니라 태그이므로 포함하지 않음 (plan.md 06)
-  // image: 주요 장르 타일 배경 — 직접 만든 오리지널 SVG(assets/genre/)
-  var genreArt = function (id) { return 'assets/genre/' + id + '.svg'; };
+  // image: 주요 장르 타일 배경(Steam CDN 아트워크, 개발 미리보기용 — 배포 전 사용 조건 확인/교체 필요)
+  var steamHero = function (appId) {
+    return 'https://cdn.cloudflare.steamstatic.com/steam/apps/' + appId + '/library_hero.jpg';
+  };
   var GENRES = [
-    { id: 'rpg', name: 'RPG', image: genreArt('rpg') },
-    { id: 'action', name: 'Action', image: genreArt('action') },
-    { id: 'horror', name: 'Horror', image: genreArt('horror') },
-    { id: 'fps', name: 'FPS', image: genreArt('fps') },
-    { id: 'strategy', name: 'Strategy', image: genreArt('strategy') },
-    { id: 'adventure', name: 'Adventure', image: genreArt('adventure') },
-    { id: 'simulation', name: 'Simulation', image: genreArt('simulation') },
+    { id: 'rpg', name: 'RPG', image: steamHero(1086940) },
+    { id: 'action', name: 'Action', image: steamHero(1145360) },
+    { id: 'horror', name: 'Horror', image: steamHero(739630) },
+    { id: 'fps', name: 'FPS', image: steamHero(730) },
+    { id: 'strategy', name: 'Strategy', image: steamHero(289070) },
+    { id: 'adventure', name: 'Adventure', image: steamHero(367520) },
+    { id: 'simulation', name: 'Simulation', image: steamHero(413150) },
     { id: 'sports', name: 'Sports' },
     { id: 'racing', name: 'Racing' },
     { id: 'puzzle', name: 'Puzzle' }
