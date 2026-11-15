@@ -1,0 +1,259 @@
+/* AI 추천 섹션 — 다크 네이비 위에 블루·퍼플 글로우. 게임 목록 섹션과 확실히 다른 분위기 */
+.gf-ai {
+  position: relative;
+  padding: 120px 0;
+  overflow: hidden;
+  background:
+    radial-gradient(900px 500px at 85% 20%, rgba(139, 92, 246, 0.22), transparent 70%),
+    radial-gradient(800px 500px at 5% 90%, rgba(52, 104, 245, 0.22), transparent 70%),
+    linear-gradient(160deg, #0d1830 0%, #131f4a 55%, #1d1760 100%);
+  color: #fff;
+  isolation: isolate;
+}
+/* 은은한 격자 질감 */
+.gf-ai::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 70% at 60% 40%, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 60% 40%, #000 20%, transparent 75%);
+}
+.gf-ai__glow { position: absolute; z-index: -1; border-radius: 50%; filter: blur(70px); pointer-events: none; }
+.gf-ai__glow--blue { left: -120px; top: 40%; width: 360px; height: 360px; background: rgba(52, 104, 245, 0.35); }
+.gf-ai__glow--violet { right: -80px; top: -60px; width: 380px; height: 380px; background: rgba(139, 92, 246, 0.35); }
+
+.gf-ai__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: 24px 56px;
+}
+.gf-ai__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  color: #cdbdff;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+.gf-ai__eyebrow::before { content: ""; order: 1; width: 28px; height: 2px; background: currentColor; }
+.gf-ai__eyebrow span { order: 0; }
+.gf-ai__title {
+  margin: 0 0 22px;
+  font-size: clamp(30px, 4vw, 54px);
+  font-weight: 800;
+  line-height: 1.22;
+  letter-spacing: -0.04em;
+}
+.gf-ai__title em {
+  font-style: normal;
+  background: linear-gradient(90deg, #7fa2ff 0%, #b79bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.gf-ai__desc { max-width: 520px; margin: 0 0 34px; color: rgba(255, 255, 255, 0.74); font-size: 17px; }
+
+.gf-ai__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 30px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, var(--blue) 0%, var(--ai) 100%);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  box-shadow: 0 12px 34px rgba(100, 90, 245, 0.45);
+  transition: transform var(--t-fast) var(--ease), box-shadow var(--t-base), filter var(--t-fast);
+}
+.gf-ai__cta:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 18px 44px rgba(120, 100, 250, 0.6); }
+.gf-ai__cta:active { transform: translateY(-1px); }
+.gf-ai__cta svg { width: 18px; height: 18px; transition: transform var(--t-fast) var(--ease); }
+.gf-ai__cta:hover svg { transform: translateX(4px); }
+.gf-ai :focus-visible { outline-color: #fff; }
+
+/* ---------- 취향 입력 데모: 칩을 누르면 예시 추천 3개 ---------- */
+.gf-ai__demo { margin-top: 38px; max-width: 600px; }
+.gf-ai__demo-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  margin: 0 0 14px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 14px;
+  font-weight: 600;
+}
+.gf-ai__demo-badge {
+  padding: 2px 9px;
+  border: 1px solid rgba(183, 155, 255, 0.55);
+  border-radius: 999px;
+  color: #cdbdff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+.gf-ai__chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.gf-ai__chip {
+  padding: 9px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 14px;
+  font-weight: 600;
+  backdrop-filter: blur(6px);
+  transition: background var(--t-fast), border-color var(--t-fast), transform var(--t-fast) var(--ease), color var(--t-fast);
+}
+.gf-ai__chip::before { content: "“"; color: #b79bff; }
+.gf-ai__chip::after { content: "”"; color: #b79bff; }
+.gf-ai__chip:hover { background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.4); transform: translateY(-2px); }
+/* 선택 상태는 색뿐 아니라 배경·굵기·체크 표시로도 구분 */
+.gf-ai__chip[aria-pressed="true"] {
+  border-color: transparent;
+  background: linear-gradient(90deg, var(--blue) 0%, var(--ai) 100%);
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 8px 22px rgba(110, 95, 245, 0.45);
+}
+.gf-ai__chip[aria-pressed="true"]::before { content: "✓ "; color: #fff; }
+.gf-ai__chip[aria-pressed="true"]::after { content: none; }
+
+.gf-ai__result { min-height: 236px; margin-top: 16px; }
+.gf-ai__thinking {
+  display: flex;
+  align-items: center;
+  min-height: 236px;
+  margin: 0;
+  color: #cdbdff;
+  font-size: 15px;
+  font-weight: 700;
+}
+.gf-ai__thinking span { animation: gf-blink 1s steps(2, start) infinite; }
+@keyframes gf-blink { 50% { opacity: 0; } }
+
+.gf-ai__picks { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.gf-ai__pick { animation: gf-rise 0.55s var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
+.gf-ai__pick-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px 10px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+  transition: background var(--t-fast), border-color var(--t-fast), transform var(--t-fast) var(--ease);
+}
+.gf-ai__pick-link:hover { background: rgba(255, 255, 255, 0.11); border-color: rgba(183, 155, 255, 0.6); transform: translateX(4px); }
+.gf-ai__pick-img {
+  position: relative;
+  flex: 0 0 52px;
+  aspect-ratio: 3 / 4;
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1c3a82, #4b2fa8);
+}
+.gf-ai__pick-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.gf-ai__pick-mono { position: absolute; inset: 0; display: grid; place-items: center; font-size: 22px; font-weight: 800; color: rgba(255, 255, 255, 0.5); }
+.gf-ai__pick-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.gf-ai__pick-body strong { color: #fff; font-size: 16px; letter-spacing: -0.02em; }
+.gf-ai__pick-why { color: rgba(255, 255, 255, 0.74); font-size: 13.5px; line-height: 1.5; }
+.gf-ai__demo-note { margin: 14px 0 0; color: rgba(255, 255, 255, 0.6); font-size: 12.5px; }
+
+/* 분석 중: 중심 코어가 더 빠르고 밝게 맥동 */
+.gf-ai.is-thinking .gf-ai__core { animation: gf-pulse 0.7s ease-in-out infinite; }
+
+/* 추상 비주얼: 중심 코어 + 도는 궤도 + 떠다니는 태그 */
+.gf-ai__visual { position: relative; aspect-ratio: 1; width: 100%; max-width: 480px; justify-self: center; }
+.gf-ai__core {
+  position: absolute;
+  inset: 34%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #cbbcff 0%, var(--ai) 38%, var(--blue) 80%);
+  box-shadow: 0 0 60px rgba(139, 92, 246, 0.7), 0 0 140px rgba(52, 104, 245, 0.5);
+  animation: gf-pulse 5s ease-in-out infinite;
+}
+.gf-ai__orbit { position: absolute; inset: 0; width: 100%; height: 100%; color: #a99cff; }
+.gf-ai__orbit .gf-orbit__ring--a { animation: gf-spin 38s linear infinite; }
+.gf-ai__orbit .gf-orbit__ring--b { animation: gf-spin 52s linear infinite reverse; }
+.gf-ai__orbit .gf-orbit__ring--c { animation: gf-spin 70s linear infinite; }
+.gf-ai__float {
+  position: absolute;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(13, 24, 48, 0.55);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
+  animation: gf-float 6s ease-in-out infinite;
+}
+.gf-ai__float--1 { left: -4%; top: 22%; }
+.gf-ai__float--2 { right: -2%; top: 48%; animation-delay: -2s; }
+.gf-ai__float--3 { left: 12%; bottom: 8%; animation-delay: -4s; }
+/* 배경 글로우: 아주 느리게 떠다니는 정도로만 움직임 */
+.gf-ai__glow--blue { animation: gf-drift 16s ease-in-out infinite alternate; }
+.gf-ai__glow--violet { animation: gf-drift 20s ease-in-out infinite alternate-reverse; }
+@keyframes gf-drift { from { transform: translate(0, 0); } to { transform: translate(48px, 36px); } }
+@keyframes gf-pulse { 50% { transform: scale(1.06); filter: brightness(1.12); } }
+@keyframes gf-float { 50% { transform: translateY(-10px); } }
+
+/* 진행 단계 */
+.gf-ai__steps {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.gf-ai__step {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 20px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 14px;
+}
+.gf-ai__step strong { color: #fff; font-size: 17px; letter-spacing: -0.02em; }
+.gf-ai__step-no { color: #b79bff; font-size: 13px; font-weight: 800; letter-spacing: 0.1em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gf-ai__core, .gf-ai__float, .gf-ai__glow, .gf-ai__orbit .gf-orbit__ring, .gf-ai.is-thinking .gf-ai__core { animation: none; }
+  .gf-ai__pick { animation: none; }
+  .gf-ai__chip, .gf-ai__pick-link { transition: none; transform: none; }
+  .gf-ai__cta, .gf-ai__cta svg { transition: none; }
+}
+
+@media (max-width: 960px) {
+  .gf-ai { padding: 88px 0; }
+  .gf-ai__inner { grid-template-columns: 1fr; }
+  .gf-ai__visual { max-width: 340px; order: 2; }
+  .gf-ai__steps { order: 3; margin-top: 8px; }
+}
+@media (max-width: 600px) {
+  .gf-ai { padding: 72px 0; }
+  .gf-ai__title br { display: none; }
+  .gf-ai__desc { font-size: 15px; }
+  .gf-ai__steps { grid-template-columns: 1fr; gap: 10px; }
+  .gf-ai__visual { max-width: 280px; }
+  .gf-ai__result, .gf-ai__thinking { min-height: 0; }
+  .gf-ai__pick-why { font-size: 13px; }
+  .gf-ai__float { font-size: 12px; padding: 6px 11px; }
+}

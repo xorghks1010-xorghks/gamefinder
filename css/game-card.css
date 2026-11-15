@@ -1,0 +1,354 @@
+/* ============ 공통 ============ */
+.gf-list { margin: 0; padding: 0; list-style: none; }
+
+.gf-card { position: relative; display: block; color: inherit; border-radius: 16px; overflow: hidden; }
+.gf-card:focus-visible { outline-offset: 4px; }
+
+.gf-card__media { position: relative; overflow: hidden; background: var(--navy); }
+.gf-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--t-slow) var(--ease);
+}
+.gf-card:hover .gf-card__img:not(.is-wide):not(.is-capsule) { transform: scale(1.06); }
+/* 세로 커버가 없어 가로 이미지로 대체된 경우: 잘라 늘리지 않고 중앙에 비율 그대로 배치 */
+.gf-card__img.is-wide { inset: 50% 0 auto 0; height: auto; aspect-ratio: 460 / 215; transform: translateY(-50%); }
+/* 작은 캡슐(231x87)만 있는 경우: 원본 크기 근처로 중앙에 두고 뒤에는 같은 이미지를 블러로 깔아줌 */
+.gf-card__img.is-capsule {
+  inset: 50% auto auto 50%;
+  width: min(72%, 231px);
+  height: auto;
+  aspect-ratio: 231 / 87;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transform: translate(-50%, -50%);
+}
+/* 쌓임 순서: Fallback(0) < 블러 배경(1) < 이미지(2) < 그라데이션/배지(3~) — 이미지가 전부 실패하면 블러도 비어 Fallback이 보임 */
+.gf-card__fallback { z-index: 0; }
+.gf-card__media.has-art::before {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  z-index: 1;
+  background: var(--art) center / cover no-repeat;
+  filter: blur(22px) saturate(1.3) brightness(0.8);
+}
+.gf-card__img { z-index: 2; }
+.gf-card__shade { z-index: 3; }
+
+/* 이미지가 없거나 모두 실패했을 때: 머리글자 + 게임명이 있는 디자인된 Fallback */
+.gf-card__fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  background: linear-gradient(145deg, #1a2f63 0%, #3a2a86 100%);
+  color: #fff;
+}
+.gf-card__mono {
+  position: absolute;
+  top: 6px;
+  right: 14px;
+  font-size: 110px;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0.16;
+}
+.gf-card__fbtitle { position: relative; font-size: 15px; font-weight: 700; line-height: 1.35; }
+
+.gf-card__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(8, 14, 30, 0.94) 0%, rgba(8, 14, 30, 0.5) 36%, rgba(8, 14, 30, 0) 64%);
+  pointer-events: none;
+}
+
+.gf-card__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.gf-card__meta { margin: 4px 0 0; font-size: 13px; line-height: 1.5; }
+.gf-card__star { display: inline-flex; color: #ffc94d; }
+.gf-card__star svg { width: 13px; height: 13px; }
+
+/* 카드 전체를 클릭 영역으로 만드는 링크 (안에 별도 버튼이 있는 카드용) */
+.gf-card__stretch::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.gf-card__stretch:focus-visible { outline: none; }
+.gf-card__stretch:focus-visible::after { outline: 2px solid var(--blue); outline-offset: -3px; border-radius: inherit; }
+
+/* ============ 인기 순위 카드 ============ */
+.gf-card--rank { height: 100%; min-height: 240px; background: var(--dark); color: #fff; isolation: isolate; }
+.gf-card--rank .gf-card__media { position: absolute; inset: 0; }
+.gf-card--rank::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(0deg, rgba(52, 104, 245, 0.45) 0%, rgba(52, 104, 245, 0) 55%);
+  opacity: 0;
+  transition: opacity var(--t-base) var(--ease);
+  pointer-events: none;
+}
+.gf-card--rank:hover::after, .gf-card--rank:focus-visible::after { opacity: 1; }
+
+/* 순위 숫자: 이미지 위에 겹치는 큰 외곽선 숫자 */
+.gf-card__rank {
+  position: absolute;
+  top: 8px;
+  left: 14px;
+  z-index: 4;
+  color: transparent;
+  font-size: 54px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.9);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--t-base) var(--ease), transform var(--t-base) var(--ease);
+  pointer-events: none;
+}
+.gf-card--rank:hover .gf-card__rank { color: rgba(255, 255, 255, 0.95); transform: translateY(2px); }
+.gf-card__chip {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(13, 24, 48, 0.62);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  backdrop-filter: blur(6px);
+}
+.gf-card--rank .gf-card__info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  padding: 18px;
+  transform: translateY(6px);
+  transition: transform var(--t-base) var(--ease);
+}
+.gf-card--rank:hover .gf-card__info { transform: none; }
+.gf-card--rank .gf-card__title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 17px;
+}
+.gf-card--rank .gf-card__meta { color: rgba(255, 255, 255, 0.72); transition: color var(--t-base); }
+.gf-card--rank:hover .gf-card__meta { color: #fff; }
+
+/* 1위 대표 카드 / 2위 와이드 카드 */
+.gf-item--r1 .gf-card__rank { top: 14px; left: 24px; font-size: 132px; color: transparent; }
+.gf-item--r1 .gf-card__rank { background: linear-gradient(180deg, #fff 10%, var(--blue-soft) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-stroke: 0; }
+.gf-item--r1 .gf-card--rank:hover .gf-card__rank { color: transparent; }
+.gf-item--r1 .gf-card__info { padding: 32px; }
+.gf-item--r1 .gf-card__title { font-size: 34px; letter-spacing: -0.03em; }
+.gf-item--r1 .gf-card__meta { font-size: 15px; margin-top: 8px; }
+.gf-item--r1 .gf-card__chip { top: 22px; right: 22px; padding: 6px 14px; font-size: 15px; background: var(--blue); }
+.gf-item--r2 .gf-card__rank { font-size: 84px; }
+.gf-item--r2 .gf-card__info { padding: 24px; }
+.gf-item--r2 .gf-card__title { font-size: 24px; }
+
+/* ============ 최신 게임 카드 (가로 갤러리) ============ */
+.gf-card--latest { background: transparent; border-radius: 0; overflow: visible; color: #fff; }
+.gf-card--latest .gf-card__media { aspect-ratio: 3 / 2; border-radius: 14px; }
+.gf-card--latest .gf-card__shade { background: linear-gradient(0deg, rgba(8, 14, 30, 0.55) 0%, rgba(8, 14, 30, 0) 50%); }
+.gf-card__date-badge {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 4;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--navy);
+  text-align: center;
+  line-height: 1.15;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+}
+.gf-card__date-badge b { display: block; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.gf-card__date-badge small { display: block; color: var(--muted); font-size: 11px; font-weight: 700; }
+.gf-card__new {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 4;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+.gf-card--latest .gf-card__body { padding: 14px 2px 0; }
+.gf-card--latest .gf-card__title {
+  overflow: hidden;
+  font-size: 17px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: color var(--t-fast);
+}
+.gf-card--latest:hover .gf-card__title { color: var(--blue-soft); }
+.gf-card--latest .gf-card__meta { color: var(--on-dark-muted); }
+
+/* ============ 대표 할인 카드 ============ */
+.gf-card--feature {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  min-height: 540px;
+  border-radius: 22px;
+  background: var(--dark);
+  color: #fff;
+  isolation: isolate;
+  box-shadow: 0 24px 60px rgba(13, 24, 48, 0.28);
+}
+.gf-card--feature .gf-card__media { position: absolute; inset: 0; }
+.gf-card--feature .gf-card__shade {
+  background:
+    linear-gradient(0deg, rgba(8, 14, 30, 0.96) 0%, rgba(8, 14, 30, 0.7) 40%, rgba(8, 14, 30, 0.05) 78%),
+    linear-gradient(90deg, rgba(8, 14, 30, 0.6) 0%, rgba(8, 14, 30, 0) 60%);
+}
+.gf-card__content { position: relative; z-index: 4; width: 100%; padding: 40px; }
+.gf-card--feature .gf-card__off {
+  margin: 14px 0 6px;
+  color: var(--sale);
+  font-size: clamp(64px, 8vw, 104px);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+}
+.gf-card--feature .gf-card__title { font-size: 30px; letter-spacing: -0.03em; }
+.gf-card--feature .gf-card__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 14px; margin: 14px 0 0; }
+.gf-card--feature .gf-card__price-now { font-size: 40px; font-weight: 800; letter-spacing: -0.03em; }
+.gf-card--feature .gf-card__price-old { color: rgba(255, 255, 255, 0.55); font-size: 18px; }
+.gf-card__save { margin: 6px 0 0; color: var(--sale); font-size: 14px; font-weight: 700; }
+.gf-card--feature:hover .gf-card__img { transform: scale(1.05); }
+
+.gf-btn {
+  position: relative;
+  z-index: 2;      /* 카드 전체 링크(stretch)보다 위 */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 50px;
+  margin-top: 24px;
+  padding: 0 24px;
+  border-radius: 12px;
+  background: var(--sale);
+  color: var(--dark);
+  font-size: 15px;
+  font-weight: 800;
+  transition: transform var(--t-fast) var(--ease), background var(--t-fast), box-shadow var(--t-fast);
+}
+.gf-btn:hover { transform: translateY(-3px); background: #ffc24f; box-shadow: 0 12px 28px rgba(255, 176, 32, 0.4); }
+.gf-btn:active { transform: translateY(-1px); }
+.gf-btn svg { width: 16px; height: 16px; }
+.gf-btn:focus-visible { outline-color: #fff; }
+
+/* ============ 스토어 구분 ============ */
+.gf-store { --store-color: #94a3b8; display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: 0.02em; }
+.gf-store[data-store="Steam"] { --store-color: #4aa8e0; }
+.gf-store[data-store="Epic Games"] { --store-color: #e5e7eb; }
+.gf-store__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--store-color); }
+.gf-store--chip { padding: 5px 12px; border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px; background: rgba(255, 255, 255, 0.12); color: #fff; font-size: 13px; backdrop-filter: blur(6px); }
+.gf-store--chip[data-store="Epic Games"] { --store-color: #fff; }
+
+/* ============ 가로형 할인 카드 ============ */
+.gf-card--row {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+  padding: 12px 18px 12px 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--bg-soft);
+  transition: transform var(--t-fast) var(--ease), border-color var(--t-fast), box-shadow var(--t-base) var(--ease);
+}
+.gf-card--row:hover { transform: translateY(-3px); border-color: var(--blue); box-shadow: 0 14px 32px rgba(0, 0, 0, 0.4); }
+.gf-card--row .gf-card__media { width: 84px; aspect-ratio: 3 / 4; border-radius: 10px; }
+.gf-card--row .gf-card__body { min-width: 0; }
+.gf-card--row .gf-card__title { margin: 4px 0 8px; overflow: hidden; color: var(--text); font-size: 16px; white-space: nowrap; text-overflow: ellipsis; }
+.gf-card--row .gf-card__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 10px; margin: 0; }
+.gf-card--row .gf-card__price-now { color: #fff; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+.gf-card--row .gf-card__price-old { color: var(--muted); font-size: 13px; }
+.gf-card--row .gf-card__meta { color: var(--muted); }
+.gf-card__off-badge {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--navy);
+  color: var(--sale);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============ 일반 카드 (게임 찾기·상세 등에서 재사용) ============ */
+.gf-card--default { border-radius: 0; overflow: visible; }
+.gf-card--default .gf-card__media { aspect-ratio: 3 / 4; border-radius: 12px; }
+.gf-card--default .gf-card__body { padding: 10px 2px 0; }
+.gf-card--default .gf-card__title { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; transition: color var(--t-fast); }
+.gf-card--default:hover .gf-card__title { color: var(--blue-soft); }
+.gf-card--default .gf-card__meta { color: var(--muted); }
+
+/* ============ 로딩 스켈레톤 ============ */
+.gf-skel {
+  background: linear-gradient(90deg, rgba(128, 140, 175, 0.16) 25%, rgba(128, 140, 175, 0.3) 50%, rgba(128, 140, 175, 0.16) 75%);
+  background-size: 200% 100%;
+  animation: gf-shimmer 1.4s linear infinite;
+}
+.gf-skel__line { display: block; width: 60%; height: 12px; margin-top: 8px; border-radius: 4px; }
+.gf-skel__line--title { width: 85%; height: 16px; margin-top: 0; }
+.gf-card--latest .gf-card__media.gf-skel { aspect-ratio: 3 / 2; }
+@keyframes gf-shimmer { to { background-position: -200% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .gf-skel { animation: none; }
+  .gf-card__img, .gf-card--rank::after, .gf-card__rank, .gf-card--rank .gf-card__info,
+  .gf-card--row, .gf-btn { transition: none; }
+  .gf-card:hover .gf-card__img:not(.is-wide) { transform: none; }
+}
+
+/* ============ 반응형 ============ */
+@media (max-width: 960px) {
+  .gf-card--feature { min-height: 460px; }
+  .gf-card__content { padding: 28px; }
+  .gf-card--feature .gf-card__price-now { font-size: 34px; }
+}
+@media (max-width: 600px) {
+  .gf-card--rank .gf-card__info { padding: 14px; }
+  .gf-card--rank .gf-card__title { font-size: 15px; }
+  .gf-card__rank { font-size: 42px; top: 6px; left: 10px; }
+  .gf-item--r1 .gf-card__rank { font-size: 130px; left: 16px; }
+  .gf-item--r1 .gf-card__info { padding: 22px; }
+  .gf-item--r1 .gf-card__title { font-size: 26px; }
+  .gf-item--r2 .gf-card__rank { font-size: 76px; }
+  .gf-item--r2 .gf-card__title { font-size: 20px; }
+  .gf-card--feature { min-height: 440px; }
+  .gf-card__content { padding: 22px; }
+  .gf-card--feature .gf-card__title { font-size: 24px; }
+  .gf-card--row { grid-template-columns: 68px minmax(0, 1fr) auto; gap: 12px; padding-right: 12px; }
+  .gf-card--row .gf-card__media { width: 68px; }
+  .gf-card--row .gf-card__price-now { font-size: 19px; }
+  .gf-card__off-badge { padding: 6px 9px; font-size: 15px; }
+}

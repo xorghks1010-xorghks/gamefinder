@@ -1,0 +1,98 @@
+/*
+ * 모션 효과 — js/components/motion.js 와 짝을 이룹니다.
+ * 변수(--px/--py 등)는 JS 가 마우스 사용 시에만 바꾸므로, 터치·모션 줄이기 환경에서는 기본값(0)이라 효과가 없습니다.
+ */
+
+/* ============ 1) Hero 시차 + 커서 빛 ============ */
+.gf-hero { --px: 0; --py: 0; --mx: 70%; --my: 40%; }
+
+/* 이미지를 살짝 키워 이동해도 가장자리가 비지 않게 함 (translate 는 기존 줌 애니메이션 transform 과 따로 합성됨) */
+.gf-slide__img {
+  inset: -28px;
+  width: calc(100% + 56px);
+  height: calc(100% + 56px);
+  max-width: none;
+  translate: calc(var(--px) * -16px) calc(var(--py) * -12px);
+  transition: translate 0.6s var(--ease);
+}
+.gf-slide__deco > * {
+  translate: calc(var(--px) * 24px) calc(var(--py) * 18px);
+  transition: translate 0.6s var(--ease);
+}
+.gf-slide__text {
+  translate: calc(var(--px) * -8px) calc(var(--py) * -6px);
+  transition: translate 0.6s var(--ease);
+}
+
+/* 커서를 따라다니는 은은한 빛 */
+.gf-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(440px circle at var(--mx) var(--my), rgba(255, 255, 255, 0.14), transparent 62%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  pointer-events: none;
+}
+.gf-hero.is-hovering::after { opacity: 1; }
+
+/* ============ 2) 카드 틸트 + 빛 반사 ============ */
+.gf-card--rank,
+.gf-card--latest,
+.gf-card--feature {
+  transform: perspective(900px) rotateX(0) rotateY(0);
+  transition: transform 0.45s var(--ease);
+  will-change: transform;
+}
+.gf-card--rank.is-tilting,
+.gf-card--latest.is-tilting,
+.gf-card--feature.is-tilting {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1.015);
+  transition: transform 0.12s linear;
+}
+
+.gf-card__glare {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  background: radial-gradient(360px circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.28), transparent 55%);
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+  pointer-events: none;
+}
+.is-tilting > .gf-card__glare,
+.is-tilting .gf-card__media > .gf-card__glare { opacity: 1; }
+
+/* ============ 3) 스크롤 진입: 카드가 순서대로 등장 ============ */
+/* .gf-reveal 은 reveal.js 가 JS 동작 시에만 붙이므로, JS 가 없으면 그대로 보입니다. */
+.gf-reveal .gf-item,
+.gf-reveal .gf-deals__feature {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.gf-reveal.is-visible .gf-item,
+.gf-reveal.is-visible .gf-deals__feature {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--i, 0) * 90ms + 150ms);
+}
+.gf-item:nth-child(1) { --i: 0; }
+.gf-item:nth-child(2) { --i: 1; }
+.gf-item:nth-child(3) { --i: 2; }
+.gf-item:nth-child(4) { --i: 3; }
+.gf-item:nth-child(5) { --i: 4; }
+.gf-item:nth-child(6) { --i: 5; }
+.gf-item:nth-child(7) { --i: 6; }
+.gf-item:nth-child(8) { --i: 7; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gf-slide__img, .gf-slide__deco > *, .gf-slide__text { translate: none; transition: none; }
+  .gf-hero::after, .gf-card__glare { display: none; }
+  .gf-card--rank, .gf-card--latest, .gf-card--feature,
+  .gf-card--rank.is-tilting, .gf-card--latest.is-tilting, .gf-card--feature.is-tilting { transform: none; transition: none; }
+  .gf-reveal .gf-item, .gf-reveal .gf-deals__feature { opacity: 1; transform: none; transition: none; }
+}

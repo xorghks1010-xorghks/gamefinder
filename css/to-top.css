@@ -1,0 +1,34 @@
+/* 맨 위로 버튼 */
+.gf-totop {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  background: rgba(13, 24, 48, 0.82);
+  color: #fff;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--t-base) var(--ease), transform var(--t-base) var(--ease), background var(--t-fast), border-color var(--t-fast);
+}
+.gf-totop[hidden] { display: none; }
+.gf-totop.is-visible { opacity: 1; transform: none; }
+.gf-totop:hover { background: var(--blue); border-color: var(--blue); }
+.gf-totop:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.gf-totop svg { width: 22px; height: 22px; }
+@supports (backdrop-filter: blur(1px)) {
+  .gf-totop { backdrop-filter: blur(10px); }
+}
+
+@media (max-width: 600px) {
+  .gf-totop { right: 16px; bottom: 16px; width: 44px; height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gf-totop { transition: none; }
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameFinder</title>
+  <meta name="description" content="인기 게임부터 내 취향에 맞는 게임까지 한곳에서 찾는 게임 탐색 웹사이트">
+  <meta name="theme-color" content="#0d1830">
+  <!-- 성능: 외부 도메인 미리 연결 + 첫 Hero 이미지 우선 로드 (이미지 주소는 data/hero-slides.js 첫 슬라이드와 같아야 함) -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://cdn.cloudflare.steamstatic.com">
+  <link rel="preconnect" href="https://www.cheapshark.com">
+  <link rel="preload" as="image" href="https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/library_hero.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/game-card.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/ai-intro.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/to-top.css">
+  <link rel="stylesheet" href="css/motion.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">본문 바로가기</a>
+
+  <div id="header-root"></div>
+
+  <main id="main">
+    <h1 class="sr-only">GameFinder — AI 게임 추천 · 게임 탐색 플랫폼</h1>
+    <!-- 각 영역은 <section>이며 내용은 js/components/*.js 가 채웁니다 -->
+    <section id="hero" class="gf-hero" aria-roledescription="캐러셀" aria-label="메인 배너"></section>
+    <!-- 배경 톤이 번갈아 바뀌는 리듬: Hero(다크) → 인기(라이트) → 최신(다크) → 할인(소프트) → AI(다크) → 탐색(라이트) -->
+    <section id="popular" class="gf-section" aria-labelledby="gf-sec-popular-title"></section>
+    <section id="latest" class="gf-section gf-section--dark" aria-labelledby="gf-sec-latest-title"></section>
+    <section id="sale" class="gf-section gf-section--sale" aria-labelledby="gf-sec-sale-title"></section>
+    <section id="ai" class="gf-ai" aria-labelledby="gf-ai-title"></section>
+    <section id="explore" class="gf-section" aria-labelledby="gf-explore-title"></section>
+  </main>
+
+  <div id="footer-root"></div>
+
+  <script src="js/routes.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="data/hero-slides.js"></script>
+  <script src="data/mock/games.js"></script>
+  <script src="js/services/game-service.js"></script>
+  <script src="js/components/header.js"></script>
+  <script src="js/components/hero.js"></script>
+  <script src="js/components/game-card.js"></script>
+  <script src="js/components/motion.js"></script>
+  <script src="js/components/game-section.js"></script>
+  <script src="js/components/ai-intro.js"></script>
+  <script src="js/components/explore.js"></script>
+  <script src="js/components/footer.js"></script>
+  <script src="js/components/reveal.js"></script>
+  <script src="js/components/route-notice.js"></script>
+  <script src="js/components/to-top.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

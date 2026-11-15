@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameFinder - Project Plan</title>
+  <style>
+    :root{
+      --navy:#102a56; --text:#1b2430; --muted:#6b7280; --line:#d8dee8;
+      --soft:#f4f6fa; --blue:#2563eb; --required-bg:#ffe8e4; --required:#d94632;
+      --later-bg:#fff3d6; --later:#9a6a00;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:24px}
+    body{margin:0;background:#eef1f6;color:var(--text);font-family:"Pretendard","Noto Sans KR","Malgun Gothic",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.75;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+    .page{width:min(900px,calc(100% - 40px));margin:32px auto;padding:56px 64px 64px;background:#fff;border-radius:6px;box-shadow:0 2px 16px rgba(16,42,86,.08)}
+    .cover{padding-bottom:28px;border-bottom:3px solid var(--navy)}
+    .eyebrow{color:var(--blue);font-weight:800;letter-spacing:.14em;font-size:12.5px;margin-bottom:10px}
+    h1{margin:0;color:var(--navy);font-size:32px;line-height:1.3;letter-spacing:-.03em}
+    .subtitle{margin:12px 0 0;color:#475569;font-size:15.5px}
+    .docinfo{display:grid;grid-template-columns:repeat(3,1fr);margin:24px 0 0;border:1px solid var(--line);border-radius:6px;overflow:hidden;font-size:13px}
+    .docinfo div{padding:10px 14px;border-right:1px solid var(--line)}
+    .docinfo div:last-child{border-right:0}
+    .docinfo dt{color:var(--muted);font-size:11.5px;font-weight:700;margin-bottom:2px}
+    .docinfo dd{margin:0;color:var(--text);font-weight:600}
+    .toc{margin:28px 0 0;padding:18px 22px;background:var(--soft);border-radius:8px}
+    .toc strong{display:block;margin-bottom:8px;color:var(--navy);font-size:13px;letter-spacing:.06em}
+    .toc ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:2px 24px;counter-reset:t}
+    .toc li{margin:0;font-size:14px}
+    .toc a{color:#334155;display:block;padding:3px 0}
+    .toc a:hover{color:var(--blue);text-decoration:none}
+    section{margin-top:48px;break-inside:avoid-page}
+    h2{display:flex;align-items:baseline;gap:12px;margin:0 0 18px;padding-bottom:10px;font-size:20px;color:var(--navy);letter-spacing:-.02em;border-bottom:1px solid var(--line)}
+    h2 .no{color:var(--blue);font-size:14px;font-weight:800;letter-spacing:.04em}
+    p{margin:0;color:#334155;font-size:15px}
+    .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .card{background:var(--soft);border-left:3px solid var(--navy);border-radius:0 8px 8px 0;padding:14px 18px}
+    .card h3{margin:0 0 4px;color:var(--navy);font-size:14px}
+    .card p{color:#1f2937;font-size:14px;line-height:1.65}
+    a{color:var(--blue);text-decoration:none}
+    a:hover{text-decoration:underline}
+    table{width:100%;border-collapse:collapse;font-size:14px;border-top:2px solid var(--navy)}
+    th,td{text-align:left;padding:13px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+    th{background:var(--soft);color:#475569;font-size:12.5px;font-weight:700}
+    td:first-child{width:22%;font-weight:700;color:#111827}
+    th:last-child,td:last-child{width:92px;text-align:center}
+    .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:800}
+    .required{background:var(--required-bg);color:var(--required)}
+    .later{background:var(--later-bg);color:var(--later)}
+    ul{margin:0;padding-left:20px}
+    li{margin:8px 0;color:#334155;font-size:15px}
+    li strong{color:var(--navy)}
+    .note{margin-top:18px;padding:14px 18px;background:#eef4ff;border-left:4px solid var(--blue);border-radius:0 8px 8px 0;color:#334155;font-size:14px}
+    .goal{background:var(--soft);border-radius:8px;padding:22px 24px}
+    .footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:#94a3b8;font-size:12px;display:flex;justify-content:space-between}
+    @media(max-width:700px){
+      body{background:#fff}
+      .page{width:100%;margin:0;padding:32px 20px 48px;border-radius:0;box-shadow:none}
+      h1{font-size:26px}
+      .docinfo{grid-template-columns:1fr}
+      .docinfo div{border-right:0;border-bottom:1px solid var(--line)}
+      .docinfo div:last-child{border-bottom:0}
+      .toc ol{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
+      table{font-size:13px}
+      th:nth-child(3),td:nth-child(3){display:none}
+      td:first-child{width:34%}
+    }
+    @media print{
+      body{background:#fff}
+      .page{width:100%;margin:0;padding:0;box-shadow:none}
+      .toc{display:none}
+      a{color:inherit}
+    }
+
+    .subheading{margin:28px 0 12px;color:var(--navy);font-size:16px}
+    .swatches{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+    .swatches div{min-width:0;display:flex;flex-direction:column;gap:3px}
+    .swatches span{height:50px;border-radius:7px}
+    .swatches strong{font-size:11.5px;color:#334155}
+    .swatches small{font-size:11px;color:var(--muted)}
+    .design-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .design-item{border:1px solid #e5eaf2;border-radius:10px;padding:16px 18px;background:#fff}
+    .design-num{color:#3468f5;font-size:11px;font-weight:800;letter-spacing:.07em}
+    .design-item h3{margin:6px 0;color:var(--navy);font-size:15px}
+    .design-item p{font-size:13px;line-height:1.65}
+    .roadmap{counter-reset:road;list-style:none;padding:0;margin:0;display:grid;gap:10px}
+    .roadmap li{counter-increment:road;position:relative;margin:0;padding:13px 14px 13px 48px;border:1px solid var(--line);border-radius:8px;background:#fff}
+    .roadmap li:before{content:counter(road,decimal-leading-zero);position:absolute;top:12px;left:14px;font-weight:800;color:var(--blue)}
+    @media(max-width:700px){.swatches{grid-template-columns:repeat(3,minmax(0,1fr))}.design-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="cover">
+      <div class="eyebrow">PROJECT PLAN</div>
+      <h1>GameFinder — AI 게임 추천 플랫폼</h1>
+      <div class="subtitle">인기 게임부터 내 취향에 맞는 게임까지 한곳에서 찾는 게임 탐색 웹사이트</div>
+      <dl class="docinfo">
+        <div><dt>문서 종류</dt><dd>프로젝트 기획서</dd></div>
+        <div><dt>프로젝트명</dt><dd>GameFinder</dd></div>
+        <div><dt>분류</dt><dd>웹 서비스 / AI 추천</dd></div>
+      </dl>
+      <p style="margin-top:14px;font-size:13.5px">관련 문서: <a href="plan.md">기능 + 화면 정의서 →</a></p>
+    </div>
+
+    <nav class="toc" aria-label="목차">
+      <strong>목차</strong>
+      <ol>
+        <li><a href="#s1">01. 기획 배경</a></li>
+        <li><a href="#s2">02. 누가 보나요</a></li>
+        <li><a href="#s3">03. 디자인 방향</a></li>
+        <li><a href="#s4">04. 핵심 기능</a></li>
+        <li><a href="#s5">05. AI 추천 서비스</a></li>
+        <li><a href="#s6">06. 필요한 화면</a></li>
+        <li><a href="#s7">07. 얻고 싶은 것</a></li>
+        <li><a href="#s8">08. 디자인 개선 로드맵</a></li>
+      </ol>
+    </nav>
+
+    <section id="s1">
+      <h2><span class="no">01</span>기획 배경</h2>
+      <p>
+        게임의 종류와 플랫폼이 많아지면서 어떤 게임을 해야 할지 찾는 과정이 점점 복잡해지고 있습니다.
+        Steam, PlayStation, Xbox, Nintendo 등 플랫폼별로 게임 정보가 나뉘어 있고,
+        인기 게임이나 신작을 확인하려면 여러 사이트를 찾아봐야 합니다.
+        GameFinder는 다양한 플랫폼의 인기 게임과 최신 게임을 한곳에서 확인하고,
+        장르와 플랫폼으로 원하는 게임을 쉽게 찾을 수 있도록 만들고자 합니다.
+        추가로 AI를 활용해 사람의 취향을 분석하고 개인에게 맞는 게임을 추천해주는 기능을 제공합니다.
+      </p>
+    </section>
+
+    <section id="s2">
+      <h2><span class="no">02</span>누가 보나요</h2>
+      <div class="cards">
+        <div class="card"><h3>새로운 게임을 찾고 싶은 사람</h3><p>현재 인기 있는 게임과 새로 출시된 게임을 빠르게 확인하고 싶은 사람</p></div>
+        <div class="card"><h3>어떤 게임을 해야 할지 고민하는 사람</h3><p>자신의 취향을 분석한 AI 게임 추천을 받아보고 싶은 사람</p></div>
+        <div class="card"><h3>특정 플랫폼을 사용하는 사람</h3><p>PC, PS5, Xbox, Switch 2에서 플레이 가능한 게임을 찾는 사람</p></div>
+        <div class="card"><h3>특정 장르를 좋아하는 사람</h3><p>RPG, 액션, FPS, 전략 등 장르별로 게임을 찾아보고 싶은 사람</p></div>
+      </div>
+    </section>
+
+    <section id="s3">
+      <h2><span class="no">03</span>디자인 방향</h2>
+      <div class="cards">
+        <div class="card"><h3>사이트명 / 로고</h3><p>GameFinder / 심플한 게임패드 또는 검색 아이콘</p></div>
+        <div class="card"><h3>메인 컬러</h3><p>흰색 + 네이비 + 포인트 블루, AI 영역에 한해 보라색을 제한적으로 사용</p></div>
+        <div class="card"><h3>메뉴 구성</h3><p>Home · 게임 찾기 · 인기 순위 · 신작 · AI 추천</p></div>
+        <div class="card"><h3>스타일</h3><p>게임 아트워크 중심의 깔끔한 웹사이트. 이미지 크기 대비, 여백, 타이포그래피로 시각적 위계 구성</p></div>
+        <div class="card">
+          <h3>참고 사이트</h3>
+          <p>
+            <a href="https://rawg.io/" target="_blank" rel="noopener">RAWG</a> — 게임 카드 및 탐색 화면<br>
+            <a href="https://www.igdb.com/" target="_blank" rel="noopener">IGDB</a> — 게임 정보, 장르, 플랫폼 구조<br>
+            <a href="https://gg.deals/" target="_blank" rel="noopener">GG.deals</a> — 인기 게임·신작·랭킹 구성<br>
+            <a href="https://backloggd.com/" target="_blank" rel="noopener">Backloggd</a> — 평가·찜·개인화 UI<br>
+            <a href="https://nextrez.app/" target="_blank" rel="noopener">NextRez</a> — 취향 기반 AI 게임 추천 서비스<br>
+            <a href="https://store.steampowered.com/" target="_blank" rel="noopener">Steam</a> — 게임 아트워크 중심 Hero·대표 콘텐츠<br>
+            <a href="https://linear.app/" target="_blank" rel="noopener">Linear</a> — 절제된 그라데이션·타이포그래피<br>
+            <a href="https://www.awwwards.com/" target="_blank" rel="noopener">Awwwards</a> — 섹션 레이아웃·인터랙션 아이디어
+          </p>
+        </div>
+        <div class="card"><h3>전체 방향</h3><p>앱처럼 보이지 않는 넓은 웹 레이아웃을 유지합니다. Hero, 인기 TOP 5, AI 영역에만 강한 시각적 포인트를 주고 다른 영역은 절제합니다.</p></div>
+      </div>
+      <h3 class="subheading">추천 디자인 컬러</h3>
+      <div class="swatches" aria-label="디자인 컬러 팔레트">
+        <div><span style="background:#ffffff;border:1px solid #e5eaf2"></span><strong>기본 배경</strong><small>#FFFFFF</small></div>
+        <div><span style="background:#f4f7fc"></span><strong>보조 배경</strong><small>#F4F7FC</small></div>
+        <div><span style="background:#142b55"></span><strong>네이비</strong><small>#142B55</small></div>
+        <div><span style="background:#3468f5"></span><strong>포인트 블루</strong><small>#3468F5</small></div>
+        <div><span style="background:#8b5cf6"></span><strong>AI 강조</strong><small>#8B5CF6</small></div>
+      </div>
+      <h3 class="subheading">화면별 디자인 적용</h3>
+      <div class="design-grid">
+        <article class="design-item"><div class="design-num">01 · HERO</div><h3>게임 아트워크 중심 배너</h3><p>AI 추천·할인 게임·인기 순위의 3개 슬라이드에 이미지, 텍스트 오버레이, CTA를 배치합니다. 기존 드래그·스와이프·자동재생은 유지합니다.</p></article>
+        <article class="design-item"><div class="design-num">02 · RANKING</div><h3>인기 1위 강조 레이아웃</h3><p>TOP 5 중 1위를 크게, 나머지 4개를 작게 구성해 단조로운 카드 반복을 줄입니다. 모바일에서는 순서를 유지하며 재배치합니다.</p></article>
+        <article class="design-item"><div class="design-num">03 · AI</div><h3>AI 추천 전용 비주얼</h3><p>연한 블루·보라색 그라데이션과 취향 예시를 사용하는 소개 영역을 만들고 기존 AI 추천 페이지로 연결합니다.</p></article>
+        <article class="design-item"><div class="design-num">04 · GAME CARDS</div><h3>정보에 맞춘 카드 디자인</h3><p>최신 게임은 출시일, 할인 게임은 할인율·정가·할인가를 우선합니다. 카드 호버 효과는 가볍게 적용합니다.</p></article>
+        <article class="design-item"><div class="design-num">05 · EXPLORE</div><h3>장르 이미지 타일</h3><p>주요 장르에는 분위기를 보여주는 배경 이미지와 오버레이를 적용합니다. 플랫폼·장르 필터 기능은 그대로 유지합니다.</p></article>
+        <article class="design-item"><div class="design-num">06 · FINISHING</div><h3>섹션 리듬과 인터랙션</h3><p>여백·제목 크기·보조 배경을 조정하고 키보드 포커스, 이미지 대체 상태, 모션 축소 옵션과 반응형을 점검합니다.</p></article>
+      </div>
+      <div class="note">디자인은 <strong>Steam의 게임 콘텐츠 표현 + Backloggd의 커버 중심 목록 + Linear의 절제된 AI 서비스 표현</strong>을 참고하되, 실제 구성과 화면은 GameFinder만의 형태로 설계합니다. 상세 구현 규칙은 <a href="plan.md">기능 + 화면 정의서</a>에 정리합니다.</div>
+    </section>
+
+    <section id="s4">
+      <h2><span class="no">04</span>핵심 기능</h2>
+      <table>
+        <thead>
+          <tr><th>기능</th><th>설명</th><th>우선순위</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>글로벌 인기 게임</td><td>현재 인기 있는 게임을 순위별로 보여주며 최대 1000위까지 확인</td><td><span class="badge required">필수</span></td></tr>
+          <tr><td>최신 게임</td><td>최근 출시된 게임을 출시일 기준으로 확인</td><td><span class="badge required">필수</span></td></tr>
+          <tr><td>게임 찾기</td><td>플랫폼, 장르, 태그를 조합하여 원하는 게임 검색</td><td><span class="badge required">필수</span></td></tr>
+          <tr><td>게임 상세</td><td>이미지, 설명, 출시일, 플랫폼, 장르, 평점 등의 정보 제공</td><td><span class="badge required">필수</span></td></tr>
+          <tr><td>AI 게임 추천</td><td>사람의 게임 취향을 분석하여 맞는 게임과 추천 이유 제공</td><td><span class="badge required">필수</span></td></tr>
+          <tr><td>찜 / 추천 기록</td><td>관심 게임 저장, 추천 결과 저장 및 개인화 기능 확장</td><td><span class="badge later">나중에</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="s5">
+      <h2><span class="no">05</span>AI 추천 서비스</h2>
+      <p>
+        <a href="https://nextrez.app/" target="_blank" rel="noopener">NextRez</a>처럼 사용자의 취향에 맞춰 게임을 추천해 주는 AI 서비스를 GameFinder의 핵심 기능으로 구현합니다.
+        AI가 말로만 추천하는 것이 아니라, 실제 게임 데이터와 연결된 결과를 보여주는 것이 목표입니다.
+      </p>
+      <div class="cards" style="margin-top:16px">
+        <div class="card"><h3>1. 취향 입력</h3><p>좋아하는 게임, 선호 장르·플랫폼, 플레이 성향(스토리/경쟁/힐링 등)을 선택하거나 자유롭게 입력</p></div>
+        <div class="card"><h3>2. 취향 분석</h3><p>AI가 입력 내용을 분석해 장르, 태그, 분위기 같은 검색 가능한 취향 조건으로 정리</p></div>
+        <div class="card"><h3>3. 게임 데이터 매칭</h3><p>정리된 조건으로 외부 게임 데이터(RAWG, IGDB 등)에서 실제 존재하는 게임만 골라 후보 구성</p></div>
+        <div class="card"><h3>4. 추천 결과</h3><p>게임 카드와 함께 “왜 이 게임을 추천하는지” 이유를 표시하고, 게임 상세 화면으로 연결</p></div>
+      </div>
+      <div class="note">
+        AI가 존재하지 않는 게임을 만들어내지 않도록, 추천 후보는 반드시 게임 데이터에서 가져온 목록 안에서만 선택하게 설계합니다.
+        찜·추천 기록 저장은 이후 단계에서 확장합니다.
+      </div>
+    </section>
+
+    <section id="s6">
+      <h2><span class="no">06</span>필요한 화면</h2>
+      <ul>
+        <li><strong>메인</strong> — 인기 게임, 최신 게임, AI 추천을 간단하게 보여주는 첫 화면</li>
+        <li><strong>인기 순위</strong> — 글로벌 인기 게임을 1위부터 최대 1000위까지 확인하는 화면</li>
+        <li><strong>신작</strong> — 최근 출시된 게임을 확인하는 화면</li>
+        <li><strong>게임 찾기</strong> — 플랫폼, 장르, 태그 조건으로 게임을 검색하는 화면</li>
+        <li><strong>게임 상세</strong> — 선택한 게임의 자세한 정보를 확인하는 화면</li>
+        <li><strong>AI 추천</strong> — 취향을 입력하고 개인화된 게임 추천을 받는 화면</li>
+      </ul>
+      <div class="note">
+        검색 조건은 서로 다른 그룹끼리는 AND, 같은 그룹 안에서는 OR 방식으로 동작하도록 설계합니다.
+        예: (PC OR PS5) AND (RPG OR Action) AND Open World
+      </div>
+    </section>
+
+    <section id="s7">
+      <h2><span class="no">07</span>얻고 싶은 것</h2>
+      <div class="goal">
+        <p>
+          단순히 게임 정보를 보여주는 사이트를 만드는 것이 아니라,
+          외부 게임 데이터를 활용하고 검색·필터·순위 기능을 구현하면서 실제 서비스 형태의 웹사이트를 만드는 것이 목표입니다.
+          또한 AI를 단순 채팅 기능으로 사용하는 것이 아니라 사람의 취향을 분석하고 실제 게임 데이터와 연결하여 추천하는 기능을 구현해보고 싶습니다.
+        </p>
+        <p style="margin-top:12px;font-weight:800;color:#102a56">
+          최종 목표는 “지금 어떤 게임이 인기 있는지 확인하고, 내가 좋아할 게임까지 쉽게 찾을 수 있는 웹서비스”를 완성하는 것입니다.
+        </p>
+      </div>
+    </section>
+
+
+    <section id="s8">
+      <h2><span class="no">08</span>디자인 개선 로드맵</h2>
+      <p style="margin-bottom:18px">현재 구현 중인 기능을 유지하면서 메인 페이지의 시각적 완성도를 단계적으로 개선합니다.</p>
+      <ol class="roadmap">
+        <li><strong>Hero 비주얼 개선</strong> — 슬라이드별 이미지, 오버레이, 텍스트 가독성, CTA 적용</li>
+        <li><strong>인기 TOP 5 재배치</strong> — 1위 강조형 비대칭 그리드와 모바일 대체 레이아웃</li>
+        <li><strong>AI 소개 영역 강조</strong> — 전용 그라데이션과 설명, 기존 AI 추천으로 연결</li>
+        <li><strong>게임 카드 스타일 정리</strong> — 커버 호버, 할인 배지, 가격, 출시일, 이미지 미표시 상태</li>
+        <li><strong>장르·섹션 디자인 개선</strong> — 주요 장르 이미지 타일, 섹션별 간격과 배경 조정</li>
+        <li><strong>품질 점검</strong> — 반응형, 성능, 접근성, 로딩·빈 상태·오류 상태 확인</li>
+      </ol>
+      <div class="note">새로운 비즈니스 기능보다 <strong>기존 핵심 기능을 더 잘 보여주는 디자인 개선</strong>을 먼저 진행합니다. 이미지 사용 시 저작권·라이선스를 확인합니다.</div>
+    </section>
+
+    <div class="footer"><span>GameFinder Project Plan</span><span>PROJECT PLAN</span></div>
+  </main>
+</body>
+</html>
