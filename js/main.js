@@ -11,7 +11,7 @@
     GF.createGameSection(document.getElementById('popular'), {
       id: 'popular',
       kicker: '01 · RANKING',
-      title: '글로벌 인기 게임 TOP 5',
+      title: '인기 게임 TOP 5',
       description: '지금 가장 주목받는 인기 게임과 국내 대표 온라인 게임을 만나보세요.',
       viewAllRouteId: 'rank',
       layout: 'rank',

@@ -55,7 +55,7 @@
 - **합친 곳**
   - **최신 게임**: 최근 1년 내 출시된 국내 PC 게임(개발사·퍼블리셔가 국내 회사)을 **최대 3개**, Steam 목록의 3·6·8번째 자리에 섞음(출시일로만 정렬하면 맨 끝으로 밀려 스크롤해야 보여서). 카드 메타에 `· 국내` 표시. 현재 예: Vampir, Aion 2, RF Online Next. Steam과 제목이 같은 게임은 Steam 쪽만 사용(중복 제거, `normTitle`)
   - **장르 보강**: 제목이 같은 Steam 게임(예: Counter-Strike 2, PUBG)에 FreeToGame 장르를 채움(인기·최신 목록)
-- **인기 TOP 5 (13차에서 추가)**: 실제 순위 데이터는 섞을 수 없어서, **1~3위는 Steam 리뷰 수 기준 실제 순위**, **4·5번째 자리에 편집 선정 국내 인기작 2개**(현재 PUBG, Lost Ark)를 섞음. 순위 숫자 대신 `KR`, 평점 칩 없음, 메타에 `· 국내`. 후보 목록 `KR_PICKS`(PUBG·Lost Ark·Black Desert·MapleStory·Dungeon Fighter Online, 모두 Steam 이미지 확인함)에서 앞 2개를 쓰고 이미 Steam 순위에 있으면 건너뜀. 섹션 안내 문구에 "KR 표시 2개는 편집 선정으로 순위에 포함되지 않음" 명시. **사람이 고른 목록이라 실시간 순위가 아님 — 바꾸려면 `game-service.js`의 `KR_PICKS`/`KR_PICK_COUNT` 수정**
+- **인기 TOP 5 (13차에서 추가)**: 실제 순위 데이터는 섞을 수 없어서, **1~3위는 Steam 리뷰 수 기준 실제 순위**, **4·5번째 자리에 편집 선정 국내 인기작 2개**(현재 PUBG, Lost Ark)를 섞음. 순위 숫자 대신 `KR`, 평점 칩 없음, 메타에 `· 국내`. 섹션 제목은 "글로벌 인기 게임 TOP 5" → **"인기 게임 TOP 5"** 로 변경(국내 게임이 섞여서). 전체 순위 페이지(`#/rank`, 기획서의 '글로벌 인기 순위')는 미구현이라 이름 그대로임. 후보 목록 `KR_PICKS`(PUBG·Lost Ark·Black Desert·MapleStory·Dungeon Fighter Online, 모두 Steam 이미지 확인함)에서 앞 2개를 쓰고 이미 Steam 순위에 있으면 건너뜀. 섹션 안내 문구에 "KR 표시 2개는 편집 선정으로 순위에 포함되지 않음" 명시. **사람이 고른 목록이라 실시간 순위가 아님 — 바꾸려면 `game-service.js`의 `KR_PICKS`/`KR_PICK_COUNT` 수정**
 - **합치지 않은 곳**: 할인(FreeToGame은 무료 게임이라 해당 없음). 인기 순위 자체의 '비교'는 불가(FreeToGame엔 리뷰 수가 없음)
 - 구현: `game-service.js`(`fetchCached` 일반화, `getFtg`, `domesticRecent`, `fillGenres`, `KR_COMPANY` 정규식, `DOMESTIC_MAX=3`, `DOMESTIC_WINDOW_DAYS=365`), `game-card.js`(`origin==='KR'`이면 `국내`), `main.js`(최신 섹션 안내 문구), `footer.js`(출처 링크)
 - **FreeToGame 실패 시 안전**: 요청이 막혀도 `[]`로 대체되어 Steam 8개만 정상 표시됨(차단 테스트로 확인)
@@ -132,3 +132,4 @@
 - **2026-11-15 (이어서 9)** — 사용자 요청으로 11차 이미지 교체를 원복(Hero·장르 모두 Steam 아트워크로 복구, `assets/` 삭제). 이력은 `e3aa040`에 보존.
 - **2026-11-15 (이어서 10)** — 12차: FreeToGame 국내 온라인 게임을 최신 게임 목록에 합치고 장르 보강, 출처 링크 추가.
 - **2026-11-15 (이어서 11)** — 13차: 인기 TOP 5 에 편집 선정 국내 인기작 2개(KR 표시) 섞기.
+- **2026-11-15 (이어서 12)** — 인기 섹션 제목에서 '글로벌' 삭제.
