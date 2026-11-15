@@ -74,12 +74,19 @@
 5. **아직 없는 페이지** (현재 라우트는 `#/` 만 구현, 나머지는 "준비 중" 안내): 게임 찾기(`#/find`), 인기 순위(`#/rank`), 신작(`#/new`), 할인(`#/sale`), AI 추천(`#/ai`), 검색(`#/search`), 게임 상세(`#/game/:id`) — 구현 시 `js/components/route-notice.js`의 `IMPLEMENTED` 배열에 추가
 6. **데이터**: 장르 정보는 CheapShark에 없어 카드에 장르가 비어 있음 → RAWG/IGDB 연동 시 `game-service.js`의 `genres` 채우기. 인기 순위는 실제 순위가 아니라 "Metacritic 75+ / Steam 긍정 80%+ 중 리뷰 수 순" 기준
 
+## 배포 (GitHub Pages)
+
+- **사이트 주소: https://xorghks1010-xorghks.github.io/gamefinder/** (2026-11-15 배포, `main` 브랜치 루트 기준)
+- 코드를 수정한 뒤 `cd gamefinder && git add -A && git commit && git push` 하면 1~2분 뒤 자동 반영됨
+- 공개 저장소라 코드와 `docs/`가 누구에게나 보임. Hero·카드의 Steam 아트워크는 개발용 임시 이미지이므로 공개 상태에서 **라이선스 확인/교체**가 더 급해짐
+- 배포 주소에서 CheapShark 실데이터 로딩 정상 확인(카드 39개, 오류 없음)
+
 ## 알아둘 것
 
 - 개발용 URL 파라미터: `index.html?mock=slow|empty|error` → 예시 데이터/로딩/빈/오류 상태 확인
 - 모션 검증 스크립트: 헤드리스 `--screenshot`은 가상 시간 때문에 transition·rAF 가 멈춰 부정확함 → Chrome `--remote-debugging-port` + Node(v26, 내장 WebSocket)로 실제 시간 측정 (예: 스크래치패드 `cdp.js`, 재작성 필요)
 - 로컬 화면 확인 방법: Chrome 헤드리스는 창 폭이 약 500px 아래로 안 줄어서 모바일은 `390px` 폭 iframe에 넣어 찍어야 정확함
-- git: `gamefinder/` 안에 **전용 저장소**가 있음 (`cd gamefinder && git log`). 첫 커밋 `56304f9` (2026-11-15), 로컬 전용(GitHub 미연결). 기획서·진행 기록의 **작업용 원본은 상위 폴더**(`plan.md`, `gamefinder-project-plan.html`, `gamefinder-progress.md`)이고, 저장소 `gamefinder/docs/`에는 커밋 시점 **복사본**이 들어 있음 → 다음 커밋 때 상위 원본을 `docs/`에 다시 복사해서 함께 커밋할 것 (`progress.md`는 이름이 다름). 상위 저장소(my-portfolio)에서는 `gamefinder/`가 별도 저장소라 추적하지 않음
+- git: `gamefinder/` 안에 **전용 저장소**가 있음 (`cd gamefinder && git log`). 첫 커밋 `56304f9` (2026-11-15), GitHub 연결됨(`origin` = https://github.com/xorghks1010-xorghks/gamefinder, **공개** 저장소). 기획서·진행 기록의 **작업용 원본은 상위 폴더**(`plan.md`, `gamefinder-project-plan.html`, `gamefinder-progress.md`)이고, 저장소 `gamefinder/docs/`에는 커밋 시점 **복사본**이 들어 있음 → 다음 커밋 때 상위 원본을 `docs/`에 다시 복사해서 함께 커밋할 것 (`progress.md`는 이름이 다름). 상위 저장소(my-portfolio)에서는 `gamefinder/`가 별도 저장소라 추적하지 않음
 - 백업: `gamefinder-backup-2026-11-15/` = **9차(다크 톤) 작업 직전** 버전 (모션·AI 데모 포함, 다크 톤 미포함). 이전 백업은 삭제하고 새로 만듦. `gamefinder.7z`는 11/10 옛 압축본(그대로 둠)
 - `CLAUDE.md`의 포트폴리오(스타일 D) 내용은 **별개 작업**이다. 이번 gamefinder 작업과 섞지 말 것. (`style-d-dark.html`은 반응형 CSS만 보완해 둠)
 
@@ -91,3 +98,4 @@
 - **2026-11-15 (이어서 3)** — 백업을 현재 버전으로 교체 후 9차 전체 다크 톤 적용·검증, plan.md 04-2 색상 표 갱신.
 - **2026-11-15 (이어서 4)** — 다크 톤 후속 확인(오류·빈·실데이터 화면) 완료, 소소한 색 수정, Hero 이미지 preload/preconnect 적용.
 - **2026-11-15 (이어서 5)** — gamefinder 전용 git 저장소 생성, 첫 커밋(31개 파일).
+- **2026-11-15 (이어서 6)** — GitHub 공개 저장소 생성·push, GitHub Pages 배포(주소는 위 '배포' 참고).
