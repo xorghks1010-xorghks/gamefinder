@@ -31,7 +31,7 @@
   }
 
   // ---------- 공통: 요청 + 세션 캐시 ----------
-  function fetchCached(url, label, trim) {
+  function fetchCached(url, label, trim, allowObject) {
     var key = 'gf:' + url;
     try {
       var hit = JSON.parse(sessionStorage.getItem(key) || 'null');
@@ -46,8 +46,8 @@
       if (!res.ok) throw new Error(label + ' ' + res.status);
       return res.json();
     }).then(function (data) {
-      if (!Array.isArray(data)) throw new Error('unexpected response');
-      if (trim) data = data.map(trim);   // 저장 용량을 줄이기 위해 필요한 필드만 남김
+      if (!Array.isArray(data) && !allowObject) throw new Error('unexpected response');
+      if (trim && Array.isArray(data)) data = data.map(trim);   // 저장 용량을 줄이기 위해 필요한 필드만 남김
       try { sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), d: data })); } catch (e) { /* noop */ }
       return data;
     }, function (err) { clearTimeout(timer); throw err; });
@@ -110,6 +110,9 @@
         };
       });
   }
+
+  // dealID 는 API 가 이미 URL 인코딩된 값으로 주므로 그대로 붙임 (다시 인코딩하면 잘못된 ID 가 됨)
+  function dealUrl(dealId) { return 'https://www.cheapshark.com/redirect?dealID=' + dealId; }
 
   function steamCover(appId) {
     return 'https://cdn.cloudflare.steamstatic.com/steam/apps/' + appId + '/library_600x900.jpg';
@@ -237,7 +240,7 @@
           salePrice: parseFloat(d.salePrice),
           discountRate: Math.round(parseFloat(d.savings)),
           currency: 'USD',
-          url: 'https://www.cheapshark.com/redirect?dealID=' + encodeURIComponent(d.dealID)   // 해당 스토어의 실제 상품 페이지로 이동
+          url: dealUrl(d.dealID)   // 해당 스토어의 실제 상품 페이지로 이동
         };
         return g;
       });
@@ -276,7 +279,126 @@
     };
   }
 
+  // ---------- 게임 상세 ----------
+  // getGameDetail(id) → Promise<Detail>. id 종류: 숫자(Steam appId) / 'ftg-<번호>'(FreeToGame) / mock id(예시 데이터)
+  // 없는 게임이면 err.code === 'notfound' 로 reject.
+  function notFound() { var e = new Error('not found'); e.code = 'notfound'; return e; }
+
+  function getStores() {
+    return fetchCached(API + '/stores', 'CheapShark').catch(function () { return []; });
+  }
+
+  function getFtgDetail(ftgId) {
+    return fetchCached('https://www.freetogame.com/api/game?id=' + ftgId, 'FreeToGame', null, true)
+      .then(function (f) { return f && f.title ? f : null; }, function () { return null; });
+  }
+
+  function isKrCompany(dev, pub) {
+    return (KR_COMPANY.test(dev || '') || KR_COMPANY.test(pub || '')) && !KR_EXCLUDE.test((dev || '') + ' ' + (pub || ''));
+  }
+
+  // FreeToGame 상세 응답 → 화면용 필드 (없으면 빈 값)
+  function ftgFields(f) {
+    if (!f) return { description: '', screenshots: [], developer: '', publisher: '', officialUrl: '', requirements: [], genre: '' };
+    var req = f.minimum_system_requirements || {};
+    return {
+      description: f.description || f.short_description || '',
+      screenshots: (f.screenshots || []).map(function (s) { return s.image; }).filter(Boolean),
+      developer: f.developer || '',
+      publisher: f.publisher || '',
+      officialUrl: f.game_url || '',
+      requirements: [['OS', req.os], ['프로세서', req.processor], ['메모리', req.memory], ['그래픽', req.graphics], ['저장공간', req.storage]]
+        .filter(function (r) { return r[1]; }),
+      genre: f.genre || ''
+    };
+  }
+
+  function ftgDetail(numId) {
+    return getFtgDetail(numId).then(function (f) {
+      if (!f) throw notFound();
+      var x = ftgFields(f);
+      return {
+        id: 'ftg-' + numId, title: f.title, source: 'FreeToGame', free: true, origin: isKrCompany(f.developer, f.publisher) ? 'KR' : '',
+        heroImage: '', headerImage: f.thumbnail, coverImage: '', steamAppId: '',
+        genres: x.genre ? [x.genre] : [], platforms: ['pc'], releaseDate: f.release_date || null,
+        rating: null, deals: [], cheapestEver: null,
+        description: x.description, screenshots: x.screenshots, developer: x.developer, publisher: x.publisher,
+        officialUrl: x.officialUrl, requirements: x.requirements
+      };
+    });
+  }
+
+  function steamDetail(appId) {
+    var kr = KR_PICKS.filter(function (p) { return p.appId === appId; })[0];
+    return Promise.all([
+      getJson('/deals?steamAppID=' + appId + '&storeID=1').catch(function () { return []; }),
+      getStores(),
+      getFtg()
+    ]).then(function (res) {
+      var deal = res[0][0], stores = res[1], ftgList = res[2];
+      var title = (deal && deal.title) || (kr && kr.title) || '';
+      if (!title) throw notFound();
+      var ftgRow = ftgList.filter(function (x) { return normTitle(x.title) === normTitle(title); })[0];
+      // 주의: 브라우저에서는 /games?steamAppID= 요청만 막혀서(Failed to fetch) 제목으로 검색한 뒤 Steam ID 가 같은 항목을 고름
+      var rowPromise = getJson('/games?title=' + encodeURIComponent(title) + '&limit=30').catch(function () { return []; })
+        .then(function (rows) { return rows.filter(function (r) { return String(r.steamAppID) === appId; })[0]; });
+      return rowPromise.then(function (row) {
+        return Promise.all([
+          row ? fetchCached(API + '/games?id=' + row.gameID, 'CheapShark', null, true).catch(function () { return null; }) : null,
+          ftgRow ? getFtgDetail(ftgRow.id) : null
+        ]);
+      }).then(function (r2) {
+        var info = r2[0], x = ftgFields(r2[1]);
+        var names = {};
+        stores.forEach(function (s) { names[s.storeID] = s.storeName; });
+        var deals = ((info && info.deals) || []).map(function (d) {
+          return { store: names[d.storeID] || '스토어', price: parseFloat(d.price), retail: parseFloat(d.retailPrice),
+                   savings: Math.round(parseFloat(d.savings)), url: dealUrl(d.dealID) };
+        }).sort(function (a, b) { return a.price - b.price; });
+        var best = info && info.cheapestPriceEver;
+        return {
+          id: appId, title: title, source: 'Steam', free: !deals.length,
+          origin: (kr || isKrCompany(x.developer, x.publisher)) ? 'KR' : '',
+          heroImage: steamArt(appId, 'library_hero.jpg'), headerImage: steamArt(appId, 'header.jpg'), coverImage: steamCover(appId), steamAppId: appId,
+          genres: kr ? [kr.genre] : (x.genre ? [x.genre] : []), platforms: ['pc'],
+          releaseDate: deal ? toIsoDate(deal.releaseDate) : (r2[1] ? r2[1].release_date : null),
+          rating: deal ? { steamPercent: parseInt(deal.steamRatingPercent, 10) || null, steamCount: parseInt(deal.steamRatingCount, 10) || null,
+                           metacritic: parseInt(deal.metacriticScore, 10) || null } : null,
+          deals: deals, cheapestEver: best ? { price: parseFloat(best.price), date: toIsoDate(best.date) } : null,
+          description: x.description, screenshots: x.screenshots, developer: x.developer, publisher: x.publisher,
+          officialUrl: x.officialUrl, requirements: x.requirements
+        };
+      });
+    });
+  }
+
+  // 예시 데이터(?mock= 또는 숫자가 아닌 id)
+  function mockDetail(id) {
+    var d = GF.mockData || {}, found = null;
+    [d.popular, d.latest, d.sale].forEach(function (list) {
+      (list || []).forEach(function (g) { if (!found && g.id === id) found = g; });
+    });
+    if (!found) return Promise.reject(notFound());
+    var deal = found.deal;
+    return Promise.resolve({
+      id: found.id, title: found.title, source: '예시 데이터', free: false, origin: '', mock: true,
+      heroImage: '', headerImage: '', coverImage: found.coverImage, steamAppId: '',
+      genres: found.genres || [], platforms: found.platforms || ['pc'], releaseDate: found.releaseDate || null, rating: null,
+      deals: deal ? [{ store: deal.store, price: deal.salePrice, retail: deal.regularPrice, currency: 'KRW', url: '',
+                       savings: Math.round((1 - deal.salePrice / deal.regularPrice) * 100) }] : [],
+      cheapestEver: null, description: '', screenshots: [], developer: '', publisher: '', officialUrl: '', requirements: []
+    });
+  }
+
+  function getGameDetail(id) {
+    id = String(id || '');
+    var isSteam = /^[0-9]+$/.test(id), isFtg = id.indexOf('ftg-') === 0;
+    if (mockMode() || (!isSteam && !isFtg)) return mockDetail(id);
+    return isFtg ? ftgDetail(id.slice(4)) : steamDetail(id);
+  }
+
   GF.gameService = {
+    getGameDetail: getGameDetail,
     getPopularGames: pick(livePopular, function () { return GF.mockData.popular.slice(0, 5); }),
     getLatestGames:  pick(liveLatest,  function () { return GF.mockData.latest.slice(0, 8); }),
     getSaleGames:    pick(liveSale,    function () { return GF.mockData.sale.slice(0, 5).map(withDiscount); }),

@@ -49,6 +49,34 @@
   var toTop = GF.createToTop();
   var motion = GF.createMotion(document.getElementById('hero'));   // Hero 시차 · 카드 틸트 (마우스 전용)
 
+  // ---------- 화면 전환: 메인 ↔ 게임 상세(#/game/<id>) ----------
+  // 같은 페이지 안에서 메인(<main id="main">)과 상세(<main id="detail">) 중 하나만 보여줍니다.
+  var mainEl = document.getElementById('main');
+  var detailEl = document.getElementById('detail');
+  var detail = GF.createGameDetail(detailEl);
+  var showingDetail = false;
+  var mainScrollY = 0;   // 메인에서 상세로 갈 때의 스크롤 위치 (돌아올 때 복원)
+
+  function onRoute() {
+    var gameId = GF.routes.currentGameId();
+    if (gameId) {
+      if (!showingDetail) mainScrollY = window.scrollY;
+      showingDetail = true;
+      mainEl.hidden = true;
+      detailEl.hidden = false;
+      window.scrollTo(0, 0);
+      detail.show(gameId);
+    } else if (showingDetail) {
+      showingDetail = false;
+      detail.hide();
+      detailEl.hidden = true;
+      mainEl.hidden = false;
+      window.scrollTo(0, mainScrollY);
+    }
+  }
+  window.addEventListener('hashchange', onRoute);
+  onRoute();   // 주소창에 #/game/... 을 직접 입력해 들어온 경우
+
   // Hero 를 제외한 섹션 콘텐츠가 화면에 들어올 때 부드럽게 나타남
   var reveal = GF.reveal(document.querySelectorAll('main > section:not(.gf-hero) > .container'));
 
@@ -62,6 +90,8 @@
     notice.destroy();
     toTop.destroy();
     motion.destroy();
+    window.removeEventListener('hashchange', onRoute);
+    detail.destroy();
     reveal.destroy();
   });
 })(window.GameFinder);

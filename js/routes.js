@@ -39,9 +39,17 @@
     return ROUTES.find.path + (qs ? '?' + qs : '');
   }
 
+  /** 현재 hash 가 게임 상세면 게임 id, 아니면 null: '#/game/730' → '730' */
+  function currentGameId() {
+    var m = /^#\/game\/([^?]+)/.exec(window.location.hash);
+    if (!m) return null;
+    try { return decodeURIComponent(m[1]); } catch (e) { return m[1]; }
+  }
+
   /** 현재 location.hash에서 라우트 id를 읽음 (알 수 없으면 home) */
   function currentRouteId() {
     var hash = window.location.hash.split('?')[0] || '#/';
+    if (hash.indexOf('#/game/') === 0) return 'game';   // 상세 페이지는 메뉴 항목이 아님(현재 메뉴 표시 없음)
     if (hash === '#' || hash === '') hash = '#/';
     for (var id in ROUTES) {
       if (ROUTES[id].path === hash) return id;
@@ -56,6 +64,7 @@
     searchHref: searchHref,
     gameHref: gameHref,
     findHref: findHref,
-    currentRouteId: currentRouteId
+    currentRouteId: currentRouteId,
+    currentGameId: currentGameId
   };
 })(window.GameFinder = window.GameFinder || {});

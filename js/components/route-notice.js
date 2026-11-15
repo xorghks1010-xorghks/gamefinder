@@ -13,7 +13,7 @@
     var el = document.createElement('div');
     el.className = 'gf-notice';
     el.setAttribute('role', 'status');
-    el.textContent = '준비 중인 페이지입니다. 현재는 메인 화면만 제공됩니다.';
+    el.textContent = '준비 중인 페이지입니다. 현재는 메인 화면과 게임 상세만 제공됩니다.';
     document.body.appendChild(el);
 
     var timer = null;
@@ -28,7 +28,7 @@
       var a = e.target.closest && e.target.closest('a[href^="#"]');
       if (!a || a.classList.contains('skip-link')) return;
       var href = a.getAttribute('href');
-      if (IMPLEMENTED.indexOf(href) === -1) show();
+      if (IMPLEMENTED.indexOf(href) === -1 && href.indexOf('#/game/') !== 0) show();   // 게임 상세는 구현됨
     }
 
     function onSearch() { show(); }

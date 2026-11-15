@@ -48,6 +48,17 @@
 - 검증: Chrome 원격제어로 실제 클릭 → 선택/분석중/결과/해제 상태와 JS 오류 없음 확인, 1440px·390px 화면 확인
 - 나중에 할 일: 실제 AI 추천 페이지(`#/ai`)를 만들면 이 데모의 문구·결과와 톤을 맞출 것. 추천 이유 문구는 직접 쓴 예시이니 필요하면 수정
 
+## 14차: 게임 상세 페이지 `#/game/<id>` (2026-11-15)
+
+- **라우팅**: 같은 페이지에서 메인(`<main id="main">`) ↔ 상세(`<main id="detail">`) 전환(`main.js`의 `onRoute`). 메인에서 상세로 갈 때 스크롤 위치를 저장해 **뒤로가기 시 복원**. 주소창에 `#/game/...`을 직접 입력해도 동작. 카드 링크는 기존 `gameHref(id)` 그대로. `routes.js`에 `currentGameId()` 추가, `route-notice.js`는 `#/game/`을 구현된 경로로 취급(안내 문구도 수정)
+- **파일**: `js/components/game-detail.js`(화면), `css/game-detail.css`(스타일), `game-service.js`의 `getGameDetail(id)`(데이터)
+- **id 종류**: 숫자 = Steam appId / `ftg-<번호>` = FreeToGame 게임(국내 최신 목록의 카드) / 그 외 = 예시 데이터(`?mock=`)
+- **화면 구성**: 상단 배너(Steam hero 이미지, 제목, 장르·PC·출시일 칩, Steam 긍정%·Metacritic, 'Steam에서 보기'/'무료로 플레이하기' 버튼) / 본문(스토어 정보 = **Steam 공식 스토어 위젯 iframe**, 소개, 스크린샷, 최소 시스템 요구사항) / 사이드(게임 정보, **스토어별 가격 비교 표** + 최저가 표시 + 역대 최저가). 데이터가 없는 섹션은 숨김. 로딩 스켈레톤 · 없는 게임(`notfound`) · 오류(다시 시도) 상태, 접근성(h1 포커스 이동, 문서 제목 변경)
+- **데이터 출처**: CheapShark(`/deals?steamAppID`, `/games?id`, `/stores`) + FreeToGame(`/api/game?id` — 설명(영문)·스크린샷·요구사항) + Steam 위젯. **Steam 유료 게임은 소개·스크린샷을 가져올 방법이 없어**(Steam API는 브라우저 호출 불가) 위젯(Steam 제공)으로 대신함. 소개 글은 FreeToGame 영문
+- **발견·주의**: (1) 브라우저에서 CheapShark `/games?steamAppID=` 만 `Failed to fetch`(curl로는 성공) → 제목으로 `/games?title=` 검색 후 steamAppID 일치 항목을 고름. 실제 브라우저로 테스트해야 잡히는 문제였음. (2) `dealID`는 API가 이미 인코딩해서 주므로 **그대로** 붙여야 함 → 기존 할인 카드의 `encodeURIComponent` 이중 인코딩을 `dealUrl()`로 수정. **스토어 이동 링크가 실제 상품 페이지로 가는지는 CheapShark 봇 확인(Cloudflare) 때문에 자동 테스트로 확인하지 못함 → 직접 클릭해서 확인 필요**
+- 검증: Chrome 원격제어로 카드 클릭→상세→뒤로가기(스크롤 600 복원), 직접 주소 진입(Steam 유료 / 국내 PUBG / FreeToGame / 없는 게임 / 예시 데이터), 1440px·390px. JS 오류 없음
+- 한계: '관련 게임'·리뷰·한국어 설명 없음. 인기 TOP5의 KR 게임 중 FreeToGame에 없는 게임(검은사막 등)은 설명 없이 위젯만 나올 수 있음
+
 ## 12차: 국내 온라인 게임 데이터 합치기 (FreeToGame, 2026-11-15)
 
 - 요구: **국내 온라인 게임 전용 섹션은 만들지 말고**, 기존 섹션에 비교해서 함께 넣기
@@ -99,7 +110,7 @@
 2. **성능**: preload/preconnect는 적용함. 남은 것: Lighthouse 실측, 이미지가 Steam CDN 원본이라 큼 → 필요하면 썸네일 크기 조정
 3. **이미지 라이선스**: `data/hero-slides.js`(Hero 3장)·`data/mock/games.js`(장르 타일 7장)의 Steam 아트워크는 개발용 임시. 공개 상태이므로 배포 전 사용 조건 확인/교체 필요. (자체 제작 SVG로 교체해 본 적 있으나 **사용자 요청으로 원복**함 — 11차 참고)
 4. **`footer.css`에 `prefers-reduced-motion` 없음** — footer에 애니메이션이 없으면 그대로 두어도 됨
-5. **아직 없는 페이지** (현재 라우트는 `#/` 만 구현, 나머지는 "준비 중" 안내): 게임 찾기(`#/find`), 인기 순위(`#/rank`), 신작(`#/new`), 할인(`#/sale`), AI 추천(`#/ai`), 검색(`#/search`), 게임 상세(`#/game/:id`) — 구현 시 `js/components/route-notice.js`의 `IMPLEMENTED` 배열에 추가
+5. **아직 없는 페이지** (구현: 메인 `#/`, 게임 상세 `#/game/:id`. 나머지는 "준비 중" 안내): 게임 찾기(`#/find`), 인기 순위(`#/rank`), 신작(`#/new`), 할인(`#/sale`), AI 추천(`#/ai`), 검색(`#/search`) — 구현 시 `js/components/route-notice.js`의 `IMPLEMENTED` 배열에 추가
 6. **데이터**: 장르 정보는 CheapShark에 없음 → 12차에서 FreeToGame과 제목이 겹치는 게임만 부분 보강. 전체를 채우려면 RAWG/IGDB 연동 필요(`game-service.js`의 `genres`). 인기 순위는 실제 순위가 아니라 "Metacritic 75+ / Steam 긍정 80%+ 중 리뷰 수 순" 기준
 
 ## 배포 (GitHub Pages)
@@ -133,3 +144,4 @@
 - **2026-11-15 (이어서 10)** — 12차: FreeToGame 국내 온라인 게임을 최신 게임 목록에 합치고 장르 보강, 출처 링크 추가.
 - **2026-11-15 (이어서 11)** — 13차: 인기 TOP 5 에 편집 선정 국내 인기작 2개(KR 표시) 섞기.
 - **2026-11-15 (이어서 12)** — 인기 섹션 제목에서 '글로벌' 삭제.
+- **2026-11-15 (이어서 13)** — 14차: 게임 상세 페이지 구현(라우팅·가격 비교·Steam 위젯·FreeToGame 상세), 할인 링크 dealID 이중 인코딩 수정.
