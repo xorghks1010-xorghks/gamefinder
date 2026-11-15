@@ -37,7 +37,7 @@
 - 검증: 데스크톱 1440px 전체 / 모바일 390px 캡처 확인, 대비 계산(보조 글자 6.7:1 이상)
 - 안 건드림: Hero, AI 섹션, 헤더, 푸터(원래 다크). 백업 `gamefinder-backup-2026-11-15/`는 **다크 톤 변경 직전**(모션·AI 데모 포함) 버전이라 되돌리고 싶으면 이걸로 복원
 - 후속 확인 완료(2026-11-15): 오류(`?mock=error`)·빈(`?mock=empty`) 상태 화면, 실제 CheapShark 데이터 화면 모두 다크 톤에서 정상. 오류 화면 '다시 시도' 버튼 글자는 `--blue-soft`로, 일반 카드 호버 제목색도 `--blue-soft`로 수정. 포커스 링도 `--blue-soft`. (실제 키보드 이동은 아직 수동 확인 전)
-- 성능(일부): `index.html`에 preconnect(jsdelivr·steam CDN·cheapshark) + 첫 Hero 이미지 preload 추가, `hero.js` 첫 슬라이드 이미지 `fetchpriority=high`(나머지 low)·`decoding=async`. **preload 주소는 `data/hero-slides.js` 첫 슬라이드와 같아야 함** (바꾸면 같이 수정). Lighthouse 실측은 아직 안 함
+- 성능(일부): `index.html`에 preconnect(jsdelivr·steam CDN·cheapshark) + 첫 Hero 이미지 preload 추가, `hero.js` 첫 슬라이드 이미지 `fetchpriority=high`(나머지 low)·`decoding=async`. **preload 주소(`assets/hero/ai.svg`)는 `data/hero-slides.js` 첫 슬라이드와 같아야 함** (바꾸면 같이 수정). Lighthouse 실측은 아직 안 함
 
 ## 8차: AI 섹션 인터랙티브 데모
 
@@ -47,6 +47,14 @@
 - 기획서 `plan.md` 04-3 AI 추천 소개 행의 "클릭 기능 추가하지 않음"을 위 내용으로 수정함
 - 검증: Chrome 원격제어로 실제 클릭 → 선택/분석중/결과/해제 상태와 JS 오류 없음 확인, 1440px·390px 화면 확인
 - 나중에 할 일: 실제 AI 추천 페이지(`#/ai`)를 만들면 이 데모의 문구·결과와 톤을 맞출 것. 추천 이유 문구는 직접 쓴 예시이니 필요하면 수정
+
+## 11차: 이미지 교체 (2026-11-15)
+
+- **Hero 배경 3장**(`assets/hero/ai.svg`, `sale.svg`, `rank.svg`)과 **장르 타일 7장**(`assets/genre/rpg·action·horror·fps·strategy·adventure·simulation.svg`)을 **직접 그린 오리지널 SVG**로 교체. 게임 아트워크(Cyberpunk/Hades/ELDEN RING 등 Steam hero 이미지) 사용 제거 → 저작권 문제 없음
+- 내용: AI = 별자리 같은 네트워크+중심 구체(보라), 할인 = 황금 할인 태그(앰버), 순위 = 별 달린 순위 막대(블루), 장르 = 성/슬래시/달밤 숲/조준경/육각 지도/산/농장 일러스트
+- `data/hero-slides.js`(image·imageAlt), `data/mock/games.js`(GENRES.image), `index.html`(preload) 수정. 대체 텍스트(alt)도 새 그림에 맞게 변경
+- **남긴 것: 게임 카드 표지(Steam CDN `library_600x900` 등)**. 실제 게임 목록을 보여주는 데이터라 유지. 그림을 바꾸려면 `assets/`의 SVG를 같은 파일명으로 덮어쓰면 됨(Hero는 1920×1000, 장르는 800×500 비율)
+- SVG 생성 스크립트는 임시 폴더에만 있었고 저장소에는 없음. 수정이 필요하면 SVG를 직접 편집
 
 ## 10차: 키보드·태블릿 점검 (2026-11-15, 배포 주소에서 실제 입력으로 검증)
 
@@ -72,8 +80,8 @@
 ## 다음에 할 일 (우선순위 순)
 
 1. **실제 기기 수동 점검** (자동 점검은 끝남 — 아래 '10차' 참고). 남은 것: 실제 폰에서 Hero 스와이프·최신 게임 가로 스크롤 손맛 확인
-2. **성능**: preload/preconnect는 적용함. 남은 것: Lighthouse 실측, 이미지가 Steam CDN 원본이라 큼 → 필요하면 썸네일 크기 조정
-3. **이미지 라이선스**: `data/hero-slides.js`의 Steam 아트워크는 개발용 임시. 배포 전 사용 조건 확인/교체 (plan.md 04-6 주의사항)
+2. **성능**: preload/preconnect 적용, Hero·장르 이미지는 자체 SVG라 가벼워짐(11장 합계 약 70KB). 남은 것: Lighthouse 실측, 게임 표지(Steam CDN) 크기
+3. **이미지 라이선스(대부분 해결, 11차 참고)**: 남은 것은 **게임 표지(Steam CDN) 카드 이미지**뿐. 게임을 소개하는 데이터 자체로 쓰는 것이라 유지했지만, 상업 서비스로 전환하거나 권리자 요청이 있으면 RAWG/IGDB 등 공식 API 이미지나 스토어 공식 위젯으로 교체 검토
 4. **`footer.css`에 `prefers-reduced-motion` 없음** — footer에 애니메이션이 없으면 그대로 두어도 됨
 5. **아직 없는 페이지** (현재 라우트는 `#/` 만 구현, 나머지는 "준비 중" 안내): 게임 찾기(`#/find`), 인기 순위(`#/rank`), 신작(`#/new`), 할인(`#/sale`), AI 추천(`#/ai`), 검색(`#/search`), 게임 상세(`#/game/:id`) — 구현 시 `js/components/route-notice.js`의 `IMPLEMENTED` 배열에 추가
 6. **데이터**: 장르 정보는 CheapShark에 없어 카드에 장르가 비어 있음 → RAWG/IGDB 연동 시 `game-service.js`의 `genres` 채우기. 인기 순위는 실제 순위가 아니라 "Metacritic 75+ / Steam 긍정 80%+ 중 리뷰 수 순" 기준
@@ -104,3 +112,4 @@
 - **2026-11-15 (이어서 5)** — gamefinder 전용 git 저장소 생성, 첫 커밋(31개 파일).
 - **2026-11-15 (이어서 6)** — GitHub 공개 저장소 생성·push, GitHub Pages 배포(주소는 위 '배포' 참고).
 - **2026-11-15 (이어서 7)** — 키보드·태블릿 점검(10차) 완료, 태블릿 Hero 화살표 겹침 수정.
+- **2026-11-15 (이어서 8)** — 11차 이미지 교체: Hero·장르 이미지를 자체 제작 SVG 10장으로 교체(게임 표지는 유지).

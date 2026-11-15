@@ -9,11 +9,7 @@
 (function (GF) {
   'use strict';
 
-  // 개발 미리보기용 Steam CDN 아트워크 — 저작권은 각 권리자에게 있으며 배포 전 사용 조건 확인/교체 필요
-  var steamHero = function (appId) {
-    return 'https://cdn.cloudflare.steamstatic.com/steam/apps/' + appId + '/library_hero.jpg';
-  };
-
+  // 배경 이미지는 GameFinder 용으로 직접 만든 오리지널 SVG(assets/hero/) — 저작권 문제 없음
   GF.heroSlides = [
     {
       id: 'ai',
@@ -22,8 +18,8 @@
       description: '사용자의 게임 취향을 분석하여 어울리는 게임을 추천해 드립니다.',
       ctaLabel: 'AI 추천 시작하기',
       routeId: 'ai',
-      image: steamHero(1091500),
-      imageAlt: 'Cyberpunk 2077 아트워크',
+      image: 'assets/hero/ai.svg',
+      imageAlt: '별자리처럼 연결된 보라색 네트워크와 빛나는 중심 구체',
       icon: 'sparkle',
       deco: 'orbit'
     },
@@ -34,8 +30,8 @@
       description: 'Steam, Epic Games 등 게임 스토어의 할인 정보를 한곳에서 확인하세요.',
       ctaLabel: '할인 게임 보기',
       routeId: 'sale',
-      image: steamHero(1145360),
-      imageAlt: 'Hades 아트워크',
+      image: 'assets/hero/sale.svg',
+      imageAlt: '황금빛 할인 태그 일러스트',
       icon: 'tag',
       decoText: 'SALE'
     },
@@ -46,8 +42,8 @@
       description: '현재 인기 있는 게임의 순위를 확인하세요.',
       ctaLabel: '인기 순위 보기',
       routeId: 'rank',
-      image: steamHero(1245620),
-      imageAlt: 'ELDEN RING 아트워크',
+      image: 'assets/hero/rank.svg',
+      imageAlt: '별이 올라간 세 개의 순위 막대 일러스트',
       icon: 'trophy',
       decoText: 'TOP'
     }
