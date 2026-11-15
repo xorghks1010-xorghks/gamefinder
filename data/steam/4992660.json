@@ -1,0 +1,72 @@
+{
+ "id": "4992660",
+ "name": "Scawy Game",
+ "description": "켄귄 스팅은 자신의 걸작을 쓰기 위해 싸구려 에셋 스토어 집을 산 실패한 공포 작가입니다. 그의 유일한 일은 고양이들에게 밥을 주는 것. 그리고 할머니가 약을 먹게 하는 것. 그리고 4일과 4밤을 살아남는 것. 황당한 패러디 호러 게임입니다.",
+ "descLang": "ko",
+ "genres": [
+  "어드벤처",
+  "캐주얼",
+  "시뮬레이션"
+ ],
+ "developers": [
+  "Swytapp Games"
+ ],
+ "publishers": [
+  "Swytapp Games"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4992660/b8009a5f4516f1564348530bcba416d31ca694de/ss_b8009a5f4516f1564348530bcba416d31ca694de.600x338.jpg?t=1794667799",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4992660/b8009a5f4516f1564348530bcba416d31ca694de/ss_b8009a5f4516f1564348530bcba416d31ca694de.1920x1080.jpg?t=1794667799"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4992660/dda9f58b1f6db0c1ed0ab7ebfae6d90197fb382d/ss_dda9f58b1f6db0c1ed0ab7ebfae6d90197fb382d.600x338.jpg?t=1794667799",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4992660/dda9f58b1f6db0c1ed0ab7ebfae6d90197fb382d/ss_dda9f58b1f6db0c1ed0ab7ebfae6d90197fb382d.1920x1080.jpg?t=1794667799"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4992660/f15f71f1ee2d8522c96e03ac0a762180a1678832/ss_f15f71f1ee2d8522c96e03ac0a762180a1678832.600x338.jpg?t=1794667799",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4992660/f15f71f1ee2d8522c96e03ac0a762180a1678832/ss_f15f71f1ee2d8522c96e03ac0a762180a1678832.1920x1080.jpg?t=1794667799"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4992660/60e04ea487b31f4d1c9d65126a5a3a41cc3ed9fa/ss_60e04ea487b31f4d1c9d65126a5a3a41cc3ed9fa.600x338.jpg?t=1794667799",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4992660/60e04ea487b31f4d1c9d65126a5a3a41cc3ed9fa/ss_60e04ea487b31f4d1c9d65126a5a3a41cc3ed9fa.1920x1080.jpg?t=1794667799"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4992660/0f74342d180092209a6481ad9fa8bf545dea81e4/ss_0f74342d180092209a6481ad9fa8bf545dea81e4.600x338.jpg?t=1794667799",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4992660/0f74342d180092209a6481ad9fa8bf545dea81e4/ss_0f74342d180092209a6481ad9fa8bf545dea81e4.1920x1080.jpg?t=1794667799"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4992660/412fc793888e56f501c69e3e2e50b1d04ac13743/ss_412fc793888e56f501c69e3e2e50b1d04ac13743.600x338.jpg?t=1794667799",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4992660/412fc793888e56f501c69e3e2e50b1d04ac13743/ss_412fc793888e56f501c69e3e2e50b1d04ac13743.1920x1080.jpg?t=1794667799"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10"
+  ],
+  [
+   "프로세서",
+   "Core i7-3820 or equivalent"
+  ],
+  [
+   "메모리",
+   "10 GB RAM"
+  ],
+  [
+   "그래픽",
+   "NVidia 1070 or equivalent"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "저장 공간",
+   "10 GB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:30.453Z"
+}

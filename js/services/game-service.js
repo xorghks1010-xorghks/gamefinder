@@ -139,12 +139,18 @@
   // ---------- 편집 선정 "국내 인기작" (인기 TOP 5 에 2개 섞음) ----------
   // 실시간 순위 데이터가 없어 사람이 고른 목록입니다(2026-11 기준 국내 대표 온라인 게임, 모두 Steam 에서 서비스).
   // 앞에서부터 TOP 5 에 쓰며, 이미 Steam 순위에 있는 게임은 건너뜁니다. 화면에는 순위 숫자 대신 'KR' 로 표시합니다.
+  // ko: 상세 페이지에 보여줄 한국어 소개(GameFinder 가 직접 쓴 짧은 요약, 문단은 \n 으로 구분). 시기에 따라 내용이 바뀔 수 있는 부분은 단정하지 않고 일반적인 특징만 적음.
   var KR_PICKS = [
-    { appId: '578080',  title: 'PUBG: BATTLEGROUNDS',   genre: 'Shooter' },
-    { appId: '1599340', title: 'Lost Ark',              genre: 'ARPG' },
-    { appId: '582660',  title: 'Black Desert',          genre: 'MMORPG' },
-    { appId: '216150',  title: 'MapleStory',            genre: 'MMORPG' },
-    { appId: '495910',  title: 'Dungeon Fighter Online', genre: 'Fighting' }
+    { appId: '578080',  title: 'PUBG: BATTLEGROUNDS',   genre: 'Shooter',
+      ko: '크래프톤이 만든 배틀로얄 슈터입니다. 많은 플레이어가 하나의 큰 맵에 떨어져 무기와 장비를 직접 찾고, 점점 좁아지는 안전 구역 안에서 끝까지 살아남는 사람이 승자가 됩니다.\n혼자, 또는 친구와 함께 팀을 이뤄 즐길 수 있고, 맵과 차량·무기 같은 요소를 어떻게 활용하느냐에 따라 전략이 크게 달라지는 것이 특징입니다.' },
+    { appId: '1599340', title: 'Lost Ark',              genre: 'ARPG',
+      ko: '스마일게이트 RPG가 개발한 쿼터뷰 시점의 액션 MMORPG입니다. 수많은 몬스터를 화려한 스킬로 시원하게 쓸어버리는 전투가 핵심이고, 개성이 다른 여러 클래스 가운데 원하는 캐릭터를 골라 키울 수 있습니다.\n혼자 진행하는 스토리와 모험, 여러 명이 함께 도전하는 레이드와 길드 활동까지 즐길 거리가 넓은 게임입니다.' },
+    { appId: '582660',  title: 'Black Desert',          genre: 'MMORPG',
+      ko: '펄어비스가 만든 오픈월드 MMORPG입니다. 직접 조작하는 콤보 중심의 액션 전투가 특징이고, 세밀하게 꾸밀 수 있는 캐릭터 커스터마이징으로도 잘 알려져 있습니다.\n전투 외에 채집·요리·무역·낚시 같은 생활 콘텐츠가 있어, 싸우지 않고 느긋하게 세계를 누비는 플레이도 가능합니다.' },
+    { appId: '216150',  title: 'MapleStory',            genre: 'MMORPG',
+      ko: '넥슨이 서비스하는 2D 횡스크롤 MMORPG로, 귀여운 그래픽과 오랜 역사로 널리 알려진 온라인 게임입니다. 여러 직업 가운데 하나를 골라 몬스터를 사냥하며 성장하고, 보스에 도전하는 것이 기본 흐름입니다.\n꾸준히 이어진 업데이트와 오래 즐겨 온 플레이어가 많아, 친구·길드와 함께 즐기기 좋은 게임입니다.' },
+    { appId: '495910',  title: 'Dungeon Fighter Online', genre: 'Fighting',
+      ko: '네오플이 개발한 2D 횡스크롤 액션 MMORPG입니다. 던전을 돌며 몬스터를 처치하는 타격감 있는 콤보 액션이 핵심이고, 직업마다 전투 방식이 크게 다릅니다.\n파티를 이뤄 던전과 레이드에 도전하며 장비를 모으고 캐릭터를 강화하는 재미가 있습니다.' }
   ];
   var KR_PICK_COUNT = 2;
 
@@ -303,7 +309,7 @@
     var req = f.minimum_system_requirements || {};
     return {
       description: f.description || f.short_description || '',
-      screenshots: (f.screenshots || []).map(function (s) { return s.image; }).filter(Boolean),
+      screenshots: (f.screenshots || []).filter(function (s) { return s && s.image; }).map(function (s) { return { thumb: s.image, full: s.image }; }),
       developer: f.developer || '',
       publisher: f.publisher || '',
       officialUrl: f.game_url || '',
@@ -328,15 +334,22 @@
     });
   }
 
+  // scripts/fetch-steam.mjs 가 미리 받아 둔 Steam 상세 (같은 사이트의 파일이라 CORS 문제 없음). 없으면 null → 기존 방식으로 표시
+  function getSteamStatic(appId) {
+    return fetchCached('data/steam/' + appId + '.json', 'SteamData', null, true)
+      .then(function (j) { return j && j.id ? j : null; }, function () { return null; });
+  }
+
   function steamDetail(appId) {
     var kr = KR_PICKS.filter(function (p) { return p.appId === appId; })[0];
     return Promise.all([
       getJson('/deals?steamAppID=' + appId + '&storeID=1').catch(function () { return []; }),
       getStores(),
-      getFtg()
+      getFtg(),
+      getSteamStatic(appId)
     ]).then(function (res) {
-      var deal = res[0][0], stores = res[1], ftgList = res[2];
-      var title = (deal && deal.title) || (kr && kr.title) || '';
+      var deal = res[0][0], stores = res[1], ftgList = res[2], st = res[3];
+      var title = (deal && deal.title) || (kr && kr.title) || (st && st.name) || '';
       if (!title) throw notFound();
       var ftgRow = ftgList.filter(function (x) { return normTitle(x.title) === normTitle(title); })[0];
       // 주의: 브라우저에서는 /games?steamAppID= 요청만 막혀서(Failed to fetch) 제목으로 검색한 뒤 Steam ID 가 같은 항목을 고름
@@ -360,13 +373,21 @@
           id: appId, title: title, source: 'Steam', free: !deals.length,
           origin: (kr || isKrCompany(x.developer, x.publisher)) ? 'KR' : '',
           heroImage: steamArt(appId, 'library_hero.jpg'), headerImage: steamArt(appId, 'header.jpg'), coverImage: steamCover(appId), steamAppId: appId,
-          genres: kr ? [kr.genre] : (x.genre ? [x.genre] : []), platforms: ['pc'],
+          genres: (st && st.genres.length) ? st.genres : (kr ? [kr.genre] : (x.genre ? [x.genre] : [])), platforms: ['pc'],
           releaseDate: deal ? toIsoDate(deal.releaseDate) : (r2[1] ? r2[1].release_date : null),
           rating: deal ? { steamPercent: parseInt(deal.steamRatingPercent, 10) || null, steamCount: parseInt(deal.steamRatingCount, 10) || null,
                            metacritic: parseInt(deal.metacriticScore, 10) || null } : null,
           deals: deals, cheapestEver: best ? { price: parseFloat(best.price), date: toIsoDate(best.date) } : null,
-          description: x.description, screenshots: x.screenshots, developer: x.developer, publisher: x.publisher,
-          officialUrl: x.officialUrl, requirements: x.requirements
+          // 소개 우선순위: 직접 쓴 한국어(편집 선정 국내 게임) > Steam 스토어 설명(한국어 또는 영문) > FreeToGame 영문
+          description: (kr && kr.ko) || (st && st.description) || x.description,
+          descLang: (kr && kr.ko) ? 'ko' : ((st && st.description) ? st.descLang : 'en'),
+          descSource: (kr && kr.ko) ? 'manual' : ((st && st.description) ? 'steam' : 'ftg'),
+          screenshots: (st && st.screenshots.length) ? st.screenshots : x.screenshots,
+          developer: (st && st.developers.length) ? st.developers.join(', ') : x.developer,
+          publisher: (st && st.publishers.length) ? st.publishers.join(', ') : x.publisher,
+          officialUrl: x.officialUrl,
+          requirements: (st && st.requirements.length) ? st.requirements : x.requirements,
+          koreanSupport: st ? !!st.koreanSupport : null
         };
       });
     });

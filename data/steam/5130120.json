@@ -1,0 +1,78 @@
+{
+ "id": "5130120",
+ "name": "Evenicle - Next Fragment Medica",
+ "description": "In a world where human civilization is threatened by monsters, only the rare few individuals who wield forbidden skills dare challenge them. However, these brave warriors have to face an even more dangerous hazard... The Hero Syndrome. Only a young doctor can hope to cure the disease in this JRPG!",
+ "descLang": "en",
+ "genres": [
+  "RPG"
+ ],
+ "developers": [
+  "Alicesoft"
+ ],
+ "publishers": [
+  "MangaGamer"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/19cf7be5cce2d0931cd503656aec85688596ae90/ss_19cf7be5cce2d0931cd503656aec85688596ae90.600x338.jpg?t=1794562133",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/19cf7be5cce2d0931cd503656aec85688596ae90/ss_19cf7be5cce2d0931cd503656aec85688596ae90.1920x1080.jpg?t=1794562133"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/2e23fd6696c25b6cc950e76b46c7e1235e65b0d5/ss_2e23fd6696c25b6cc950e76b46c7e1235e65b0d5.600x338.jpg?t=1794562133",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/2e23fd6696c25b6cc950e76b46c7e1235e65b0d5/ss_2e23fd6696c25b6cc950e76b46c7e1235e65b0d5.1920x1080.jpg?t=1794562133"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/a415b4a8b08bb836b1bf372d6386ed6036ff30da/ss_a415b4a8b08bb836b1bf372d6386ed6036ff30da.600x338.jpg?t=1794562133",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/a415b4a8b08bb836b1bf372d6386ed6036ff30da/ss_a415b4a8b08bb836b1bf372d6386ed6036ff30da.1920x1080.jpg?t=1794562133"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/b0099c36cad748dc901e8d437d3fe43a67c72307/ss_b0099c36cad748dc901e8d437d3fe43a67c72307.600x338.jpg?t=1794562133",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/b0099c36cad748dc901e8d437d3fe43a67c72307/ss_b0099c36cad748dc901e8d437d3fe43a67c72307.1920x1080.jpg?t=1794562133"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/b5dd15d04f90449d7989b68295965a005863620d/ss_b5dd15d04f90449d7989b68295965a005863620d.600x338.jpg?t=1794562133",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/b5dd15d04f90449d7989b68295965a005863620d/ss_b5dd15d04f90449d7989b68295965a005863620d.1920x1080.jpg?t=1794562133"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/c02089d622cd09ba68a060d236131c593d0d6e63/ss_c02089d622cd09ba68a060d236131c593d0d6e63.600x338.jpg?t=1794562133",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/c02089d622cd09ba68a060d236131c593d0d6e63/ss_c02089d622cd09ba68a060d236131c593d0d6e63.1920x1080.jpg?t=1794562133"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/62806bec2bb320417389baff7040fc16fe1aeecf/ss_62806bec2bb320417389baff7040fc16fe1aeecf.600x338.jpg?t=1794562133",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/62806bec2bb320417389baff7040fc16fe1aeecf/ss_62806bec2bb320417389baff7040fc16fe1aeecf.1920x1080.jpg?t=1794562133"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/46723bdb4559f91b5d3cdf6c39f0e9481d54aab3/ss_46723bdb4559f91b5d3cdf6c39f0e9481d54aab3.600x338.jpg?t=1794562133",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5130120/46723bdb4559f91b5d3cdf6c39f0e9481d54aab3/ss_46723bdb4559f91b5d3cdf6c39f0e9481d54aab3.1920x1080.jpg?t=1794562133"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10/11"
+  ],
+  [
+   "프로세서",
+   "Core i3"
+  ],
+  [
+   "메모리",
+   "2 GB RAM"
+  ],
+  [
+   "그래픽",
+   "VRAM 256MB/Shader Model 2.0"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "저장 공간",
+   "2 GB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": false,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:47.907Z"
+}

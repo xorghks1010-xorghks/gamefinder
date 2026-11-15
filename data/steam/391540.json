@@ -1,0 +1,67 @@
+{
+ "id": "391540",
+ "name": "Undertale",
+ "description": "UNDERTALE! The RPG game where you don't have to destroy anyone.",
+ "descLang": "en",
+ "genres": [
+  "인디",
+  "RPG"
+ ],
+ "developers": [
+  "tobyfox"
+ ],
+ "publishers": [
+  "tobyfox"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_6ded97a2c98473ac1e8a2b3c1419d93fb31b1186.600x338.jpg?t=1757349115",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_6ded97a2c98473ac1e8a2b3c1419d93fb31b1186.1920x1080.jpg?t=1757349115"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_b9018c41cea2bdfb150609bedfca99b16a5af02a.600x338.jpg?t=1757349115",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_b9018c41cea2bdfb150609bedfca99b16a5af02a.1920x1080.jpg?t=1757349115"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_b9ec4c53a8ed37f764649c970757c0a1f4948ec1.600x338.jpg?t=1757349115",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_b9ec4c53a8ed37f764649c970757c0a1f4948ec1.1920x1080.jpg?t=1757349115"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_edab41f7c9fa287b0d90ebfa3b9219fec6e1b3ed.600x338.jpg?t=1757349115",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_edab41f7c9fa287b0d90ebfa3b9219fec6e1b3ed.1920x1080.jpg?t=1757349115"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_a11393d4b437ca75c10521f6baf53fbba9006f0f.600x338.jpg?t=1757349115",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_a11393d4b437ca75c10521f6baf53fbba9006f0f.1920x1080.jpg?t=1757349115"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_85d6f0db4b5d6207534120c4b51e37dfd2f8dd83.600x338.jpg?t=1757349115",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_85d6f0db4b5d6207534120c4b51e37dfd2f8dd83.1920x1080.jpg?t=1757349115"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_9025a366676c26046b1d08e94ab1a73406aa11db.600x338.jpg?t=1757349115",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391540/ss_9025a366676c26046b1d08e94ab1a73406aa11db.1920x1080.jpg?t=1757349115"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제 *",
+   "Windows XP, Vista, 7, 8, or 10"
+  ],
+  [
+   "메모리",
+   "2 GB RAM"
+  ],
+  [
+   "그래픽",
+   "128MB"
+  ],
+  [
+   "저장 공간",
+   "200 MB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": false,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:09.046Z"
+}

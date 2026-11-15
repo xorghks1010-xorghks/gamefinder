@@ -1,0 +1,82 @@
+{
+ "id": "3816120",
+ "name": "重生2我独自逆袭 Re2 I Rise Alone",
+ "description": "Interactive movie‑game blending SLG gameplay and real‑life romance simulation: Step into the shoes of an underdog and live out a power‑fantasy rags‑to‑riches story. Combat, character progression, drinking and romance — all in one! 100‑GB content volume- redefines your power‑fantasy experience!",
+ "descLang": "en",
+ "genres": [
+  "캐주얼",
+  "RPG",
+  "시뮬레이션",
+  "전략"
+ ],
+ "developers": [
+  "Proudmate Entertainment"
+ ],
+ "publishers": [
+  "Proudmate Entertainment",
+  "一相逢互动娱乐"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/076865524fe416d7c872071f0765b4d77da33c27/ss_076865524fe416d7c872071f0765b4d77da33c27.600x338.jpg?t=1794715956",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/076865524fe416d7c872071f0765b4d77da33c27/ss_076865524fe416d7c872071f0765b4d77da33c27.1920x1080.jpg?t=1794715956"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/20efa9a67fa5cf579df762667cdab19d1a115586/ss_20efa9a67fa5cf579df762667cdab19d1a115586.600x338.jpg?t=1794715956",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/20efa9a67fa5cf579df762667cdab19d1a115586/ss_20efa9a67fa5cf579df762667cdab19d1a115586.1920x1080.jpg?t=1794715956"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/3f80f021537fa6cbbe59c22d1737f0bb36fc2cfd/ss_3f80f021537fa6cbbe59c22d1737f0bb36fc2cfd.600x338.jpg?t=1794715956",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/3f80f021537fa6cbbe59c22d1737f0bb36fc2cfd/ss_3f80f021537fa6cbbe59c22d1737f0bb36fc2cfd.1920x1080.jpg?t=1794715956"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/626c989212b0cad6f2433874cd0765545d3888b2/ss_626c989212b0cad6f2433874cd0765545d3888b2.600x338.jpg?t=1794715956",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/626c989212b0cad6f2433874cd0765545d3888b2/ss_626c989212b0cad6f2433874cd0765545d3888b2.1920x1080.jpg?t=1794715956"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/e226c5cf7fba53d55e832a3963f8826837d97e37/ss_e226c5cf7fba53d55e832a3963f8826837d97e37.600x338.jpg?t=1794715956",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/e226c5cf7fba53d55e832a3963f8826837d97e37/ss_e226c5cf7fba53d55e832a3963f8826837d97e37.1920x1080.jpg?t=1794715956"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/621ce88d5a5b128314c55a406ed8a7add95a70e0/ss_621ce88d5a5b128314c55a406ed8a7add95a70e0.600x338.jpg?t=1794715956",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/621ce88d5a5b128314c55a406ed8a7add95a70e0/ss_621ce88d5a5b128314c55a406ed8a7add95a70e0.1920x1080.jpg?t=1794715956"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/26d5f6a3cbaea5f72fc14994024d569efb0a3efa/ss_26d5f6a3cbaea5f72fc14994024d569efb0a3efa.600x338.jpg?t=1794715956",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/26d5f6a3cbaea5f72fc14994024d569efb0a3efa/ss_26d5f6a3cbaea5f72fc14994024d569efb0a3efa.1920x1080.jpg?t=1794715956"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/638b0e3478a8bb7f7f847ce83a208ac96e2384c1/ss_638b0e3478a8bb7f7f847ce83a208ac96e2384c1.600x338.jpg?t=1794715956",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3816120/638b0e3478a8bb7f7f847ce83a208ac96e2384c1/ss_638b0e3478a8bb7f7f847ce83a208ac96e2384c1.1920x1080.jpg?t=1794715956"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10/Windows 11"
+  ],
+  [
+   "프로세서",
+   "Intel Core i5-1155G7 and above processors"
+  ],
+  [
+   "메모리",
+   "8 GB RAM"
+  ],
+  [
+   "그래픽",
+   "integrated graphics"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "저장 공간",
+   "110 GB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": false,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:25.197Z"
+}

@@ -1,0 +1,81 @@
+{
+ "id": "526870",
+ "name": "Satisfactory",
+ "description": "Satisfactory is a first-person open-world factory building game with a dash of exploration and combat. Play alone or with friends, explore an alien planet, create multi-story factories, and enter conveyor belt heaven!",
+ "descLang": "en",
+ "genres": [
+  "어드벤처",
+  "인디",
+  "시뮬레이션",
+  "전략"
+ ],
+ "developers": [
+  "Coffee Stain Studios"
+ ],
+ "publishers": [
+  "Coffee Stain Publishing"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_9083ccf8fbb22c4068a6e233e3de343f815f9dc1.600x338.jpg?t=1791192059",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_9083ccf8fbb22c4068a6e233e3de343f815f9dc1.1920x1080.jpg?t=1791192059"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_6f456011887f970dc230af5e1720065ca3430aae.600x338.jpg?t=1791192059",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_6f456011887f970dc230af5e1720065ca3430aae.1920x1080.jpg?t=1791192059"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_b1104309f1c22c85de6ad6c401e6d889411c14d2.600x338.jpg?t=1791192059",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_b1104309f1c22c85de6ad6c401e6d889411c14d2.1920x1080.jpg?t=1791192059"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_3f47e401fc3e09fd86500d2026da954de08a015b.600x338.jpg?t=1791192059",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_3f47e401fc3e09fd86500d2026da954de08a015b.1920x1080.jpg?t=1791192059"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_077e7ea98621faeb5b4a73ea0aaa91f41c6f66c9.600x338.jpg?t=1791192059",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_077e7ea98621faeb5b4a73ea0aaa91f41c6f66c9.1920x1080.jpg?t=1791192059"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_cff8791f06839134d09f4c865758193a7023b92f.600x338.jpg?t=1791192059",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_cff8791f06839134d09f4c865758193a7023b92f.1920x1080.jpg?t=1791192059"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_9bd0410b1f4bbc26996d7082e20a0f7cb9002988.600x338.jpg?t=1791192059",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_9bd0410b1f4bbc26996d7082e20a0f7cb9002988.1920x1080.jpg?t=1791192059"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_306f1c5828e3afeccea89f1d1f0e3f954a042bd7.600x338.jpg?t=1791192059",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/526870/ss_306f1c5828e3afeccea89f1d1f0e3f954a042bd7.1920x1080.jpg?t=1791192059"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10 or later (64-Bit)"
+  ],
+  [
+   "프로세서",
+   "i5-3570 3.4 GHz 4 Core"
+  ],
+  [
+   "메모리",
+   "8 GB RAM"
+  ],
+  [
+   "그래픽",
+   "Nvidia GTX 1650/GTX 1050-ti, or AMD RX 470/RX 570, or equivalent performance & VRAM"
+  ],
+  [
+   "저장 공간",
+   "20 GB 사용 가능 공간"
+  ],
+  [
+   "추가 사항",
+   "Internet connection required for multiplayer."
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:14.366Z"
+}

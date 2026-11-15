@@ -1,0 +1,70 @@
+{
+ "id": "4602120",
+ "name": "500 FINGER FILLET",
+ "description": "500 STABS. 20 MINUTES TO ESCAPE. A horror roguelite about stabbing yourself in the hand 500 times to escape a deadly trap. Can you make it out with all your fingers? Or will you bleed out on the table?",
+ "descLang": "en",
+ "genres": [
+  "인디"
+ ],
+ "developers": [
+  "DEADBODY Games"
+ ],
+ "publishers": [
+  "DEADBODY Games"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/b26b1fd52d3dc9909bb7f24731e4942cfa67c12c/ss_b26b1fd52d3dc9909bb7f24731e4942cfa67c12c.600x338.jpg?t=1794495489",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/b26b1fd52d3dc9909bb7f24731e4942cfa67c12c/ss_b26b1fd52d3dc9909bb7f24731e4942cfa67c12c.1920x1080.jpg?t=1794495489"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/18f2414ce30d8366e8cd3c474b29a149d3d3a6c9/ss_18f2414ce30d8366e8cd3c474b29a149d3d3a6c9.600x338.jpg?t=1794495489",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/18f2414ce30d8366e8cd3c474b29a149d3d3a6c9/ss_18f2414ce30d8366e8cd3c474b29a149d3d3a6c9.1920x1080.jpg?t=1794495489"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/9b03c33f5985fc690ee3d32433f8a3b1f2097512/ss_9b03c33f5985fc690ee3d32433f8a3b1f2097512.600x338.jpg?t=1794495489",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/9b03c33f5985fc690ee3d32433f8a3b1f2097512/ss_9b03c33f5985fc690ee3d32433f8a3b1f2097512.1920x1080.jpg?t=1794495489"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/333d49298d52c6718a2224ea0e2eb204d2b97f46/ss_333d49298d52c6718a2224ea0e2eb204d2b97f46.600x338.jpg?t=1794495489",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/333d49298d52c6718a2224ea0e2eb204d2b97f46/ss_333d49298d52c6718a2224ea0e2eb204d2b97f46.1920x1080.jpg?t=1794495489"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/ba4ce0c45510ead4ca0bf7701fb64be521eca9fb/ss_ba4ce0c45510ead4ca0bf7701fb64be521eca9fb.600x338.jpg?t=1794495489",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/ba4ce0c45510ead4ca0bf7701fb64be521eca9fb/ss_ba4ce0c45510ead4ca0bf7701fb64be521eca9fb.1920x1080.jpg?t=1794495489"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/7453a9fada921b8aee3c394f4321049d019a03d3/ss_7453a9fada921b8aee3c394f4321049d019a03d3.600x338.jpg?t=1794495489",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/7453a9fada921b8aee3c394f4321049d019a03d3/ss_7453a9fada921b8aee3c394f4321049d019a03d3.1920x1080.jpg?t=1794495489"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/daf0462994b205f257e921d2085ff0fa7518d7f5/ss_daf0462994b205f257e921d2085ff0fa7518d7f5.600x338.jpg?t=1794495489",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4602120/daf0462994b205f257e921d2085ff0fa7518d7f5/ss_daf0462994b205f257e921d2085ff0fa7518d7f5.1920x1080.jpg?t=1794495489"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 11"
+  ],
+  [
+   "프로세서",
+   "Intel core i7"
+  ],
+  [
+   "메모리",
+   "32 GB RAM"
+  ],
+  [
+   "그래픽",
+   "128MB"
+  ],
+  [
+   "저장 공간",
+   "1 GB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": false,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:35.665Z"
+}

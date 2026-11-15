@@ -1,0 +1,82 @@
+{
+ "id": "4045480",
+ "name": "Drawquarium 드로잉 캔버스 수족관",
+ "description": "직접 물고기를 그리고 아늑한 나만의 수족관을 만들어 보세요. 움직이는 바탕 화면 배경으로도 사용할 수 있어요! 그림이 살아 움직이는 모습을 보고, 먹이를 주며 키우고, 황금 비늘을 모아 새로운 장식을 잠금 해제하세요. 집중과 휴식을 돕는 편리한 도구도 준비되어 있어요.",
+ "descLang": "ko",
+ "genres": [
+  "시뮬레이션"
+ ],
+ "developers": [
+  "byKaleb"
+ ],
+ "publishers": [
+  "rokaplay"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/d61ec8ba7cc8682c3a40846e85829660e961ec18/ss_d61ec8ba7cc8682c3a40846e85829660e961ec18.600x338.jpg?t=1794730252",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/d61ec8ba7cc8682c3a40846e85829660e961ec18/ss_d61ec8ba7cc8682c3a40846e85829660e961ec18.1920x1080.jpg?t=1794730252"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/b0b0e1374588cdf78a4ca1cdc36bbfb155672030/ss_b0b0e1374588cdf78a4ca1cdc36bbfb155672030.600x338.jpg?t=1794730252",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/b0b0e1374588cdf78a4ca1cdc36bbfb155672030/ss_b0b0e1374588cdf78a4ca1cdc36bbfb155672030.1920x1080.jpg?t=1794730252"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/e7d40daa26a6c44e9957aed442c23dd34bc2aaa0/ss_e7d40daa26a6c44e9957aed442c23dd34bc2aaa0.600x338.jpg?t=1794730252",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/e7d40daa26a6c44e9957aed442c23dd34bc2aaa0/ss_e7d40daa26a6c44e9957aed442c23dd34bc2aaa0.1920x1080.jpg?t=1794730252"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/2aea81c4a6239d1e03340db1f0b99f35e9106a5f/ss_2aea81c4a6239d1e03340db1f0b99f35e9106a5f.600x338.jpg?t=1794730252",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/2aea81c4a6239d1e03340db1f0b99f35e9106a5f/ss_2aea81c4a6239d1e03340db1f0b99f35e9106a5f.1920x1080.jpg?t=1794730252"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/fe71d66e244b981f867f067fc051fef2169721f3/ss_fe71d66e244b981f867f067fc051fef2169721f3.600x338.jpg?t=1794730252",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/fe71d66e244b981f867f067fc051fef2169721f3/ss_fe71d66e244b981f867f067fc051fef2169721f3.1920x1080.jpg?t=1794730252"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/c7a8e37c874fa1a4e307d827b42f5290231bd7a8/ss_c7a8e37c874fa1a4e307d827b42f5290231bd7a8.600x338.jpg?t=1794730252",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/c7a8e37c874fa1a4e307d827b42f5290231bd7a8/ss_c7a8e37c874fa1a4e307d827b42f5290231bd7a8.1920x1080.jpg?t=1794730252"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/f0f745be6eadb79523d0d1d51fc713f89b7e82a7/ss_f0f745be6eadb79523d0d1d51fc713f89b7e82a7.600x338.jpg?t=1794730252",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/f0f745be6eadb79523d0d1d51fc713f89b7e82a7/ss_f0f745be6eadb79523d0d1d51fc713f89b7e82a7.1920x1080.jpg?t=1794730252"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/bfbdf96f0acc3fef9a94f7155976f7e6b9601a0a/ss_bfbdf96f0acc3fef9a94f7155976f7e6b9601a0a.600x338.jpg?t=1794730252",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045480/bfbdf96f0acc3fef9a94f7155976f7e6b9601a0a/ss_bfbdf96f0acc3fef9a94f7155976f7e6b9601a0a.1920x1080.jpg?t=1794730252"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10 64bit"
+  ],
+  [
+   "프로세서",
+   "Quad-core Intel i5-8400 / AMD Ryzen 5 1600 (or equivalent)"
+  ],
+  [
+   "메모리",
+   "8 GB RAM"
+  ],
+  [
+   "그래픽",
+   "NVIDIA GTX 1060 / AMD RX 580 (6 GB VRAM)"
+  ],
+  [
+   "DirectX",
+   "버전 12"
+  ],
+  [
+   "저장 공간",
+   "700 MB 사용 가능 공간"
+  ],
+  [
+   "사운드카드",
+   "DirectX compatible sound card"
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:26.893Z"
+}

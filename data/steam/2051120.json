@@ -1,0 +1,82 @@
+{
+ "id": "2051120",
+ "name": "HOT WHEELS UNLEASHED™ 2 - Turbocharged",
+ "description": "멋진 차들이 향상된 재미와 함께 돌아왔습니다! 130종이 넘는 차량과 신규 메커니즘으로 레이스를 즐기세요. 또한 새로운 환경과 게임 모드에서 트랙을 건설하고 온/오프라인에서 즐겨보세요!",
+ "descLang": "ko",
+ "genres": [
+  "액션",
+  "어드벤처",
+  "레이싱",
+  "시뮬레이션",
+  "스포츠"
+ ],
+ "developers": [
+  "Milestone S.r.l."
+ ],
+ "publishers": [
+  "Milestone S.r.l."
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_8bcbd07e97af5cd2d700aa82299484f200e41e93.600x338.jpg?t=1785493588",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_8bcbd07e97af5cd2d700aa82299484f200e41e93.1920x1080.jpg?t=1785493588"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_e8d032ee7d2123bd93bc47ea212e93bfae1536af.600x338.jpg?t=1785493588",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_e8d032ee7d2123bd93bc47ea212e93bfae1536af.1920x1080.jpg?t=1785493588"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_93ee2538b683c3d80de05aaa5247cbaa551b52f0.600x338.jpg?t=1785493588",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_93ee2538b683c3d80de05aaa5247cbaa551b52f0.1920x1080.jpg?t=1785493588"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_05e6007e1656e5ed034b9ff7c8744cbf94cd5eb6.600x338.jpg?t=1785493588",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_05e6007e1656e5ed034b9ff7c8744cbf94cd5eb6.1920x1080.jpg?t=1785493588"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_53ef55b97d2d98b283908430b7f2b7cd791a5e1d.600x338.jpg?t=1785493588",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_53ef55b97d2d98b283908430b7f2b7cd791a5e1d.1920x1080.jpg?t=1785493588"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_f719ba7f946bdb58d6dcc14d42a5bed91be4aeda.600x338.jpg?t=1785493588",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_f719ba7f946bdb58d6dcc14d42a5bed91be4aeda.1920x1080.jpg?t=1785493588"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_d084f285f3fff767ff216e93bd62c87edf353b0e.600x338.jpg?t=1785493588",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_d084f285f3fff767ff216e93bd62c87edf353b0e.1920x1080.jpg?t=1785493588"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_b2aa7357dac8098e169028a38d8c16a44c92d90c.600x338.jpg?t=1785493588",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2051120/ss_b2aa7357dac8098e169028a38d8c16a44c92d90c.1920x1080.jpg?t=1785493588"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10 64-Bit or later"
+  ],
+  [
+   "프로세서",
+   "Intel Core i5-4590 or equivalent / AMD FX-4350 or equivalent"
+  ],
+  [
+   "메모리",
+   "8 GB RAM"
+  ],
+  [
+   "그래픽",
+   "GeForce GTX 1050 / Radeon RX 460"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "저장 공간",
+   "30 GB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": false,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:46.201Z"
+}

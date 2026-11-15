@@ -1,0 +1,91 @@
+{
+ "id": "49520",
+ "name": "Borderlands 2",
+ "description": "슈팅과 약탈의 새로운 시대가 곧 시작됩니다. 네 명의 새로운 Vault 헌터 중 한 명으로서, 괴물들과 사이코들이 가득한 방대한 세계와 사악한 배후자, Handsome Jack에 맞서십시오.",
+ "descLang": "ko",
+ "genres": [
+  "액션",
+  "RPG"
+ ],
+ "developers": [
+  "Gearbox Software",
+  "Aspyr (Mac)",
+  "Aspyr (Linux)"
+ ],
+ "publishers": [
+  "2K",
+  "Aspyr (Mac)",
+  "Aspyr (Linux)"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_6734eaa79dcd0fe53971fbd50d20b5d0d45f4809.600x338.jpg?t=1793288352",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_6734eaa79dcd0fe53971fbd50d20b5d0d45f4809.1920x1080.jpg?t=1793288352"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_2f27a18562fbf4a91943c3968b35db5ac1caf5ad.600x338.jpg?t=1793288352",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_2f27a18562fbf4a91943c3968b35db5ac1caf5ad.1920x1080.jpg?t=1793288352"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_c20610ab476bfe99172df77fe84f579d91e45a2b.600x338.jpg?t=1793288352",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_c20610ab476bfe99172df77fe84f579d91e45a2b.1920x1080.jpg?t=1793288352"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_da8b3279d4ff979b99b3a417d21a097600729266.600x338.jpg?t=1793288352",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_da8b3279d4ff979b99b3a417d21a097600729266.1920x1080.jpg?t=1793288352"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_44272f9763b856d66ce9a3a6269f4988f7af11fc.600x338.jpg?t=1793288352",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_44272f9763b856d66ce9a3a6269f4988f7af11fc.1920x1080.jpg?t=1793288352"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_8b1154bc507678f4a21fcc2d9083ef79a5db4e76.600x338.jpg?t=1793288352",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_8b1154bc507678f4a21fcc2d9083ef79a5db4e76.1920x1080.jpg?t=1793288352"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_3d8370934170622af4fcc8a3975f7be480b3d815.600x338.jpg?t=1793288352",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_3d8370934170622af4fcc8a3975f7be480b3d815.1920x1080.jpg?t=1793288352"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_da86d7794b10a6dc1a8386d2ed272492e2b5ee4a.600x338.jpg?t=1793288352",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/49520/ss_da86d7794b10a6dc1a8386d2ed272492e2b5ee4a.1920x1080.jpg?t=1793288352"
+  }
+ ],
+ "requirements": [
+  [
+   "OS *",
+   "Windows XP SP3"
+  ],
+  [
+   "Processor",
+   "2.4 GHz Dual Core Processor"
+  ],
+  [
+   "Memory",
+   "2 GB(XP)/ 2 GB(Vista)"
+  ],
+  [
+   "Hard Disk Space",
+   "13 GB free"
+  ],
+  [
+   "Video Memory",
+   "256 MB"
+  ],
+  [
+   "Video Card",
+   "NVIDIA GeForce 8500 /ATI Radeon HD 2600"
+  ],
+  [
+   "Sound",
+   "DirectX 9.0c Compatible"
+  ],
+  [
+   "Other Requirements",
+   "Initial installation requires one-time internet connection for Steam authentication; software installations required (included with the game) include Steam Client, DirectX 9, Microsoft .NET 4 Framework, Visual C++ Redistributable 2005, Visual C++ Redistributable 2008, Visual C++ Redistributable 2010, and AMD CPU Drivers (XP Only/AMD Only)"
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:16.102Z"
+}

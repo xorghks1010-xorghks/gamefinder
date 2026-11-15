@@ -1,0 +1,80 @@
+{
+ "id": "2138710",
+ "name": "Sifu",
+ "description": "Sifu는 쿵푸 전투 메커니즘과 시네마틱 무술 액션을 갖춘 현실감 넘치는 3인칭 난투극으로, 플레이어들은 복수의 길을 걷게 됩니다.",
+ "descLang": "ko",
+ "genres": [
+  "액션",
+  "인디"
+ ],
+ "developers": [
+  "Sloclap"
+ ],
+ "publishers": [
+  "Sloclap",
+  "Kepler Interactive"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_9be1654f96e9fd6517fbe9107d76da245cbfaeb9.600x338.jpg?t=1782742326",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_9be1654f96e9fd6517fbe9107d76da245cbfaeb9.1920x1080.jpg?t=1782742326"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_7f7fd03f973d0a1e5e9d481a2235402c19c0f0e5.600x338.jpg?t=1782742326",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_7f7fd03f973d0a1e5e9d481a2235402c19c0f0e5.1920x1080.jpg?t=1782742326"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_fcbdfe30cb361fdc6971878306a5179d175240c9.600x338.jpg?t=1782742326",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_fcbdfe30cb361fdc6971878306a5179d175240c9.1920x1080.jpg?t=1782742326"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_c917c981f912e8331b40a2638a32b3021458d4b8.600x338.jpg?t=1782742326",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_c917c981f912e8331b40a2638a32b3021458d4b8.1920x1080.jpg?t=1782742326"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_6541bc550e7b1133d123ebce8b0e098dccbe66eb.600x338.jpg?t=1782742326",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_6541bc550e7b1133d123ebce8b0e098dccbe66eb.1920x1080.jpg?t=1782742326"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_c400edce5e28150a5d9859aaace1c76fb2b44d78.600x338.jpg?t=1782742326",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_c400edce5e28150a5d9859aaace1c76fb2b44d78.1920x1080.jpg?t=1782742326"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_8bdc441c064f7ac1f75a33bb9f50e38110f38d28.600x338.jpg?t=1782742326",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_8bdc441c064f7ac1f75a33bb9f50e38110f38d28.1920x1080.jpg?t=1782742326"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_e13cb718cba01b51788627b43226fedd52caa217.600x338.jpg?t=1782742326",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2138710/ss_e13cb718cba01b51788627b43226fedd52caa217.1920x1080.jpg?t=1782742326"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제 *",
+   "Windows 8.1"
+  ],
+  [
+   "프로세서",
+   "AMD FX-4350 or Intel Core i5-3470 or equivalent"
+  ],
+  [
+   "메모리",
+   "8 GB RAM"
+  ],
+  [
+   "그래픽",
+   "Radeon R7 250 or GeForce GT 640 or equivalent"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "저장 공간",
+   "22 GB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:53.178Z"
+}

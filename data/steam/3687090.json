@@ -1,0 +1,79 @@
+{
+ "id": "3687090",
+ "name": "Dice Hoarder",
+ "description": "《Dice Hoarder》는 신비로운 주사위 상점을 채워 나가는 코지 정리 게임입니다. 상점의 모든 주사위를 분류하고 짝을 맞춰 7개로 구성된 TRPG 주사위 세트를 완성하며, 새 일자리에 숨겨진 비밀을 밝혀내세요.",
+ "descLang": "ko",
+ "genres": [
+  "캐주얼",
+  "인디"
+ ],
+ "developers": [
+  "DieCorp Games"
+ ],
+ "publishers": [
+  "DieCorp Games"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/21c6b9a4640c155a0e4a503488ff194771f9e2bc/ss_21c6b9a4640c155a0e4a503488ff194771f9e2bc.600x338.jpg?t=1794596935",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/21c6b9a4640c155a0e4a503488ff194771f9e2bc/ss_21c6b9a4640c155a0e4a503488ff194771f9e2bc.1920x1080.jpg?t=1794596935"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/f3d1c640e3f3b4874f2311808afb02151403a411/ss_f3d1c640e3f3b4874f2311808afb02151403a411.600x338.jpg?t=1794596935",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/f3d1c640e3f3b4874f2311808afb02151403a411/ss_f3d1c640e3f3b4874f2311808afb02151403a411.1920x1080.jpg?t=1794596935"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/556f338b831f5f04b9a4aebeddd39ae3cd6cbe83/ss_556f338b831f5f04b9a4aebeddd39ae3cd6cbe83.600x338.jpg?t=1794596935",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/556f338b831f5f04b9a4aebeddd39ae3cd6cbe83/ss_556f338b831f5f04b9a4aebeddd39ae3cd6cbe83.1920x1080.jpg?t=1794596935"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/1daef99ddbc042ec2c53c5021a6df79fc18d594b/ss_1daef99ddbc042ec2c53c5021a6df79fc18d594b.600x338.jpg?t=1794596935",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/1daef99ddbc042ec2c53c5021a6df79fc18d594b/ss_1daef99ddbc042ec2c53c5021a6df79fc18d594b.1920x1080.jpg?t=1794596935"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/1eb6043b969080c31a5d425ed1a108746502a28a/ss_1eb6043b969080c31a5d425ed1a108746502a28a.600x338.jpg?t=1794596935",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/1eb6043b969080c31a5d425ed1a108746502a28a/ss_1eb6043b969080c31a5d425ed1a108746502a28a.1920x1080.jpg?t=1794596935"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/120ee60081e96f30235a9361574b1b9fbb16cab0/ss_120ee60081e96f30235a9361574b1b9fbb16cab0.600x338.jpg?t=1794596935",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/120ee60081e96f30235a9361574b1b9fbb16cab0/ss_120ee60081e96f30235a9361574b1b9fbb16cab0.1920x1080.jpg?t=1794596935"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/857690c6641650139c0e1f336c21b9a59fc8fdfb/ss_857690c6641650139c0e1f336c21b9a59fc8fdfb.600x338.jpg?t=1794596935",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/857690c6641650139c0e1f336c21b9a59fc8fdfb/ss_857690c6641650139c0e1f336c21b9a59fc8fdfb.1920x1080.jpg?t=1794596935"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/d1cd0f221e140bae441c40b5e0b9c508e8da5713/ss_d1cd0f221e140bae441c40b5e0b9c508e8da5713.600x338.jpg?t=1794596935",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3687090/d1cd0f221e140bae441c40b5e0b9c508e8da5713/ss_d1cd0f221e140bae441c40b5e0b9c508e8da5713.1920x1080.jpg?t=1794596935"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10 64-bit"
+  ],
+  [
+   "프로세서",
+   "Intel Core i5-8400"
+  ],
+  [
+   "메모리",
+   "8 GB RAM"
+  ],
+  [
+   "그래픽",
+   "NVIDIA GeForce GTX 1060 6GB"
+  ],
+  [
+   "DirectX",
+   "버전 12"
+  ],
+  [
+   "저장 공간",
+   "4 GB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:21.737Z"
+}

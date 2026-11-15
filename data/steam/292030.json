@@ -1,0 +1,78 @@
+{
+ "id": "292030",
+ "name": "The Witcher 3: Wild Hunt — Remastered",
+ "description": "더 위쳐 3: 와일드 헌트 - 리마스터는 다양한 업그레이드와 개선 사항을 통해, 호평받은 롤플레잉 게임을 현대적으로 재탄생시켰습니다. 전문 괴물 사냥꾼 리비아의 게롤트가 되어, 양녀 시리를 찾기 위한 장대한 퀘스트를 수행하며 다크 판타지 오픈 월드를 가로지르는 여정을 떠나 보세요.",
+ "descLang": "ko",
+ "genres": [
+  "RPG"
+ ],
+ "developers": [
+  "CD PROJEKT RED"
+ ],
+ "publishers": [
+  "CD PROJEKT RED"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/f7f564ecedd09b3e503b071a637aeefdedbeedd8/ss_f7f564ecedd09b3e503b071a637aeefdedbeedd8.600x338.jpg?t=1793900434",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/f7f564ecedd09b3e503b071a637aeefdedbeedd8/ss_f7f564ecedd09b3e503b071a637aeefdedbeedd8.1920x1080.jpg?t=1793900434"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/0a38e4d0d57f15934772dbe09b322d08132d5518/ss_0a38e4d0d57f15934772dbe09b322d08132d5518.600x338.jpg?t=1793900434",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/0a38e4d0d57f15934772dbe09b322d08132d5518/ss_0a38e4d0d57f15934772dbe09b322d08132d5518.1920x1080.jpg?t=1793900434"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/19c03c2b997d3a393fc629fd42f55ddb4a3d8dd0/ss_19c03c2b997d3a393fc629fd42f55ddb4a3d8dd0.600x338.jpg?t=1793900434",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/19c03c2b997d3a393fc629fd42f55ddb4a3d8dd0/ss_19c03c2b997d3a393fc629fd42f55ddb4a3d8dd0.1920x1080.jpg?t=1793900434"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/3a3f430982cc3bccac1633d3ea60a30bf3d1ae9e/ss_3a3f430982cc3bccac1633d3ea60a30bf3d1ae9e.600x338.jpg?t=1793900434",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/3a3f430982cc3bccac1633d3ea60a30bf3d1ae9e/ss_3a3f430982cc3bccac1633d3ea60a30bf3d1ae9e.1920x1080.jpg?t=1793900434"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/78ecbfb8bc64b8e9d4a372f4a8ffa5069e9325d0/ss_78ecbfb8bc64b8e9d4a372f4a8ffa5069e9325d0.600x338.jpg?t=1793900434",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/78ecbfb8bc64b8e9d4a372f4a8ffa5069e9325d0/ss_78ecbfb8bc64b8e9d4a372f4a8ffa5069e9325d0.1920x1080.jpg?t=1793900434"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/203487f667e4ac00baf482b1c93c87a2b830a6fc/ss_203487f667e4ac00baf482b1c93c87a2b830a6fc.600x338.jpg?t=1793900434",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/203487f667e4ac00baf482b1c93c87a2b830a6fc/ss_203487f667e4ac00baf482b1c93c87a2b830a6fc.1920x1080.jpg?t=1793900434"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/bd815be52023e2632855e01d3d7ba813a0b8d1a3/ss_bd815be52023e2632855e01d3d7ba813a0b8d1a3.600x338.jpg?t=1793900434",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/bd815be52023e2632855e01d3d7ba813a0b8d1a3/ss_bd815be52023e2632855e01d3d7ba813a0b8d1a3.1920x1080.jpg?t=1793900434"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/a8bb0ff704918927e07002cf0901d7195bb6a13e/ss_a8bb0ff704918927e07002cf0901d7195bb6a13e.600x338.jpg?t=1793900434",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/a8bb0ff704918927e07002cf0901d7195bb6a13e/ss_a8bb0ff704918927e07002cf0901d7195bb6a13e.1920x1080.jpg?t=1793900434"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "64-bit Windows 11"
+  ],
+  [
+   "프로세서",
+   "Core i5-8400 / Ryzen 5 2600"
+  ],
+  [
+   "메모리",
+   "12 GB RAM"
+  ],
+  [
+   "그래픽",
+   "GeForce GTX 1660 / Radeon RX 5500 XT 8GB / Arc A580"
+  ],
+  [
+   "저장 공간",
+   "60 SSD GB 사용 가능 공간"
+  ],
+  [
+   "추가 사항",
+   "VRAM 6 GB"
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:03.778Z"
+}

@@ -77,6 +77,18 @@
   window.addEventListener('hashchange', onRoute);
   onRoute();   // 주소창에 #/game/... 을 직접 입력해 들어온 경우
 
+  // 로고·Home 은 "처음으로": 상세에서 누르면 메인 맨 위로, 이미 메인이면 부드럽게 맨 위로 올라감.
+  // (뒤로가기·"← 목록으로"는 보던 위치로 복원 — 위 mainScrollY)
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function onHomeClick(e) {
+    var a = e.target.closest && e.target.closest('.gf-logo, .gf-nav__link[data-route="home"], .gf-footer__logo, .gf-footer__nav a[href="#/"]');
+    if (!a) return;
+    if (showingDetail) { mainScrollY = 0; return; }   // 주소는 그대로 #/ 로 이동, 복원할 위치만 맨 위로
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+  }
+  document.addEventListener('click', onHomeClick);
+
   // Hero 를 제외한 섹션 콘텐츠가 화면에 들어올 때 부드럽게 나타남
   var reveal = GF.reveal(document.querySelectorAll('main > section:not(.gf-hero) > .container'));
 
@@ -91,6 +103,7 @@
     toTop.destroy();
     motion.destroy();
     window.removeEventListener('hashchange', onRoute);
+    document.removeEventListener('click', onHomeClick);
     detail.destroy();
     reveal.destroy();
   });

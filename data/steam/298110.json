@@ -1,0 +1,91 @@
+{
+ "id": "298110",
+ "name": "Far Cry® 4",
+ "description": "전쟁으로 황폐해진 히말라야 지역, 이곳에 오픈 월드 FPS로 자유를 불러오세요. 강력한 무기를 사용하며, 자이로콥터와 전쟁 코끼리로 지상과 하늘을 제패하며, 솔로 또는 협동 플레이로 적의 영토에 맞서세요.",
+ "descLang": "ko",
+ "genres": [
+  "액션",
+  "어드벤처"
+ ],
+ "developers": [
+  "Ubisoft Montreal, Red Storm, Shanghai, Toronto, Kiev"
+ ],
+ "publishers": [
+  "Ubisoft"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/703b3e3ba281a4b7e9594b790cc1c8d9cd26790b/ss_703b3e3ba281a4b7e9594b790cc1c8d9cd26790b.600x338.jpg?t=1793367666",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/703b3e3ba281a4b7e9594b790cc1c8d9cd26790b/ss_703b3e3ba281a4b7e9594b790cc1c8d9cd26790b.1920x1080.jpg?t=1793367666"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/80837f83feb636e6747a9ddc24bee20003c714d0/ss_80837f83feb636e6747a9ddc24bee20003c714d0.600x338.jpg?t=1793367666",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/80837f83feb636e6747a9ddc24bee20003c714d0/ss_80837f83feb636e6747a9ddc24bee20003c714d0.1920x1080.jpg?t=1793367666"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/994c96b823374e576cb5d6513f8a976c1a41efc8/ss_994c96b823374e576cb5d6513f8a976c1a41efc8.600x338.jpg?t=1793367666",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/994c96b823374e576cb5d6513f8a976c1a41efc8/ss_994c96b823374e576cb5d6513f8a976c1a41efc8.1920x1080.jpg?t=1793367666"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/f8d2168d3fcca8ad6abd8311ea5edf775aa28171/ss_f8d2168d3fcca8ad6abd8311ea5edf775aa28171.600x338.jpg?t=1793367666",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/f8d2168d3fcca8ad6abd8311ea5edf775aa28171/ss_f8d2168d3fcca8ad6abd8311ea5edf775aa28171.1920x1080.jpg?t=1793367666"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/fffb8639ae2cf20762afed059b9a90a08687e449/ss_fffb8639ae2cf20762afed059b9a90a08687e449.600x338.jpg?t=1793367666",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/fffb8639ae2cf20762afed059b9a90a08687e449/ss_fffb8639ae2cf20762afed059b9a90a08687e449.1920x1080.jpg?t=1793367666"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/44ad5ea0dfe9e8116506ecaa92947642bf213a3f/ss_44ad5ea0dfe9e8116506ecaa92947642bf213a3f.600x338.jpg?t=1793367666",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/44ad5ea0dfe9e8116506ecaa92947642bf213a3f/ss_44ad5ea0dfe9e8116506ecaa92947642bf213a3f.1920x1080.jpg?t=1793367666"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/63b55dc7195b2fe6f195c33dc860609836c3cdce/ss_63b55dc7195b2fe6f195c33dc860609836c3cdce.600x338.jpg?t=1793367666",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/63b55dc7195b2fe6f195c33dc860609836c3cdce/ss_63b55dc7195b2fe6f195c33dc860609836c3cdce.1920x1080.jpg?t=1793367666"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/1f767a80833902ea244147811257bf25e669f772/ss_1f767a80833902ea244147811257bf25e669f772.600x338.jpg?t=1793367666",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/1f767a80833902ea244147811257bf25e669f772/ss_1f767a80833902ea244147811257bf25e669f772.1920x1080.jpg?t=1793367666"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10 (64-bit)"
+  ],
+  [
+   "프로세서",
+   "2.6 GHz Intel® Core™ i5-750 or 3.2 GHz AMD Phenom™ II X4 955"
+  ],
+  [
+   "메모리",
+   "4 GB RAM"
+  ],
+  [
+   "그래픽",
+   "NVIDIA GeForce GTX 460 or AMD Radeon HD5850 (1 GB VRAM)"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "네트워크",
+   "초고속 인터넷 연결"
+  ],
+  [
+   "저장 공간",
+   "30 GB 사용 가능 공간"
+  ],
+  [
+   "사운드카드",
+   "DirectX-compatible (5.1 surround sound recommended)"
+  ],
+  [
+   "추가 사항",
+   "Windows-compatible keyboard, mouse, optional controller (Xbox 360 Controller for Windows recommended)"
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:54.858Z"
+}

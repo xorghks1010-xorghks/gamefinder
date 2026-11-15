@@ -22,6 +22,7 @@
 
   function createGameDetail(root) {
     var seq = 0;
+    var renderToken = 0;   // 화면이 다시 그려질 때마다 증가 — 늦게 끝난 번역이 다른 게임 화면을 덮어쓰지 않게 함
     var currentId = null;
 
     function backLink() {
@@ -90,6 +91,7 @@
         dlRow('출시일', g.releaseDate ? esc(fmt.formatDate(g.releaseDate)) : '') +
         dlRow('장르', esc((g.genres || []).join(', '))) +
         dlRow('플랫폼', esc(platforms)) +
+        dlRow('한국어', g.koreanSupport === true ? '지원' : (g.koreanSupport === false ? '미지원' : '')) +
         dlRow('가격', g.free ? '무료 플레이' : '');
       return rows ? section('게임 정보', '<dl class="gf-dinfo">' + rows + '</dl>', 'gf-d-info') : '';
     }
@@ -120,20 +122,32 @@
 
     function mainHtml(g) {
       var out = '';
-      if (g.steamAppId) {
-        out += section('스토어 정보',
-          '<iframe class="gf-dwidget" src="https://store.steampowered.com/widget/' + esc(g.steamAppId) + '/?l=koreana" title="' + esc(g.title) + ' Steam 스토어 위젯" loading="lazy" height="190"></iframe>' +
-          '<p class="gf-dmuted">Steam 공식 스토어 위젯입니다. 설명과 구매 정보는 Steam에서 제공합니다.</p>', 'gf-d-store');
+      if (g.description) {
+        var ko = g.descLang === 'ko';
+        var noteText = g.descSource === 'manual' ? '소개는 GameFinder가 직접 작성한 요약입니다.'
+          : g.descSource === 'steam' ? (ko ? '소개는 Steam 스토어에 등록된 한국어 설명입니다.' : '소개는 Steam 스토어에 등록된 영문 설명입니다.')
+          : '소개 글은 FreeToGame이 제공하는 영문 설명입니다.';
+        out += section('소개',
+          '<div class="gf-dabout">' +
+            (ko ? '' : '<button type="button" class="gf-dtr" hidden></button>') +
+            '<div class="gf-dtext">' + paragraphs(g.description) + '</div>' +
+            '<p class="gf-dmuted gf-dnote">' + esc(noteText) + '</p>' +
+          '</div>', 'gf-d-about');
       }
-      if (g.description) out += section('소개', '<div class="gf-dtext">' + paragraphs(g.description) + '</div><p class="gf-dmuted">소개 글은 FreeToGame이 제공하는 영문 설명입니다.</p>', 'gf-d-about');
       if (g.screenshots.length) {
-        out += section('스크린샷', '<ul class="gf-dshots">' + g.screenshots.map(function (u, i) {
-          return '<li><a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc(g.title) + ' 스크린샷 ' + (i + 1) + ' 크게 보기 (새 창)">' +
-            '<img src="' + esc(u) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a></li>';
+        out += section('스크린샷', '<ul class="gf-dshots">' + g.screenshots.map(function (s, i) {
+          return '<li><a href="' + esc(s.full) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc(g.title) + ' 스크린샷 ' + (i + 1) + ' 크게 보기 (새 창)">' +
+            '<img src="' + esc(s.thumb) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a></li>';
         }).join('') + '</ul>', 'gf-d-shots');
       }
       if (g.requirements.length) {
         out += section('최소 시스템 요구사항', '<dl class="gf-dinfo">' + g.requirements.map(function (r) { return dlRow(r[0], esc(r[1])); }).join('') + '</dl>', 'gf-d-req');
+      }
+      // 스토어 위젯은 구매·가격 확인용으로 맨 뒤에 둠 (소개·스크린샷이 위로 오도록)
+      if (g.steamAppId) {
+        out += section('Steam 스토어',
+          '<iframe class="gf-dwidget" src="https://store.steampowered.com/widget/' + esc(g.steamAppId) + '/?l=koreana" title="' + esc(g.title) + ' Steam 스토어 위젯" loading="lazy" height="190"></iframe>' +
+          '<p class="gf-dmuted">Steam 공식 스토어 위젯입니다. 가격과 구매 정보는 Steam에서 제공합니다.</p>', 'gf-d-store');
       }
       if (!out) out = '<p class="gf-dmuted">이 게임의 추가 설명은 아직 준비되지 않았습니다.</p>';
       return out;
@@ -171,6 +185,69 @@
           '<div class="container"><p class="gf-dsource">' + (g.mock ? '개발 단계의 예시 데이터입니다.' : '데이터: CheapShark · Steam · FreeToGame (저작권은 각 게임 권리자에게 있습니다)') + '</p></div>' +
         '</article>';
       focusTitle();
+      setupTranslate(++renderToken);
+    }
+
+    // ---------- 영문 소개 → 한국어 (Chrome 내장 번역, 브라우저 안에서만 처리되어 글이 외부로 나가지 않음) ----------
+    // Translator API 를 지원하고 영어→한국어가 가능할 때만 번역 버튼을 보여줍니다. 모델이 이미 있으면(available) 자동으로 번역하고,
+    // 내려받아야 하면(downloadable) 버튼을 눌렀을 때 시작합니다(사용자 클릭이 필요). 지원하지 않으면 영문 그대로 둡니다.
+    var translatorPromise = null;
+    function getTranslator(onProgress) {
+      if (!translatorPromise) {
+        translatorPromise = Translator.create({
+          sourceLanguage: 'en', targetLanguage: 'ko',
+          monitor: function (m) { m.addEventListener('downloadprogress', function (e) { onProgress(Math.round(e.loaded * 100)); }); }
+        }).catch(function (err) { translatorPromise = null; throw err; });
+      }
+      return translatorPromise;
+    }
+
+    function setupTranslate(token) {
+      var box = root.querySelector('.gf-dabout');
+      var btn = box && box.querySelector('.gf-dtr');
+      if (!btn || typeof window.Translator !== 'function') return;
+      var text = box.querySelector('.gf-dtext');
+      var note = box.querySelector('.gf-dnote');
+      var originalHtml = text.innerHTML;
+      var originalNote = note.textContent;
+      var originals = Array.prototype.map.call(text.querySelectorAll('p'), function (p) { return p.textContent; });
+      var state = 'en';    // 'en' 원문 | 'busy' 번역 중 | 'ko' 번역본
+
+      function alive() { return token === renderToken && root.contains(btn); }
+      function label() { btn.textContent = state === 'ko' ? '원문 보기 (English)' : '한국어로 번역'; btn.disabled = false; }
+
+      function showOriginal() {
+        state = 'en'; text.innerHTML = originalHtml; note.textContent = originalNote; label();
+      }
+
+      function translate() {
+        state = 'busy'; btn.disabled = true; btn.textContent = '번역 준비 중…';
+        getTranslator(function (pct) { if (alive() && state === 'busy') btn.textContent = '번역 모델 내려받는 중 ' + pct + '%'; })   // 끝난 뒤 늦게 오는 진행률은 무시
+          .then(function (tr) {
+            if (!alive()) return null;
+            btn.textContent = '번역 중…';
+            return Promise.all(originals.map(function (t) { return tr.translate(t); }));
+          })
+          .then(function (out) {
+            if (!out || !alive()) return;
+            text.innerHTML = out.map(function (t) { return '<p>' + esc(t) + '</p>'; }).join('');
+            note.textContent = 'Chrome 내장 번역으로 자동 번역한 글입니다. 부정확한 표현이 있을 수 있습니다.';
+            state = 'ko'; label();
+          })
+          .catch(function () {
+            if (!alive()) return;
+            showOriginal();
+            note.textContent = '번역할 수 없어 영문 설명을 그대로 보여드립니다.';
+          });
+      }
+
+      btn.addEventListener('click', function () { if (state === 'en') translate(); else if (state === 'ko') showOriginal(); });
+
+      Translator.availability({ sourceLanguage: 'en', targetLanguage: 'ko' }).then(function (a) {
+        if (!alive() || a === 'unavailable') return;
+        label(); btn.hidden = false;
+        if (a === 'available') translate();   // 이미 준비된 경우에만 자동 번역
+      }).catch(function () { /* 지원하지 않는 환경: 영문 그대로 */ });
     }
 
     // ---------- 불러오기 ----------

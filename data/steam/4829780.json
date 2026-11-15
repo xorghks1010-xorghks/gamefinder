@@ -1,0 +1,79 @@
+{
+ "id": "4829780",
+ "name": "Frontier Tale",
+ "description": "Frontier Tale is a cozy adventure farming game that blends extraction-style gameplay with town building. Forge weapons, explore a charming cel-shaded fantasy world, gather rare resources, recruit unique companions, and build your dream frontier from the ground up.",
+ "descLang": "en",
+ "genres": [
+  "어드벤처",
+  "캐주얼",
+  "인디",
+  "RPG",
+  "시뮬레이션"
+ ],
+ "developers": [
+  "APOPHIS GAME STUDIO"
+ ],
+ "publishers": [
+  "APOPHIS GAME STUDIO",
+  "NPC Entertainment"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/590e6916f4465b70d2c585dfbbf3db9b41528fb7/ss_590e6916f4465b70d2c585dfbbf3db9b41528fb7.600x338.jpg?t=1794546859",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/590e6916f4465b70d2c585dfbbf3db9b41528fb7/ss_590e6916f4465b70d2c585dfbbf3db9b41528fb7.1920x1080.jpg?t=1794546859"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/9528b3fdf544d6e97df9ea35533262e7e93b35a8/ss_9528b3fdf544d6e97df9ea35533262e7e93b35a8.600x338.jpg?t=1794546859",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/9528b3fdf544d6e97df9ea35533262e7e93b35a8/ss_9528b3fdf544d6e97df9ea35533262e7e93b35a8.1920x1080.jpg?t=1794546859"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/35fded108714414be0e6b753094a72b08b90a926/ss_35fded108714414be0e6b753094a72b08b90a926.600x338.jpg?t=1794546859",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/35fded108714414be0e6b753094a72b08b90a926/ss_35fded108714414be0e6b753094a72b08b90a926.1920x1080.jpg?t=1794546859"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/faaaa50d9d1dbc276245a31c78a29162dc1c2eb2/ss_faaaa50d9d1dbc276245a31c78a29162dc1c2eb2.600x338.jpg?t=1794546859",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/faaaa50d9d1dbc276245a31c78a29162dc1c2eb2/ss_faaaa50d9d1dbc276245a31c78a29162dc1c2eb2.1920x1080.jpg?t=1794546859"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/81204d27514d43546f7f5fc0b6623972e16eed56/ss_81204d27514d43546f7f5fc0b6623972e16eed56.600x338.jpg?t=1794546859",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/81204d27514d43546f7f5fc0b6623972e16eed56/ss_81204d27514d43546f7f5fc0b6623972e16eed56.1920x1080.jpg?t=1794546859"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/6c7280515c16d8e3d27c186b1a8b5d900c4632ec/ss_6c7280515c16d8e3d27c186b1a8b5d900c4632ec.600x338.jpg?t=1794546859",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/6c7280515c16d8e3d27c186b1a8b5d900c4632ec/ss_6c7280515c16d8e3d27c186b1a8b5d900c4632ec.1920x1080.jpg?t=1794546859"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/329a1e9ba0fd5a9fa1faea058a3dfd0dd65e3fe8/ss_329a1e9ba0fd5a9fa1faea058a3dfd0dd65e3fe8.600x338.jpg?t=1794546859",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/329a1e9ba0fd5a9fa1faea058a3dfd0dd65e3fe8/ss_329a1e9ba0fd5a9fa1faea058a3dfd0dd65e3fe8.1920x1080.jpg?t=1794546859"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/23f500238850644796c12f0d344b01da1f7e0170/ss_23f500238850644796c12f0d344b01da1f7e0170.600x338.jpg?t=1794546859",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4829780/23f500238850644796c12f0d344b01da1f7e0170/ss_23f500238850644796c12f0d344b01da1f7e0170.1920x1080.jpg?t=1794546859"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10+"
+  ],
+  [
+   "프로세서",
+   "Intel(R) Core(TM) i3-3220"
+  ],
+  [
+   "메모리",
+   "8 GB RAM"
+  ],
+  [
+   "그래픽",
+   "1Gb Video Memory, Capable of OpenGL 3.0+ Support"
+  ],
+  [
+   "저장 공간",
+   "8 GB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": false,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:28.690Z"
+}

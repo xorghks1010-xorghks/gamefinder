@@ -1,0 +1,80 @@
+{
+ "id": "4390080",
+ "name": "Bottled by Bears",
+ "description": "포포드 곰 가족과 함께 가장 북적이고 달콤한 작은 양봉장을 운영해 보세요! 귀엽고 희귀한 벌들을 수집하고, 꿀을 단지에 담아 판매하며 농장을 확장해 나가는 아기자기한 힐링 방치형 경영 게임입니다.",
+ "descLang": "ko",
+ "genres": [
+  "캐주얼",
+  "인디",
+  "시뮬레이션"
+ ],
+ "developers": [
+  "monoii studio"
+ ],
+ "publishers": [
+  "monoii studio"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/da5820ac79234f3f1bbeb450702b21e27cf3e387/ss_da5820ac79234f3f1bbeb450702b21e27cf3e387.600x338.jpg?t=1794684185",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/da5820ac79234f3f1bbeb450702b21e27cf3e387/ss_da5820ac79234f3f1bbeb450702b21e27cf3e387.1920x1080.jpg?t=1794684185"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/45347d0740daaabfc3971e3b5d63e54cdf8f02ff/ss_45347d0740daaabfc3971e3b5d63e54cdf8f02ff.600x338.jpg?t=1794684185",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/45347d0740daaabfc3971e3b5d63e54cdf8f02ff/ss_45347d0740daaabfc3971e3b5d63e54cdf8f02ff.1920x1080.jpg?t=1794684185"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/7b7283a438a262683ce0a4b5092ee1981b5abf56/ss_7b7283a438a262683ce0a4b5092ee1981b5abf56.600x338.jpg?t=1794684185",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/7b7283a438a262683ce0a4b5092ee1981b5abf56/ss_7b7283a438a262683ce0a4b5092ee1981b5abf56.1920x1080.jpg?t=1794684185"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/b77b65bf807a88137a859999f5469237442f3093/ss_b77b65bf807a88137a859999f5469237442f3093.600x338.jpg?t=1794684185",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/b77b65bf807a88137a859999f5469237442f3093/ss_b77b65bf807a88137a859999f5469237442f3093.1920x1080.jpg?t=1794684185"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/0afeed77afbf227278b0c7485d7e85144a3df5db/ss_0afeed77afbf227278b0c7485d7e85144a3df5db.600x338.jpg?t=1794684185",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/0afeed77afbf227278b0c7485d7e85144a3df5db/ss_0afeed77afbf227278b0c7485d7e85144a3df5db.1920x1080.jpg?t=1794684185"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/538dd79bc8cdcea0877077a7b0512efe7b32245a/ss_538dd79bc8cdcea0877077a7b0512efe7b32245a.600x338.jpg?t=1794684185",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/538dd79bc8cdcea0877077a7b0512efe7b32245a/ss_538dd79bc8cdcea0877077a7b0512efe7b32245a.1920x1080.jpg?t=1794684185"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/1118da876f855b18046cd1b336b8c75ef245e73e/ss_1118da876f855b18046cd1b336b8c75ef245e73e.600x338.jpg?t=1794684185",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/1118da876f855b18046cd1b336b8c75ef245e73e/ss_1118da876f855b18046cd1b336b8c75ef245e73e.1920x1080.jpg?t=1794684185"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/70282d1c7617c042cd626e8c7db4550827bf4421/ss_70282d1c7617c042cd626e8c7db4550827bf4421.600x338.jpg?t=1794684185",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4390080/70282d1c7617c042cd626e8c7db4550827bf4421/ss_70282d1c7617c042cd626e8c7db4550827bf4421.1920x1080.jpg?t=1794684185"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10 64-bit (21H1 or later)"
+  ],
+  [
+   "프로세서",
+   "Intel Core i3-6100 / AMD Ryzen 3 1200"
+  ],
+  [
+   "메모리",
+   "4 GB RAM"
+  ],
+  [
+   "그래픽",
+   "Intel UHD 620 or better, 1 GB VRAM"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "저장 공간",
+   "1 GB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:32.230Z"
+}

@@ -207,3 +207,19 @@
 @media (max-width: 600px) {
   .gf-dwidget { height: 270px; }
 }
+
+/* 영문 소개 → 한국어 번역 버튼 (Chrome 내장 번역을 쓸 수 있을 때만 보임) */
+.gf-dtr {
+  margin: 0 0 14px;
+  padding: 8px 16px;
+  border: 1px solid var(--blue-soft);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--blue-soft);
+  font-size: 13px;
+  font-weight: 700;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.gf-dtr[hidden] { display: none; }
+.gf-dtr:hover:not(:disabled) { background: var(--blue); border-color: var(--blue); color: #fff; }
+.gf-dtr:disabled { opacity: 0.7; cursor: progress; }

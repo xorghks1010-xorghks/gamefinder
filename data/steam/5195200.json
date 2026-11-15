@@ -1,0 +1,85 @@
+{
+ "id": "5195200",
+ "name": "Engagement",
+ "description": "주력함을 지휘해, 홀로 또는 최대 4인 협동으로, 구원 함대가 올 때까지 잿빛 띠를 공허와 그 밖의 적들로부터 지키세요. 모든 업그레이드는 눈에 보이는 하드포인트에 고정된 포탑이고, 모집한 호위함은 이름과 격추 수를 간직하며, 전투는 매번 새롭게 펼쳐집니다.",
+ "descLang": "ko",
+ "genres": [
+  "액션",
+  "인디",
+  "RPG",
+  "전략"
+ ],
+ "developers": [
+  "Trevor Parker"
+ ],
+ "publishers": [
+  "Trevor Games"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/7ea2f1defb18cb2dd73e2a8caf72a3c5d29aab00/ss_7ea2f1defb18cb2dd73e2a8caf72a3c5d29aab00.600x338.jpg?t=1794627915",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/7ea2f1defb18cb2dd73e2a8caf72a3c5d29aab00/ss_7ea2f1defb18cb2dd73e2a8caf72a3c5d29aab00.1920x1080.jpg?t=1794627915"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/41c8859fdf1367c7b62adec652d29fe14d744f07/ss_41c8859fdf1367c7b62adec652d29fe14d744f07.600x338.jpg?t=1794627915",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/41c8859fdf1367c7b62adec652d29fe14d744f07/ss_41c8859fdf1367c7b62adec652d29fe14d744f07.1920x1080.jpg?t=1794627915"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/cc38c4b542bcf38aef62f810957af9c7b1c7d2b1/ss_cc38c4b542bcf38aef62f810957af9c7b1c7d2b1.600x338.jpg?t=1794627915",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/cc38c4b542bcf38aef62f810957af9c7b1c7d2b1/ss_cc38c4b542bcf38aef62f810957af9c7b1c7d2b1.1920x1080.jpg?t=1794627915"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/edbcfc398fbae86589c564e399c05ca117862853/ss_edbcfc398fbae86589c564e399c05ca117862853.600x338.jpg?t=1794627915",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/edbcfc398fbae86589c564e399c05ca117862853/ss_edbcfc398fbae86589c564e399c05ca117862853.1920x1080.jpg?t=1794627915"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/bb5d3612bbcbc17caf447c45cc331dbad745620f/ss_bb5d3612bbcbc17caf447c45cc331dbad745620f.600x338.jpg?t=1794627915",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/bb5d3612bbcbc17caf447c45cc331dbad745620f/ss_bb5d3612bbcbc17caf447c45cc331dbad745620f.1920x1080.jpg?t=1794627915"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/224f99dfd699fc88ff9893760eb080dee203e5ed/ss_224f99dfd699fc88ff9893760eb080dee203e5ed.600x338.jpg?t=1794627915",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/224f99dfd699fc88ff9893760eb080dee203e5ed/ss_224f99dfd699fc88ff9893760eb080dee203e5ed.1920x1080.jpg?t=1794627915"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/e993129f5ab5f16f6a78a4691f3d9cb9d6ece20c/ss_e993129f5ab5f16f6a78a4691f3d9cb9d6ece20c.600x338.jpg?t=1794627915",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/e993129f5ab5f16f6a78a4691f3d9cb9d6ece20c/ss_e993129f5ab5f16f6a78a4691f3d9cb9d6ece20c.1920x1080.jpg?t=1794627915"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/a6050cade7d5b01fcd53ba6050e1f09016346f1e/ss_a6050cade7d5b01fcd53ba6050e1f09016346f1e.600x338.jpg?t=1794627915",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5195200/a6050cade7d5b01fcd53ba6050e1f09016346f1e/ss_a6050cade7d5b01fcd53ba6050e1f09016346f1e.1920x1080.jpg?t=1794627915"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10 64비트(버전 1809 이상)"
+  ],
+  [
+   "프로세서",
+   "듀얼 코어 x64: Intel Core i3-4000 시리즈 / AMD FX-4300 이상"
+  ],
+  [
+   "메모리",
+   "4 GB RAM"
+  ],
+  [
+   "그래픽",
+   "WebGL 2.0 / DirectX 11 지원 GPU: Intel HD Graphics 4000 이상"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "저장 공간",
+   "500 MB 사용 가능 공간"
+  ],
+  [
+   "사운드카드",
+   "Windows 호환 오디오 장치"
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:33.934Z"
+}

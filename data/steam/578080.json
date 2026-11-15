@@ -1,0 +1,85 @@
+{
+ "id": "578080",
+ "name": "PUBG: BATTLEGROUNDS",
+ "description": "배틀로얄 유행의 시작이자, 그 정수를 보여준 PUBG: 배틀그라운드를 지금 무료로 플레이하세요! 다양한 맵에 낙하하여 무기와 보급품을 확보하고, 점점 줄어드는 블루존 속에서 끝까지 살아남아 승리를 쟁취하세요.",
+ "descLang": "ko",
+ "genres": [
+  "액션",
+  "어드벤처",
+  "대규모 멀티플레이어",
+  "무료 플레이"
+ ],
+ "developers": [
+  "PUBG Corporation"
+ ],
+ "publishers": [
+  "KRAFTON, Inc."
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/c16e2f2d122cae77a1cbaca19263df0f2d2214fa/ss_c16e2f2d122cae77a1cbaca19263df0f2d2214fa.600x338.jpg?t=1792718193",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/c16e2f2d122cae77a1cbaca19263df0f2d2214fa/ss_c16e2f2d122cae77a1cbaca19263df0f2d2214fa.1920x1080.jpg?t=1792718193"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/aa1c51a9b45c88e770b443d8d3cd28f3024b0760/ss_aa1c51a9b45c88e770b443d8d3cd28f3024b0760.600x338.jpg?t=1792718193",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/aa1c51a9b45c88e770b443d8d3cd28f3024b0760/ss_aa1c51a9b45c88e770b443d8d3cd28f3024b0760.1920x1080.jpg?t=1792718193"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/bf9b3de5896d4ec7ef9531938b26946cded81fdf/ss_bf9b3de5896d4ec7ef9531938b26946cded81fdf.600x338.jpg?t=1792718193",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/bf9b3de5896d4ec7ef9531938b26946cded81fdf/ss_bf9b3de5896d4ec7ef9531938b26946cded81fdf.1920x1080.jpg?t=1792718193"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/faa4f9f6caa9613f07fd1193a143f66e0fac489c/ss_faa4f9f6caa9613f07fd1193a143f66e0fac489c.600x338.jpg?t=1792718193",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/faa4f9f6caa9613f07fd1193a143f66e0fac489c/ss_faa4f9f6caa9613f07fd1193a143f66e0fac489c.1920x1080.jpg?t=1792718193"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/3ae78fac4c07e9a2e2955286014355d6b7f3c8c7/ss_3ae78fac4c07e9a2e2955286014355d6b7f3c8c7.600x338.jpg?t=1792718193",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/3ae78fac4c07e9a2e2955286014355d6b7f3c8c7/ss_3ae78fac4c07e9a2e2955286014355d6b7f3c8c7.1920x1080.jpg?t=1792718193"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/eb19c1ce924ff4689105242257b6d377ffe2e264/ss_eb19c1ce924ff4689105242257b6d377ffe2e264.600x338.jpg?t=1792718193",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/eb19c1ce924ff4689105242257b6d377ffe2e264/ss_eb19c1ce924ff4689105242257b6d377ffe2e264.1920x1080.jpg?t=1792718193"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/e4d447065171993f718cab6b5d793f1e03dda581/ss_e4d447065171993f718cab6b5d793f1e03dda581.600x338.jpg?t=1792718193",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/e4d447065171993f718cab6b5d793f1e03dda581/ss_e4d447065171993f718cab6b5d793f1e03dda581.1920x1080.jpg?t=1792718193"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/dfbecb503265d4ba705f7ffb60eff2460c936d70/ss_dfbecb503265d4ba705f7ffb60eff2460c936d70.600x338.jpg?t=1792718193",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/dfbecb503265d4ba705f7ffb60eff2460c936d70/ss_dfbecb503265d4ba705f7ffb60eff2460c936d70.1920x1080.jpg?t=1792718193"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "64-bit Windows 10"
+  ],
+  [
+   "프로세서",
+   "Intel Core i5-4430 / AMD FX-6300"
+  ],
+  [
+   "메모리",
+   "8 GB RAM"
+  ],
+  [
+   "그래픽",
+   "NVIDIA GeForce GTX 960 2GB / AMD Radeon R7 370 2GB"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "네트워크",
+   "초고속 인터넷 연결"
+  ],
+  [
+   "저장 공간",
+   "40 GB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": true,
+ "fetchedAt": "2026-11-15T09:36:48.146Z"
+}

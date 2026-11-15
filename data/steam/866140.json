@@ -1,0 +1,87 @@
+{
+ "id": "866140",
+ "name": "Arise: A Simple Story",
+ "description": "사랑하는 연인을 잃는 슬픈 여행을 떠나보세요. 시간을 조작하고, 퍼즐을 풀며, 주변을 재구성해서 전생의 달콤 쌉쌀한 기억을 찾아 나가세요. 행복과 고난, 즐거움과 슬픔에 대한 이야기입니다. 우리 모두가 언젠가는 겪게 될 이야기죠.",
+ "descLang": "ko",
+ "genres": [
+  "어드벤처",
+  "인디"
+ ],
+ "developers": [
+  "Piccolo Studio"
+ ],
+ "publishers": [
+  "Untold Tales"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_1828a7b0a37f411a26e217402f6a3ad12dd62a18.600x338.jpg?t=1790876446",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_1828a7b0a37f411a26e217402f6a3ad12dd62a18.1920x1080.jpg?t=1790876446"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_b812df720f5239531616772cbc79cb9beb479f93.600x338.jpg?t=1790876446",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_b812df720f5239531616772cbc79cb9beb479f93.1920x1080.jpg?t=1790876446"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_4b4602ee12c4adec763fe2ba2fb315f22f8f286b.600x338.jpg?t=1790876446",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_4b4602ee12c4adec763fe2ba2fb315f22f8f286b.1920x1080.jpg?t=1790876446"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_cd83bb4721224f41f65c67d53c394e68684a10dd.600x338.jpg?t=1790876446",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_cd83bb4721224f41f65c67d53c394e68684a10dd.1920x1080.jpg?t=1790876446"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_6673197af709665a210fb6a8a57ce88e5ddcbe82.600x338.jpg?t=1790876446",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_6673197af709665a210fb6a8a57ce88e5ddcbe82.1920x1080.jpg?t=1790876446"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_bfa8bcb3ff24e6c501e47b8b23ed5d4c34c50a78.600x338.jpg?t=1790876446",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_bfa8bcb3ff24e6c501e47b8b23ed5d4c34c50a78.1920x1080.jpg?t=1790876446"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_9a433275c2155fc83b0b78b051878f0779025b99.600x338.jpg?t=1790876446",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_9a433275c2155fc83b0b78b051878f0779025b99.1920x1080.jpg?t=1790876446"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_1a6f1318317c379e8c7dacec58a6e6c6fe924b03.600x338.jpg?t=1790876446",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/866140/ss_1a6f1318317c379e8c7dacec58a6e6c6fe924b03.1920x1080.jpg?t=1790876446"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제 *",
+   "Windows 7 / 8.1 / 10 (64 bit)"
+  ],
+  [
+   "프로세서",
+   "Intel Core i3 4340 3.6 GHz or AMD equivalent"
+  ],
+  [
+   "메모리",
+   "6 GB RAM"
+  ],
+  [
+   "그래픽",
+   "NVIDIA GeForce GTX 670 2 GB or AMD Radeon equivalent"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "저장 공간",
+   "6 GB 사용 가능 공간"
+  ],
+  [
+   "사운드카드",
+   "DirectX 9.0c Compliant"
+  ],
+  [
+   "추가 사항",
+   "Recommended input: Controller"
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:44.428Z"
+}

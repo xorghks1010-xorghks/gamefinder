@@ -1,0 +1,88 @@
+{
+ "id": "5378110",
+ "name": "One More Lawn",
+ "description": "Mow lawns in first person on a beat-up riding mower, solo or online co-op up to 6 players. You're a grumpy old man who smokes, drinks cheap beer and doesn't care, but leaves perfect stripes. A picky neighbor, an abandoned golf course, an island wedding.",
+ "descLang": "en",
+ "genres": [
+  "캐주얼",
+  "인디",
+  "시뮬레이션"
+ ],
+ "developers": [
+  "Superdou"
+ ],
+ "publishers": [
+  "Superdou"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/a11f8d9a8c252b09c2a44029e32026fb27d877e9/ss_a11f8d9a8c252b09c2a44029e32026fb27d877e9.600x338.jpg?t=1794604627",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/a11f8d9a8c252b09c2a44029e32026fb27d877e9/ss_a11f8d9a8c252b09c2a44029e32026fb27d877e9.1920x1080.jpg?t=1794604627"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/ec80f5b8105fc3f4199ff17d44d22fb6a232eb97/ss_ec80f5b8105fc3f4199ff17d44d22fb6a232eb97.600x338.jpg?t=1794604627",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/ec80f5b8105fc3f4199ff17d44d22fb6a232eb97/ss_ec80f5b8105fc3f4199ff17d44d22fb6a232eb97.1920x1080.jpg?t=1794604627"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/45727f553bf126d10876dba1fb8ae6f2c634e801/ss_45727f553bf126d10876dba1fb8ae6f2c634e801.600x338.jpg?t=1794604627",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/45727f553bf126d10876dba1fb8ae6f2c634e801/ss_45727f553bf126d10876dba1fb8ae6f2c634e801.1920x1080.jpg?t=1794604627"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/c39d50dc61c0ef4c06338c688431d51d2df1d101/ss_c39d50dc61c0ef4c06338c688431d51d2df1d101.600x338.jpg?t=1794604627",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/c39d50dc61c0ef4c06338c688431d51d2df1d101/ss_c39d50dc61c0ef4c06338c688431d51d2df1d101.1920x1080.jpg?t=1794604627"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/9f071c63c3bf70ae6837342eb7dc3dfd8b125fdc/ss_9f071c63c3bf70ae6837342eb7dc3dfd8b125fdc.600x338.jpg?t=1794604627",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/9f071c63c3bf70ae6837342eb7dc3dfd8b125fdc/ss_9f071c63c3bf70ae6837342eb7dc3dfd8b125fdc.1920x1080.jpg?t=1794604627"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/8053848836d1e97ebd77ba7d7d58a699c861fccc/ss_8053848836d1e97ebd77ba7d7d58a699c861fccc.600x338.jpg?t=1794604627",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/8053848836d1e97ebd77ba7d7d58a699c861fccc/ss_8053848836d1e97ebd77ba7d7d58a699c861fccc.1920x1080.jpg?t=1794604627"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/9bf4e1f529daf24523f6aae315daf514b45305d8/ss_9bf4e1f529daf24523f6aae315daf514b45305d8.600x338.jpg?t=1794604627",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/9bf4e1f529daf24523f6aae315daf514b45305d8/ss_9bf4e1f529daf24523f6aae315daf514b45305d8.1920x1080.jpg?t=1794604627"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/dc2f5b3bcd1f71dfb16c471137f97083b7490198/ss_dc2f5b3bcd1f71dfb16c471137f97083b7490198.600x338.jpg?t=1794604627",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5378110/dc2f5b3bcd1f71dfb16c471137f97083b7490198/ss_dc2f5b3bcd1f71dfb16c471137f97083b7490198.1920x1080.jpg?t=1794604627"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10 64-bit"
+  ],
+  [
+   "프로세서",
+   "Intel Core i5-4460 / AMD Ryzen 3 1200"
+  ],
+  [
+   "메모리",
+   "8 GB RAM"
+  ],
+  [
+   "그래픽",
+   "NVIDIA GeForce GTX 960 / AMD Radeon RX 460 (2 GB de VRAM)"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "네트워크",
+   "초고속 인터넷 연결"
+  ],
+  [
+   "저장 공간",
+   "2 GB 사용 가능 공간"
+  ],
+  [
+   "추가 사항",
+   "1080p at low settings or 720p at medium. Online co-op requires Steam to be running and signed in."
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:37.435Z"
+}

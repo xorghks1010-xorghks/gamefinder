@@ -1,0 +1,60 @@
+{
+ "id": "3810510",
+ "name": "DERELIKT",
+ "description": "DERELIKT is a narrative retro FPS built for fans of claustrophobic PS1-era sci-fi horror.",
+ "descLang": "en",
+ "genres": [
+  "액션",
+  "어드벤처",
+  "인디"
+ ],
+ "developers": [
+  "Visuwyg"
+ ],
+ "publishers": [
+  "Hyperstrange"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3810510/dac0f26c11249ec0a0ecb662a229fefb79b91e06/ss_dac0f26c11249ec0a0ecb662a229fefb79b91e06.600x338.jpg?t=1794733120",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3810510/dac0f26c11249ec0a0ecb662a229fefb79b91e06/ss_dac0f26c11249ec0a0ecb662a229fefb79b91e06.1920x1080.jpg?t=1794733120"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3810510/be82df14df1274e2ba5ab7550c46c0d54f780360/ss_be82df14df1274e2ba5ab7550c46c0d54f780360.600x338.jpg?t=1794733120",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3810510/be82df14df1274e2ba5ab7550c46c0d54f780360/ss_be82df14df1274e2ba5ab7550c46c0d54f780360.1920x1080.jpg?t=1794733120"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3810510/6b9c1308c0acf69ba6843b36d96d70e14c5a1d21/ss_6b9c1308c0acf69ba6843b36d96d70e14c5a1d21.600x338.jpg?t=1794733120",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3810510/6b9c1308c0acf69ba6843b36d96d70e14c5a1d21/ss_6b9c1308c0acf69ba6843b36d96d70e14c5a1d21.1920x1080.jpg?t=1794733120"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3810510/f7b293e5eee87a29157a5b651193b53a99a64a95/ss_f7b293e5eee87a29157a5b651193b53a99a64a95.600x338.jpg?t=1794733120",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3810510/f7b293e5eee87a29157a5b651193b53a99a64a95/ss_f7b293e5eee87a29157a5b651193b53a99a64a95.1920x1080.jpg?t=1794733120"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3810510/6ebdcf0e177611ed6fd9f267888cfc120bd57ec9/ss_6ebdcf0e177611ed6fd9f267888cfc120bd57ec9.600x338.jpg?t=1794733120",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3810510/6ebdcf0e177611ed6fd9f267888cfc120bd57ec9/ss_6ebdcf0e177611ed6fd9f267888cfc120bd57ec9.1920x1080.jpg?t=1794733120"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3810510/9edb1992699efb5dad0ecd1d9e95d1ff6df155c7/ss_9edb1992699efb5dad0ecd1d9e95d1ff6df155c7.600x338.jpg?t=1794733120",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3810510/9edb1992699efb5dad0ecd1d9e95d1ff6df155c7/ss_9edb1992699efb5dad0ecd1d9e95d1ff6df155c7.1920x1080.jpg?t=1794733120"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10 64-bit or later"
+  ],
+  [
+   "프로세서",
+   "AMD Ryzen 5 1600 or equivalent"
+  ],
+  [
+   "그래픽",
+   "NVIDIA GeForce GTX 1060 or equivalent"
+  ]
+ ],
+ "koreanSupport": false,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:23.484Z"
+}

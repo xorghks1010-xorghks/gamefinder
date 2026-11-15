@@ -1,0 +1,72 @@
+{
+ "id": "2909400",
+ "name": "FINAL FANTASY VII REBIRTH",
+ "description": "마황 도시 미드가르에서 탈출한 클라우드와 동료들은 광대한 세계로 떠난다. 새롭게 그려지는 스토리, 광대한 세계에서 펼쳐지는 자유로운 모험, 동료들과의 인연이 더욱 깊어지는 배틀―― 『FINAL FANTASY VII REMAKE』로부터 더욱 진화된 게임 체험이 재탄생한다.",
+ "descLang": "ko",
+ "genres": [
+  "액션",
+  "어드벤처",
+  "RPG"
+ ],
+ "developers": [
+  "Square Enix"
+ ],
+ "publishers": [
+  "Square Enix"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2909400/ss_7a83a64967a06edbf0d43821153a0188471d596a.600x338.jpg?t=1793774936",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2909400/ss_7a83a64967a06edbf0d43821153a0188471d596a.1920x1080.jpg?t=1793774936"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2909400/ss_7c389d8ed52b6bd2350a3bc9866ac45c919fb2e9.600x338.jpg?t=1793774936",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2909400/ss_7c389d8ed52b6bd2350a3bc9866ac45c919fb2e9.1920x1080.jpg?t=1793774936"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2909400/ss_5540aef3258019f77559ca77ef29ba893b61010f.600x338.jpg?t=1793774936",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2909400/ss_5540aef3258019f77559ca77ef29ba893b61010f.1920x1080.jpg?t=1793774936"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2909400/ss_45513682d4c2e77b2a89e7bea00ec2851c110116.600x338.jpg?t=1793774936",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2909400/ss_45513682d4c2e77b2a89e7bea00ec2851c110116.1920x1080.jpg?t=1793774936"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2909400/ss_e20893c29ecb3211e9d2dd4b0c043a209ea15c07.600x338.jpg?t=1793774936",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2909400/ss_e20893c29ecb3211e9d2dd4b0c043a209ea15c07.1920x1080.jpg?t=1793774936"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows® 10 64-bit"
+  ],
+  [
+   "프로세서",
+   "AMD Ryzen™ 5 1400 / Intel® Core™ i3-8100"
+  ],
+  [
+   "메모리",
+   "16 GB RAM"
+  ],
+  [
+   "그래픽",
+   "AMD Radeon™ RX 6600 (RX 6600 or above required) / Intel® Arc™ A580 / NVIDIA® GeForce® RTX 2060 (RTX series required)"
+  ],
+  [
+   "DirectX",
+   "버전 12"
+  ],
+  [
+   "저장 공간",
+   "155 GB 사용 가능 공간"
+  ],
+  [
+   "추가 사항",
+   "1080P / 30FPS (Graphics Quality Preset “Low”), SSD Required. Graphics Cards with Shader Model 6.6 support and OS with DirectX 12 Ultimate support required. 12GB VRAM or above recommended to play on 4k resolution."
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:49.668Z"
+}

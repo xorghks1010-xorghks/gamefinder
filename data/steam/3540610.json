@@ -1,0 +1,78 @@
+{
+ "id": "3540610",
+ "name": "아스트랄 헌터: 귀환",
+ "description": "탑다운 액션 로그라이트 게임입니다. 무기를 선택하여 외계 생명체 무리와 싸우세요. 다양한 업그레이드 모듈과 소품으로 독특한 전투 스타일을 구축하세요. 외계 생명체를 포획하여 능력을 사용하거나, 기지로 데려와 재료를 생산하세요. 더 많은 캐릭터를 수집하여 행성을 정복하세요!",
+ "descLang": "ko",
+ "genres": [
+  "액션"
+ ],
+ "developers": [
+  "Mosscat"
+ ],
+ "publishers": [
+  "Shuffle Play Games"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/6bc8efeb4a487b731a185f1233741b1d9b63373d/ss_6bc8efeb4a487b731a185f1233741b1d9b63373d.600x338.jpg?t=1794629256",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/6bc8efeb4a487b731a185f1233741b1d9b63373d/ss_6bc8efeb4a487b731a185f1233741b1d9b63373d.1920x1080.jpg?t=1794629256"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/8c8f2ab0fd84ecd19233f594af060e5c8ab56f1f/ss_8c8f2ab0fd84ecd19233f594af060e5c8ab56f1f.600x338.jpg?t=1794629256",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/8c8f2ab0fd84ecd19233f594af060e5c8ab56f1f/ss_8c8f2ab0fd84ecd19233f594af060e5c8ab56f1f.1920x1080.jpg?t=1794629256"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/3605b01b3ec30d42d28c7aa7b6f644b04ff45dc3/ss_3605b01b3ec30d42d28c7aa7b6f644b04ff45dc3.600x338.jpg?t=1794629256",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/3605b01b3ec30d42d28c7aa7b6f644b04ff45dc3/ss_3605b01b3ec30d42d28c7aa7b6f644b04ff45dc3.1920x1080.jpg?t=1794629256"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/25356b9ce8bdfc97c52bf0174f86101f0cd00423/ss_25356b9ce8bdfc97c52bf0174f86101f0cd00423.600x338.jpg?t=1794629256",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/25356b9ce8bdfc97c52bf0174f86101f0cd00423/ss_25356b9ce8bdfc97c52bf0174f86101f0cd00423.1920x1080.jpg?t=1794629256"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/a4a713a753742a31d387642e8a97cf706b0d0d7e/ss_a4a713a753742a31d387642e8a97cf706b0d0d7e.600x338.jpg?t=1794629256",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/a4a713a753742a31d387642e8a97cf706b0d0d7e/ss_a4a713a753742a31d387642e8a97cf706b0d0d7e.1920x1080.jpg?t=1794629256"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/5a8b254f474ce5c5d99e1b611bf4a40b761f957e/ss_5a8b254f474ce5c5d99e1b611bf4a40b761f957e.600x338.jpg?t=1794629256",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/5a8b254f474ce5c5d99e1b611bf4a40b761f957e/ss_5a8b254f474ce5c5d99e1b611bf4a40b761f957e.1920x1080.jpg?t=1794629256"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/930a166b1b480e6db3cefa2fdb9c210b129775bd/ss_930a166b1b480e6db3cefa2fdb9c210b129775bd.600x338.jpg?t=1794629256",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/930a166b1b480e6db3cefa2fdb9c210b129775bd/ss_930a166b1b480e6db3cefa2fdb9c210b129775bd.1920x1080.jpg?t=1794629256"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/1de85a889816b365ebd01f6bdcffbdf7f0d49b9c/ss_1de85a889816b365ebd01f6bdcffbdf7f0d49b9c.600x338.jpg?t=1794629256",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3540610/1de85a889816b365ebd01f6bdcffbdf7f0d49b9c/ss_1de85a889816b365ebd01f6bdcffbdf7f0d49b9c.1920x1080.jpg?t=1794629256"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제 *",
+   "Windows 7 64bit"
+  ],
+  [
+   "프로세서",
+   "Intel Pentium 4 processor or later that's SSE2 capable"
+  ],
+  [
+   "메모리",
+   "2 GB RAM"
+  ],
+  [
+   "그래픽",
+   "Intel UHD 630"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "저장 공간",
+   "1 GB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": true,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:18.184Z"
+}

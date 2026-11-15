@@ -1,0 +1,80 @@
+{
+ "id": "5189160",
+ "name": "We March as One",
+ "description": "Start with a few shapes and build an army tens of thousands strong. Paint your troops onto the battlefield and send them to war against enormous hordes in this incremental auto battler where every unit is individually simulated.",
+ "descLang": "en",
+ "genres": [
+  "인디",
+  "시뮬레이션",
+  "전략"
+ ],
+ "developers": [
+  "dux"
+ ],
+ "publishers": [
+  "dux"
+ ],
+ "screenshots": [
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/718d09d2e69cae7b79b929d914eebb92fe7caf80/ss_718d09d2e69cae7b79b929d914eebb92fe7caf80.600x338.jpg?t=1794596550",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/718d09d2e69cae7b79b929d914eebb92fe7caf80/ss_718d09d2e69cae7b79b929d914eebb92fe7caf80.1920x1080.jpg?t=1794596550"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/5ead9fb6f453f34c5bfd670af0a969401aacdaf8/ss_5ead9fb6f453f34c5bfd670af0a969401aacdaf8.600x338.jpg?t=1794596550",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/5ead9fb6f453f34c5bfd670af0a969401aacdaf8/ss_5ead9fb6f453f34c5bfd670af0a969401aacdaf8.1920x1080.jpg?t=1794596550"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/2dfaf200f5d80dbb07e4721d154eadf3ebd3ecaf/ss_2dfaf200f5d80dbb07e4721d154eadf3ebd3ecaf.600x338.jpg?t=1794596550",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/2dfaf200f5d80dbb07e4721d154eadf3ebd3ecaf/ss_2dfaf200f5d80dbb07e4721d154eadf3ebd3ecaf.1920x1080.jpg?t=1794596550"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/8b779ce4d8be893d9a2106179fa2b38b684c8b07/ss_8b779ce4d8be893d9a2106179fa2b38b684c8b07.600x338.jpg?t=1794596550",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/8b779ce4d8be893d9a2106179fa2b38b684c8b07/ss_8b779ce4d8be893d9a2106179fa2b38b684c8b07.1920x1080.jpg?t=1794596550"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/8d410cdb10b32f8ad73fb4edcb948300bbf2b744/ss_8d410cdb10b32f8ad73fb4edcb948300bbf2b744.600x338.jpg?t=1794596550",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/8d410cdb10b32f8ad73fb4edcb948300bbf2b744/ss_8d410cdb10b32f8ad73fb4edcb948300bbf2b744.1920x1080.jpg?t=1794596550"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/16adfc3faecacb0badd266680bc3ccc9dda40089/ss_16adfc3faecacb0badd266680bc3ccc9dda40089.600x338.jpg?t=1794596550",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/16adfc3faecacb0badd266680bc3ccc9dda40089/ss_16adfc3faecacb0badd266680bc3ccc9dda40089.1920x1080.jpg?t=1794596550"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/b05f2b28650d621303ffa6a8ba2ef4f114ffe9f7/ss_b05f2b28650d621303ffa6a8ba2ef4f114ffe9f7.600x338.jpg?t=1794596550",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/b05f2b28650d621303ffa6a8ba2ef4f114ffe9f7/ss_b05f2b28650d621303ffa6a8ba2ef4f114ffe9f7.1920x1080.jpg?t=1794596550"
+  },
+  {
+   "thumb": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/1f0f3157b9bda1ec2386953048f90f57496feb05/ss_1f0f3157b9bda1ec2386953048f90f57496feb05.600x338.jpg?t=1794596550",
+   "full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5189160/1f0f3157b9bda1ec2386953048f90f57496feb05/ss_1f0f3157b9bda1ec2386953048f90f57496feb05.1920x1080.jpg?t=1794596550"
+  }
+ ],
+ "requirements": [
+  [
+   "운영 체제",
+   "Windows 10 64-bit (21H1 or newer)"
+  ],
+  [
+   "프로세서",
+   "Quad-core CPU — Intel Core i5-6400 / AMD Ryzen 3 1200"
+  ],
+  [
+   "메모리",
+   "8192 MB RAM"
+  ],
+  [
+   "그래픽",
+   "Any DirectX 11 capable GPU with 1 GB VRAM (GeForce GTX 750 / Radeon R7 260 / Intel UHD 630)"
+  ],
+  [
+   "DirectX",
+   "버전 11"
+  ],
+  [
+   "저장 공간",
+   "2048 MB 사용 가능 공간"
+  ]
+ ],
+ "koreanSupport": false,
+ "isFree": false,
+ "fetchedAt": "2026-11-15T09:37:19.911Z"
+}
