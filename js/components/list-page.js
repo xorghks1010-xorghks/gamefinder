@@ -41,6 +41,7 @@
     var hasMore = false;
     var seq = 0;                 // 필터를 바꾸거나 화면을 떠나면 늦게 도착한 응답을 버림
     var loadingMore = false;
+    var asOf = '';               // 데이터 기준일 (load 결과에 asOf 가 있으면 개수 옆에 표시)
     var sortId = 'gf-' + cfg.route + '-sort';
 
     function firstCursor() { return cfg.firstCursor !== undefined ? cfg.firstCursor : 0; }
@@ -135,7 +136,7 @@
         (loadingMore ? '불러오는 중…' : '더 보기') + '</button>';
     }
 
-    function updateCount() { setCount(cfg.noun + ' ' + items.length + '개'); }
+    function updateCount() { setCount(cfg.noun + ' ' + items.length + '개' + (asOf ? ' · 기준일 ' + asOf : '')); }
 
     // ---------- 데이터 ----------
     function addItems(list) {
@@ -154,13 +155,14 @@
     }
 
     function advance(res) {
+      if (res.asOf) asOf = res.asOf;
       cursor = res.next !== undefined ? res.next : (typeof cursor === 'number' ? cursor + 1 : cursor);
       hasMore = !!res.hasMore;
     }
 
     function loadFirst() {
       var mine = ++seq;
-      items = []; seen = {}; cursor = firstCursor(); hasMore = false; loadingMore = false;
+      items = []; seen = {}; cursor = firstCursor(); hasMore = false; loadingMore = false; asOf = '';
       showSkeleton();
       cfg.load(filters, cursor).then(function (res) {
         if (mine !== seq) return;

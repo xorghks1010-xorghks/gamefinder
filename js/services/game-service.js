@@ -188,22 +188,88 @@
   }
 
   // ---------- 목록별 조회 ----------
+  // ---------- Steam 인기 차트 (메인 TOP 5 + 인기 순위 페이지) ----------
+  // scripts/fetch-charts.mjs 가 미리 받아 둔 Steam 공식 차트(최대 동시접속자 기준 순위·지난주 순위). 브라우저는 Steam API 를 직접 못 읽음(CORS).
+  // 파일이 없거나 읽기 실패하면 null → 아래 "인기 후보 풀"(Steam 리뷰 수 기준)로 대신 표시.
+  function getChart() {
+    return fetchCached('data/charts/steam-most-played.json', 'Charts', null, true)
+      .then(function (j) { return j && j.items && j.items.length ? j : null; }, function () { return null; });
+  }
+
+  // 차트 한 줄 → 앱 공통 game 객체. rankChange: 지난주 순위 - 이번 순위 (양수 = 상승, 0 = 변동 없음, null = 신규 진입)
+  function chartGame(c) {
+    return {
+      id: c.appid,
+      title: c.name,
+      coverImage: steamCover(c.appid),
+      heroImage: steamArt(c.appid, 'library_hero.jpg'),
+      headerImage: steamArt(c.appid, 'header.jpg'),
+      thumbImage: '',
+      genres: [],
+      platforms: ['pc'],
+      ranking: c.rank,
+      rankChange: c.lastWeekRank ? c.lastWeekRank - c.rank : null,
+      note: '최대 동시접속 ' + countFormat.format(c.peak) + '명'
+    };
+  }
+
+  function asOfText(iso) { return /^\d{4}-\d{2}-\d{2}$/.test(iso || '') ? iso.replace(/-/g, '.') : ''; }
+
+  // ---------- 인기 후보 풀 (차트를 못 읽을 때의 대체: Steam 리뷰 수 기준) ----------
+  // CheapShark 는 리뷰 수 정렬을 지원하지 않고(Metacritic 순으로만 줌), 리뷰가 많은 게임이 여러 페이지에 흩어져 있음
+  // (조건에 맞는 게임 약 2,280개 = 38페이지). 그래서 Metacritic 상위 POP_PAGES 페이지(60개씩)를 받아 직접 리뷰 수 순으로 정렬함.
+  // 차트를 쓸 수 있으면 풀은 쓰지 않음(요청 8개를 아낌). 대체로 쓸 때도 메인과 순위 페이지가 같은 풀을 써야 1~5위가 어긋나지 않음. 요청 결과는 10분간 세션 캐시.
+  var POP_PAGES = 8;
+  var RANK_TOP = 100, RANK_STEP = 20;
+
+  function trimDeal(d) {   // 세션 저장 용량을 줄이려고 필요한 필드만 남김
+    return { gameID: d.gameID, steamAppID: d.steamAppID, title: d.title, thumb: d.thumb, storeID: d.storeID,
+             steamRatingCount: d.steamRatingCount, steamRatingPercent: d.steamRatingPercent, metacriticScore: d.metacriticScore };
+  }
+
+  function popPage(n) {
+    var url = API + '/deals?storeID=1&sortBy=Metacritic&metacritic=75&steamRating=80&pageSize=60&pageNumber=' + n;
+    return fetchCached(url, 'CheapShark', trimDeal).catch(function () {
+      // 8개를 동시에 요청하므로 한 번쯤 일시적으로 실패할 수 있어 한 번만 다시 시도
+      return new Promise(function (r) { setTimeout(r, 800); }).then(function () { return fetchCached(url, 'CheapShark', trimDeal); });
+    });
+  }
+
+  var popPoolPromise = null;
+  function popularPool() {
+    if (!popPoolPromise) {
+      var reqs = [];
+      for (var i = 0; i < POP_PAGES; i++) reqs.push(popPage(i));
+      popPoolPromise = Promise.all(reqs).then(function (pages) {
+        var pool = uniqueGames([].concat.apply([], pages));
+        pool.sort(function (a, b) { return parseInt(b.steamRatingCount, 10) - parseInt(a.steamRatingCount, 10); });
+        return pool;
+      });
+      popPoolPromise.catch(function () { popPoolPromise = null; });   // 실패하면 다음 호출(다시 시도)에서 새로 받음
+    }
+    return popPoolPromise;
+  }
+
+  // 메인 TOP 5: 차트가 있으면 차트 순위(최대 동시접속자), 없으면 리뷰 수 순위로 대체
   function livePopular() {
-    var q = '/deals?storeID=1&sortBy=Metacritic&metacritic=75&steamRating=80&pageSize=60';
-    return Promise.all([getJson(q + '&pageNumber=0'), getJson(q + '&pageNumber=1'), getFtg()]).then(function (res) {
-      var pool = uniqueGames(res[0].concat(res[1]));
-      pool.sort(function (a, b) { return b.steamRatingCount - a.steamRatingCount; });
+    return getChart().then(function (chart) {
+      if (chart) return Promise.all([chart.items.map(chartGame), getFtg()]);
+      return Promise.all([popularPool().then(function (pool) { return pool; }), getFtg()]);
+    }).then(function (res) {
+      var pool = res[0];
+      var fromChart = !!(pool[0] && pool[0].rankChange !== undefined);
       // 순위(1위~)는 Steam 리뷰 수 기준 실제 순위만 사용. 국내 게임은 순위가 아니라 '편집 선정'으로 마지막 자리에 섞음.
       var steamTitles = {};
       pool.slice(0, 5).forEach(function (d) { steamTitles[normTitle(d.title)] = true; });
       var picks = KR_PICKS.filter(function (p) { return !steamTitles[normTitle(p.title)]; }).slice(0, KR_PICK_COUNT).map(krGame);
       var steam = fillGenres(pool.slice(0, 5 - picks.length).map(function (d, i) {
+        if (fromChart) return d;
         var g = baseGame(d);
         g.ranking = i + 1;
         g.ratingPercent = parseInt(d.steamRatingPercent, 10);
         g.note = reviewNote(d);
         return g;
-      }), res[2]);
+      }), res[1]);
       return steam.concat(picks);
     });
   }
@@ -285,6 +351,44 @@
             '&pageSize=' + SALE_PAGE_SIZE + '&pageNumber=' + page;
     return getJson(q).then(function (deals) {
       return { items: uniqueGames(deals).map(dealGame), hasMore: deals.length >= SALE_PAGE_SIZE };
+    });
+  }
+
+  // ---------- 인기 순위 전체 목록 (#/rank) ----------
+  /** getRankList(offset) → Promise<{ items, hasMore, next, asOf }> — 차트 TOP 100(없으면 리뷰 수 순 TOP 100)을 RANK_STEP 개씩. offset 은 처음 0 */
+  function getRankList(offset) {
+    offset = offset || 0;
+    var mode = mockMode();
+    if (mode) {
+      var mockItems = GF.mockData.popular.slice(offset, offset + RANK_STEP).map(function (g, i) {
+        var c = {};
+        for (var k in g) c[k] = g[k];
+        c.ranking = offset + i + 1;
+        return c;
+      });
+      return mockRespond({ items: mockItems, hasMore: false }, mode).then(function (r) {
+        return Array.isArray(r) ? { items: r, hasMore: false } : r;   // ?mock=empty 는 [] 로 응답함
+      });
+    }
+    return getChart().then(function (chart) {
+      if (chart) {
+        return getFtg().then(function (ftg) {
+          var top = chart.items.slice(0, RANK_TOP);
+          var items = fillGenres(top.slice(offset, offset + RANK_STEP).map(chartGame), ftg);
+          return { items: items, hasMore: offset + RANK_STEP < top.length, next: offset + RANK_STEP, asOf: asOfText(chart.rollupDate) };
+        });
+      }
+      return Promise.all([popularPool(), getFtg()]).then(function (res) {   // 차트를 못 읽을 때: 리뷰 수 순위
+        var top = res[0].slice(0, RANK_TOP);
+        var items = fillGenres(top.slice(offset, offset + RANK_STEP).map(function (d, i) {
+          var g = baseGame(d);
+          g.ranking = offset + i + 1;
+          g.ratingPercent = parseInt(d.steamRatingPercent, 10);
+          g.note = reviewNote(d);
+          return g;
+        }), res[1]);
+        return { items: items, hasMore: offset + RANK_STEP < top.length, next: offset + RANK_STEP };
+      });
     });
   }
 
@@ -439,10 +543,13 @@
       getJson('/deals?steamAppID=' + appId + '&storeID=1').catch(function () { return []; }),
       getStores(),
       getFtg(),
-      getSteamStatic(appId)
+      getSteamStatic(appId),
+      getChart()
     ]).then(function (res) {
       var deal = res[0][0], stores = res[1], ftgList = res[2], st = res[3];
-      var title = (deal && deal.title) || (kr && kr.title) || (st && st.name) || '';
+      // 인기 차트에 있는 무료 게임(CS2·Dota 2 등)은 CheapShark 가격 정보도, 저장된 Steam 파일도 없을 수 있어 차트의 이름을 마지막 대안으로 씀
+      var chartRow = res[4] && res[4].items.filter(function (c) { return c.appid === appId; })[0];
+      var title = (deal && deal.title) || (kr && kr.title) || (st && st.name) || (chartRow && chartRow.name) || '';
       if (!title) throw notFound();
       var ftgRow = ftgList.filter(function (x) { return normTitle(x.title) === normTitle(title); })[0];
       // 주의: 브라우저에서는 /games?steamAppID= 요청만 막혀서(Failed to fetch) 제목으로 검색한 뒤 Steam ID 가 같은 항목을 고름
@@ -463,7 +570,9 @@
         }).sort(function (a, b) { return a.price - b.price; });
         var best = info && info.cheapestPriceEver;
         return {
-          id: appId, title: title, source: 'Steam', free: !deals.length,
+          // 무료 여부: Steam 이 알려준 값(차트·저장된 상세) 우선. 없으면 "가격 정보가 없으면 무료"로 추정 (유료인데 CheapShark 에 가격이 없는 게임이 '무료'로 보이는 것을 막음)
+          id: appId, title: title, source: 'Steam',
+          free: chartRow ? !!chartRow.isFree : (st && typeof st.isFree === 'boolean' ? st.isFree : !deals.length),
           origin: (kr || isKrCompany(x.developer, x.publisher)) ? 'KR' : '',
           heroImage: steamArt(appId, 'library_hero.jpg'), headerImage: steamArt(appId, 'header.jpg'), coverImage: steamCover(appId), steamAppId: appId,
           genres: (st && st.genres.length) ? st.genres : (kr ? [kr.genre] : (x.genre ? [x.genre] : [])), platforms: ['pc'],
@@ -518,6 +627,7 @@
     getSaleGames:    pick(liveSale,    function () { return GF.mockData.sale.slice(0, 5).map(withDiscount); }),
     getSaleList:     getSaleList,
     getReleaseList:  getReleaseList,
+    getRankList:     getRankList,
     isMock: function () { return !!mockMode(); },
     getPlatforms:    function () { return GF.mockData.platforms; },
     getGenres:       function () { return GF.mockData.genres; },

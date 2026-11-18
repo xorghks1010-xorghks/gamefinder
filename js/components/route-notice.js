@@ -13,7 +13,7 @@
     var el = document.createElement('div');
     el.className = 'gf-notice';
     el.setAttribute('role', 'status');
-    el.textContent = '준비 중인 페이지입니다. 현재는 메인 화면, 신작, 할인 게임, 게임 상세만 제공됩니다.';
+    el.textContent = '준비 중인 페이지입니다. 현재는 메인 화면, 인기 순위, 신작, 할인 게임, 게임 상세만 제공됩니다.';
     document.body.appendChild(el);
 
     var timer = null;

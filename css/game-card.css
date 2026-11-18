@@ -317,6 +317,19 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* 순위 카드: 왼쪽 순위 숫자 + 오른쪽 Steam 긍정 평가 % (할인 배지 틀 재사용). 칸 배치·크기는 list-page.css */
+.gf-card__no { color: var(--muted); font-size: 1em; font-weight: 900; letter-spacing: -0.04em; text-align: center; font-variant-numeric: tabular-nums; }
+.gf-card--rankrow.is-top .gf-card__no { color: var(--blue-soft); }
+.gf-card__score { display: inline-flex; align-items: center; gap: 0.3em; color: #fff; }
+.gf-card__score .gf-card__star { display: inline-flex; color: #ffc94d; }
+.gf-card__score .gf-card__star svg { width: 0.8em; height: 0.8em; }
+/* 순위 변동 (지난주 대비). 색에만 의존하지 않도록 ▲▼ 기호와 숫자를 함께 씀 */
+.gf-card__change { min-width: 3.2em; justify-content: center; text-align: center; font-variant-numeric: tabular-nums; }
+.gf-card__change.is-up { color: #6ee7a8; }
+.gf-card__change.is-down { color: #ff9a9a; }
+.gf-card__change.is-same { color: var(--muted); }
+.gf-card__change.is-new { color: var(--blue-soft); font-size: 0.8em; letter-spacing: 0.06em; }
+
 /* 신작 카드의 출시일 배지: 할인 배지(.gf-card__off-badge) 틀을 쓰되 날짜를 두 줄(월.일 / 연도)로 */
 .gf-card__date-tag { display: flex; flex-direction: column; align-items: center; color: var(--blue-soft); line-height: 1.15; text-align: center; }
 .gf-card__date-tag b { font-size: 1em; }

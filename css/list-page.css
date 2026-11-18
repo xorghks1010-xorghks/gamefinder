@@ -85,6 +85,15 @@
 .gf-rows .gf-card--row .gf-store { font-size: clamp(14px, 1.8vw, 15px); }
 .gf-rows .gf-card--row .gf-card__off-badge { padding: 0.45em 0.7em; border-radius: 0.6em; font-size: clamp(15px, 2.6vw, 24px); }
 
+/* 순위 카드: [순위 숫자 | 커버 | 제목·메타 | 긍정 평가 %] 4칸. 숫자 칸·커버도 화면 폭에 따라 같이 줄어듦 */
+.gf-rows .gf-card--rankrow {
+  grid-template-columns: clamp(30px, 6vw, 60px) clamp(60px, 11vw, 104px) minmax(0, 1fr) auto;
+  gap: clamp(8px, 2vw, 22px);
+  padding-left: clamp(6px, 1.4vw, 14px);
+}
+.gf-rows .gf-card--rankrow .gf-card__no { font-size: clamp(20px, 4.4vw, 40px); }
+.gf-rows .gf-card--rankrow .gf-card__score { font-size: clamp(15px, 2.4vw, 22px); }
+
 /* 더 보기 */
 .gf-page__more { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 36px; }
 .gf-more {

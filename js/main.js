@@ -16,7 +16,7 @@
       viewAllRouteId: 'rank',
       layout: 'rank',
       sampleNote: MOCK ? SAMPLE + '순위와 평점은 실제 인기 순위가 아닌 임시 값입니다.' : '',
-      note: '데이터: CheapShark · Steam. Metacritic 75점 이상, Steam 긍정 평가 80% 이상인 게임을 Steam 리뷰 수 순으로 표시합니다(실시간 플레이어 수 순위가 아닙니다). KR 표시 2개는 국내 대표 온라인 게임을 편집해 함께 보여드리는 것으로 순위에 포함되지 않습니다.',
+      note: '데이터: Steam 공식 인기 차트(최대 동시접속자 수 기준, 하루 단위 집계). KR 표시 2개는 국내 대표 온라인 게임을 편집해 함께 보여드리는 것으로 순위에 포함되지 않습니다.',
       load: svc.getPopularGames
     }),
     GF.createGameSection(document.getElementById('latest'), {

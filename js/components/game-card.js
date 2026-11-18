@@ -6,6 +6,7 @@
  *           'feature' 대표 할인 카드 — 큰 키아트 + 할인율·가격·스토어 이동 버튼
  *           'row'     가로형 할인 카드 — 작은 커버 + 스토어·가격·할인율
  *           'default' 일반 카드 — 3:4 커버 + 제목/메타
+ *           'rankrow' 가로형 순위 카드 — 순위 숫자 + 작은 커버 + 제목·장르·리뷰 수 + Steam 긍정 평가 % (인기 순위 목록 페이지용)
  *           'release' 가로형 신작 카드 — 작은 커버 + 출처·제목·장르 + 출시일 배지 (신작 목록 페이지용)
  *     ('popular' → 'rank', 'sale' → 'row' 별칭 지원)
  *   GameFinder.gameCard.skeleton(type, index) → 로딩용 HTML
@@ -173,6 +174,39 @@
     );
   }
 
+  // ---------- 가로형 순위 카드 (인기 순위 목록 페이지) ----------
+  function rankrow(g, i) {
+    var n = g.ranking || (i + 1);
+    var score = scoreText(g);
+    var meta = esc([(g.genres && g.genres.length) ? g.genres.join(', ') : '', g.note].filter(Boolean).join(' · '));
+    // 오른쪽 칸: 차트 순위면 지난주 대비 순위 변동, 리뷰 수 순위(대체)면 Steam 긍정 평가 %
+    var right = '';
+    if (g.rankChange !== undefined) {
+      var ch = g.rankChange, cls, txt, sr;
+      if (ch === null) { cls = 'is-new'; txt = 'NEW'; sr = '이번 주 새로 진입'; }
+      else if (ch > 0) { cls = 'is-up'; txt = '▲ ' + ch; sr = '지난주보다 ' + ch + '계단 상승'; }
+      else if (ch < 0) { cls = 'is-down'; txt = '▼ ' + (-ch); sr = '지난주보다 ' + (-ch) + '계단 하락'; }
+      else { cls = 'is-same'; txt = '–'; sr = '지난주와 같은 순위'; }
+      right = '<span class="gf-card__off-badge gf-card__change ' + cls + '"><span aria-hidden="true">' + txt + '</span><span class="sr-only">' + sr + '</span></span>';
+    } else if (score) {
+      right = '<span class="gf-card__off-badge gf-card__score"><span class="gf-card__star" aria-hidden="true">' + STAR + '</span>' +
+              '<span class="sr-only">Steam 긍정 평가 </span>' + score + '</span>';
+    }
+    return (
+      '<li class="gf-item gf-item--row">' +
+        '<article class="gf-card gf-card--row gf-card--rankrow' + (n <= 3 ? ' is-top' : '') + '" data-game-id="' + esc(g.id) + '">' +
+          '<span class="gf-card__no" aria-hidden="true">' + n + '</span>' +
+          media(g, 'row', i) +
+          '<div class="gf-card__body">' +
+            '<h3 class="gf-card__title"><a class="gf-card__stretch" href="' + href(g) + '"><span class="sr-only">' + n + '위 </span>' + esc(g.title) + '</a></h3>' +
+            '<p class="gf-card__meta">' + meta + '</p>' +
+          '</div>' +
+          right +
+        '</article>' +
+      '</li>'
+    );
+  }
+
   // ---------- 가로형 신작 카드 (신작 목록 페이지) ----------
   function release(g, i) {
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(g.releaseDate || '');
@@ -213,7 +247,7 @@
     );
   }
 
-  var RENDER = { rank: rank, latest: latest, feature: feature, row: row, release: release, 'default': plain };
+  var RENDER = { rank: rank, latest: latest, feature: feature, row: row, rankrow: rankrow, release: release, 'default': plain };
 
   function render(game, type, index) {
     var t = ALIAS[type] || type;
@@ -228,7 +262,7 @@
       return '<li class="gf-item gf-item--rank gf-item--r' + (i + 1) + '" aria-hidden="true"><div class="gf-card gf-card--rank gf-skel"></div></li>';
     }
     if (t === 'feature') return '<div class="gf-card gf-card--feature gf-skel" aria-hidden="true"></div>';
-    if (t === 'row' || t === 'release') return '<li class="gf-item gf-item--row" aria-hidden="true"><div class="gf-card gf-card--row gf-skel"></div></li>';
+    if (t === 'row' || t === 'release' || t === 'rankrow') return '<li class="gf-item gf-item--row" aria-hidden="true"><div class="gf-card gf-card--row gf-skel"></div></li>';
     return '<li class="gf-item gf-item--' + t + '" aria-hidden="true"><div class="gf-card gf-card--' + t + '">' +
       '<div class="gf-card__media gf-skel"></div>' +
       '<div class="gf-card__body"><span class="gf-skel gf-skel__line gf-skel__line--title"></span><span class="gf-skel gf-skel__line"></span></div>' +

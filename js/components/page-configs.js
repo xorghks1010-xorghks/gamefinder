@@ -35,6 +35,23 @@
       load: function (f, cursor) { return svc.getSaleList({ store: f.store, sort: f.sort, page: cursor }); }
     },
 
+    rank: {
+      route: 'rank',
+      kicker: '01 · RANKING',
+      title: '인기 순위',
+      description: 'Steam에서 지금 가장 많은 사람이 플레이하는 게임 TOP 100을 확인해 보세요.',
+      noun: '인기 게임',
+      card: 'rankrow',
+      firstCursor: 0,   // game-service 의 getRankList offset
+      empty: '표시할 인기 게임이 없습니다.',
+      mockNote: '개발 단계의 예시 데이터입니다. 순위와 평점은 실제 인기 순위가 아닌 임시 값입니다.',
+      note: '데이터: Steam 공식 인기 차트(하루 단위 집계를 미리 받아 둔 것이라 실시간이 아니며 기준일 시점의 순위입니다). ' +
+            '숫자는 그날 게임을 플레이한 최대 동시접속자 수이고, 순위는 Steam의 공식 집계라 숫자 크기와 항상 일치하지는 않습니다. ' +
+            '순위 변동은 지난주 순위와 비교한 값이며, 게임이 아닌 항목(모드 등)은 제외해 순위 번호가 건너뛸 수 있습니다. ' +
+            '플랫폼·장르 필터는 데이터가 없어 아직 제공하지 않습니다.',
+      load: function (f, cursor) { return svc.getRankList(cursor); }
+    },
+
     'new': {
       route: 'new',
       kicker: '02 · NEW RELEASES',
