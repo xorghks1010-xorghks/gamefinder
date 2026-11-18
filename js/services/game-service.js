@@ -114,8 +114,23 @@
   // dealID 는 API 가 이미 URL 인코딩된 값으로 주므로 그대로 붙임 (다시 인코딩하면 잘못된 ID 가 됨)
   function dealUrl(dealId) { return 'https://www.cheapshark.com/redirect?dealID=' + dealId; }
 
+  // Steam 이미지 주소: 예전 규칙(번호 + 고정 파일 이름)은 최근 출시작에서 404 입니다(Steam 이 주소에 해시를 넣는 방식으로 바꿈).
+  // scripts/fetch-images.mjs 가 만든 data/catalog/images.js(GF.imageData)에 "예전 주소가 404 인 게임의 정확한 주소"가 있으면 그걸 쓰고,
+  // 없으면 예전 규칙을 씀. (파일이 없어도 동작)
+  var IMAGE_BASE = 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/';
+  function imgEntry(appId) { var d = GF.imageData; return (d && d.map && d.map[String(appId)]) || null; }
+  function imgUrl(appId, e, k) { return IMAGE_BASE + appId + '/' + e[k] + (e.t ? '?t=' + e.t : ''); }
+
   function steamCover(appId) {
+    var e = imgEntry(appId);
+    if (e && e.c) return imgUrl(appId, e, 'c');
     return 'https://cdn.cloudflare.steamstatic.com/steam/apps/' + appId + '/library_600x900.jpg';
+  }
+
+  // 작은 캡슐(231x87): 큰 이미지가 모두 없을 때의 마지막 대체. 해시 주소를 쓰는 게임만 있음('' 이면 없음)
+  function steamThumb(appId) {
+    var e = imgEntry(appId);
+    return e && e.s ? imgUrl(appId, e, 's') : '';
   }
 
   function toIsoDate(unix) {
@@ -133,6 +148,11 @@
   }
 
   function steamArt(appId, file) {
+    var e = imgEntry(appId);
+    if (e) {
+      if (file === 'header.jpg' && e.h) return imgUrl(appId, e, 'h');
+      if (file === 'library_hero.jpg' && e.r) return imgUrl(appId, e, 'r');
+    }
     return 'https://cdn.cloudflare.steamstatic.com/steam/apps/' + appId + '/' + file;
   }
 
@@ -161,7 +181,7 @@
       coverImage: steamCover(p.appId),
       heroImage: steamArt(p.appId, 'library_hero.jpg'),
       headerImage: steamArt(p.appId, 'header.jpg'),
-      thumbImage: '',
+      thumbImage: steamThumb(p.appId),
       genres: [p.genre],
       platforms: ['pc'],
       origin: 'KR',            // 카드에 '국내' 표시, 순위 숫자 대신 'KR'
@@ -176,7 +196,7 @@
       coverImage: steamCover(d.steamAppID),                       // 세로 600x900 (없는 게임도 있음)
       heroImage: steamArt(d.steamAppID, 'library_hero.jpg'),      // 가로 와이드 키아트
       headerImage: steamArt(d.steamAppID, 'header.jpg'),          // 가로 460x215 (신작은 없는 경우가 있음)
-      thumbImage: d.thumb || '',                                  // 231x87 캡슐 — 신작도 항상 존재하는 유일한 이미지
+      thumbImage: d.thumb || steamThumb(d.steamAppID),            // 231x87 캡슐 — 신작도 항상 존재하는 유일한 이미지 (CheapShark 가 주는 값, 없으면 Steam 해시 주소)
       genres: [],            // CheapShark는 장르를 제공하지 않음 (장르는 이후 RAWG/IGDB 연동 시 추가)
       platforms: ['pc']
     };
@@ -223,7 +243,7 @@
       coverImage: steamCover(c.appid),
       heroImage: steamArt(c.appid, 'library_hero.jpg'),
       headerImage: steamArt(c.appid, 'header.jpg'),
-      thumbImage: '',
+      thumbImage: steamThumb(c.appid),
       genres: [],
       platforms: ['pc'],
       ranking: c.rank,
@@ -474,7 +494,25 @@
     { kind: 'mode',  id: 'multi',      label: '멀티플레이',      find: 'mode=multi',       words: ['multiplayer', 'multi', '멀티', '멀티플레이'] },
     { kind: 'mode',  id: 'coop',       label: '협동 플레이',      find: 'mode=coop',        words: ['coop', 'cooperative', '협동', '협력', '협동플레이'] },
     { kind: 'mode',  id: 'pvp',        label: 'PvP',             find: 'mode=pvp',         words: ['pvp', '대전'] },
-    { kind: 'price', id: 'free',       label: '무료',            find: 'price=free',       words: ['free', 'freetoplay', 'f2p', '무료', '무료게임'] }
+    { kind: 'price', id: 'free',       label: '무료',            find: 'price=free',       words: ['free', 'freetoplay', 'f2p', '무료', '무료게임'] },
+    // 세부 분류 (SteamSpy 사용자 태그)
+    { kind: 'sub', id: 'fps',          label: 'FPS',          find: 'sub=fps',          words: ['fps', '에프피에스', '1인칭슈터', '일인칭슈터', 'firstpersonshooter'] },
+    { kind: 'sub', id: 'tps',          label: '3인칭 슈터',   find: 'sub=tps',          words: ['tps', '티피에스', '3인칭슈터', '삼인칭슈터', 'thirdpersonshooter'] },
+    { kind: 'sub', id: 'shooter',      label: '슈터',         find: 'sub=shooter',      words: ['shooter', '슈터', '슈팅', '건슈터', '총게임', '총쏘는게임'] },
+    { kind: 'sub', id: 'battleroyale', label: '배틀로얄',     find: 'sub=battleroyale', words: ['battleroyale', '배틀로얄', '배틀로열'] },
+    { kind: 'sub', id: 'horror',       label: '공포',         find: 'sub=horror',       words: ['horror', '공포', '호러', '공포게임'] },
+    { kind: 'sub', id: 'puzzle',       label: '퍼즐',         find: 'sub=puzzle',       words: ['puzzle', '퍼즐'] },
+    { kind: 'sub', id: 'platformer',   label: '플랫폼',       find: 'sub=platformer',   words: ['platformer', '플랫폼', '플랫포머', '플랫폼게임'] },
+    { kind: 'sub', id: 'fighting',     label: '격투',         find: 'sub=fighting',     words: ['fighting', '격투', '대전격투', '격투게임'] },
+    { kind: 'sub', id: 'roguelike',    label: '로그라이크',   find: 'sub=roguelike',    words: ['roguelike', 'roguelite', 'rogue', '로그라이크', '로그라이트', '로그'] },
+    { kind: 'sub', id: 'soulslike',    label: '소울라이크',   find: 'sub=soulslike',    words: ['soulslike', 'souls', '소울라이크', '소울류', '소울'] },
+    { kind: 'sub', id: 'metroidvania', label: '메트로배니아', find: 'sub=metroidvania', words: ['metroidvania', '메트로배니아', '메트로이드바니아'] },
+    { kind: 'sub', id: 'openworld',    label: '오픈 월드',    find: 'sub=openworld',    words: ['openworld', '오픈월드', '오픈'] },
+    { kind: 'sub', id: 'survival',     label: '생존',         find: 'sub=survival',     words: ['survival', '생존', '서바이벌', '생존게임'] },
+    { kind: 'sub', id: 'sandbox',      label: '샌드박스',     find: 'sub=sandbox',      words: ['sandbox', '샌드박스'] },
+    { kind: 'sub', id: 'turnbased',    label: '턴제',         find: 'sub=turnbased',    words: ['turnbased', '턴제', '턴제전략', '턴제게임'] },
+    { kind: 'sub', id: 'citybuilder',  label: '도시 건설',    find: 'sub=citybuilder',  words: ['citybuilder', '도시건설', '시티빌더', '도시건설게임'] },
+    { kind: 'sub', id: 'storyrich',    label: '스토리 중심',  find: 'sub=storyrich',    words: ['storyrich', '스토리중심', '스토리', '스토리게임'] }
   ];
 
   function tagKey(s) { return String(s).toLowerCase().replace(/[\s\-_]/g, ''); }
@@ -492,6 +530,7 @@
   function catalogHasTag(c, tag) {
     if (tag.kind === 'genre') return c.genres.indexOf(tag.id) !== -1;
     if (tag.kind === 'mode') return c.tags.indexOf(tag.id) !== -1;
+    if (tag.kind === 'sub') return (c.sub || []).indexOf(tag.id) !== -1;
     return !!c.free;
   }
 
@@ -650,9 +689,23 @@
   var GENRE_ID = { action: 'Action', adventure: 'Adventure', rpg: 'RPG', strategy: 'Strategy', simulation: 'Simulation',
                    sports: 'Sports', racing: 'Racing', indie: 'Indie', casual: 'Casual', mmo: 'Massively Multiplayer' };
 
+  // 세부 분류(FPS·공포·오픈 월드 …): Steam 공식 장르에는 없고 사용자 투표 태그(SteamSpy)에만 있음. scripts/fetch-tags.mjs 가 만든 파일을 카탈로그 항목의 c.sub 로 합침.
+  // 파일이 없거나 못 읽어도 카탈로그는 그대로 동작함(c.sub = []).
+  var SUB_KO = { fps: 'FPS', tps: '3인칭 슈터', shooter: '슈터', battleroyale: '배틀로얄', horror: '공포', puzzle: '퍼즐', platformer: '플랫폼',
+                 fighting: '격투', roguelike: '로그라이크', soulslike: '소울라이크', metroidvania: '메트로배니아', openworld: '오픈 월드',
+                 survival: '생존', sandbox: '샌드박스', turnbased: '턴제', citybuilder: '도시 건설', storyrich: '스토리 중심' };
+
   function getCatalog() {
-    return loadDataScript('data/catalog/games.js', 'catalogData')
-      .then(function (j) { if (!j || !j.items || !j.items.length) throw new Error('no catalog'); return j; });
+    return loadDataScript('data/catalog/games.js', 'catalogData').then(function (j) {
+      if (!j || !j.items || !j.items.length) throw new Error('no catalog');
+      if (j._subMerged) return j;
+      return loadDataScript('data/catalog/tags.js', 'tagData').catch(function () { return null; }).then(function (t) {
+        var map = (t && t.map) || {};
+        j.items.forEach(function (c) { c.sub = map[c.id] || []; });
+        j._subMerged = true;
+        return j;
+      });
+    });
   }
 
   function catalogGame(c) {
@@ -663,8 +716,8 @@
       coverImage: steamCover(c.id),
       heroImage: steamArt(c.id, 'library_hero.jpg'),
       headerImage: steamArt(c.id, 'header.jpg'),
-      thumbImage: '',
-      genres: c.genres.map(function (g) { return GENRE_KO[g] || g; }),
+      thumbImage: steamThumb(c.id),
+      genres: c.genres.map(function (g) { return GENRE_KO[g] || g; }).concat((c.sub || []).slice(0, 2).map(function (t) { return SUB_KO[t] || t; })),
       platforms: ['pc'],
       free: !!c.free,
       metacritic: c.metacritic || null,
@@ -690,18 +743,20 @@
         return Array.isArray(r) ? { items: r, hasMore: false } : r;   // ?mock=empty 는 [] 로 응답함
       });
     }
-    var hasChips = !!((f.genre && f.genre.length) || (f.mode && f.mode.length) || (f.price && f.price !== 'all'));
+    var hasChips = !!((f.genre && f.genre.length) || (f.mode && f.mode.length) || (f.sub && f.sub.length) || (f.price && f.price !== 'all'));
     // 키워드만 있고(분류 이름이 아님) 칩 필터가 없으면, 카탈로그(약 600개)에 없는 게임도 전체 검색(CheapShark 등)으로 보충함
     var broadP = (f.q && !tagOf(f.q) && !hasChips) ? searchAll(f.q).catch(function () { return []; }) : Promise.resolve([]);
     return Promise.all([getCatalog(), broadP]).then(function (res) {
       var cat = res[0], broad = res[1];
       var genres = (f.genre || []).map(function (id) { return GENRE_ID[id]; }).filter(Boolean);
       var tags = f.mode || [];
+      var subs = f.sub || [];
       var nq = f.q ? normTitle(f.q) : '';
       var kwTag = f.q ? tagOf(f.q) : null;   // 키워드가 분류 이름('rpg'·'액션'·'협동'·'무료')이면 그 분류에 해당하는 게임도 포함
       var list = cat.items.filter(function (c) {
         if (genres.length && !c.genres.some(function (g) { return genres.indexOf(g) !== -1; })) return false;
         if (tags.length && !c.tags.some(function (t) { return tags.indexOf(t) !== -1; })) return false;
+        if (subs.length && !(c.sub || []).some(function (t) { return subs.indexOf(t) !== -1; })) return false;
         if (f.price === 'free' && !c.free) return false;
         if (f.price === 'paid' && c.free) return false;
         if (nq && normTitle(c.name).indexOf(nq) === -1 && !(kwTag && catalogHasTag(c, kwTag))) return false;
@@ -932,6 +987,7 @@
     getRankList:     getRankList,
     getSearchList:   getSearchList,
     getFindList:     getFindList,
+    imageUrls: function (appId) { return { cover: steamCover(appId), header: steamArt(appId, 'header.jpg'), thumb: steamThumb(appId) }; },   // 이미지 주소 (AI 추천 화면 등에서 사용)
     getCatalog:      getCatalog,       // AI 추천(#/ai): 카탈로그 원본 항목 [{id,name,genres,tags,free,released,metacritic,reviews}]
     catalogGame:     catalogGame,
     isMock: function () { return !!mockMode(); },

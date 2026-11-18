@@ -33,7 +33,7 @@
     var others = genres.filter(function (g) { return !g.image; });
 
     var featuredHtml = featured.map(function (g) {
-      return '<li><a class="gf-genre-tile" href="' + GF.routes.findHref({ genre: g.id }) + '">' +
+      return '<li><a class="gf-genre-tile" href="' + GF.routes.findHref(g.find || { genre: g.id }) + '">' +
         '<img class="gf-genre-tile__img" src="' + esc(g.image) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' +
         '<span class="gf-genre-tile__name">' + esc(g.name) + '</span>' +
         '<span class="gf-genre-tile__go" aria-hidden="true">게임 찾아보기 →</span>' +
@@ -41,7 +41,7 @@
     }).join('');
 
     var genreHtml = others.map(function (g) {
-      return '<li><a class="gf-tile gf-tile--genre" href="' + GF.routes.findHref({ genre: g.id }) + '">' + esc(g.name) + '</a></li>';
+      return '<li><a class="gf-tile gf-tile--genre" href="' + GF.routes.findHref(g.find || { genre: g.id }) + '">' + esc(g.name) + '</a></li>';
     }).join('');
 
     // root 자체가 index.html 의 <section id="explore" class="gf-section"> 이므로 내용만 채움

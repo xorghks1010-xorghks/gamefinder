@@ -86,14 +86,14 @@
   var GENRES = [
     { id: 'rpg', name: 'RPG', image: steamHero(1086940) },
     { id: 'action', name: 'Action', image: steamHero(1145360) },
-    { id: 'horror', name: 'Horror', image: steamHero(739630) },
-    { id: 'fps', name: 'FPS', image: steamHero(730) },
+    { id: 'horror', name: 'Horror', image: steamHero(739630), find: { sub: 'horror' } },      // find: 게임 찾기로 보낼 필터 (Steam 장르가 아니라 세부 분류)
+    { id: 'fps', name: 'FPS', image: steamHero(730), find: { sub: 'fps' } },
     { id: 'strategy', name: 'Strategy', image: steamHero(289070) },
     { id: 'adventure', name: 'Adventure', image: steamHero(367520) },
     { id: 'simulation', name: 'Simulation', image: steamHero(413150) },
     { id: 'sports', name: 'Sports' },
     { id: 'racing', name: 'Racing' },
-    { id: 'puzzle', name: 'Puzzle' }
+    { id: 'puzzle', name: 'Puzzle', find: { sub: 'puzzle' } }
   ];
 
   GF.mockData = {

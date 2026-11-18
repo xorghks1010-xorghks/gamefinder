@@ -13,15 +13,15 @@
   var BASE_TITLE = 'GameFinder';
   var MIN = 3, MAX = 10, RESULT_COUNT = 5, SUGGEST = 12;
   var STEPS = ['플랫폼', '좋아하는 게임', '분석', '추천 결과'];
-  var STEAM = 'https://cdn.cloudflare.steamstatic.com/steam/apps/';
 
   function norm(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9가-힣]/g, ''); }
-  function coverOf(id) { return STEAM + id + '/library_600x900.jpg'; }
-  function headerOf(id) { return STEAM + id + '/header.jpg'; }
   function ko(g) { return (GF.recommend.GENRE_KO[g] || g); }
 
+  // 표지 → 가로 이미지 → 작은 캡슐 순으로 시도 (게임 서비스가 최근 출시작의 해시 주소를 알고 있음)
   function img(id, cls) {
-    return '<img class="' + cls + '" src="' + coverOf(id) + '" data-fallback="' + headerOf(id) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">';
+    var u = GF.gameService.imageUrls(id);
+    var rest = [u.header, u.thumb].filter(function (x) { return x && x !== u.cover; }).join(' ');
+    return '<img class="' + cls + '" src="' + u.cover + '"' + (rest ? ' data-fallback="' + rest + '"' : '') + ' alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">';
   }
 
   function createAiPage(root) {
@@ -331,7 +331,8 @@
     function onImgError(e) {
       var im = e.target;
       if (!im.tagName || im.tagName !== 'IMG' || !im.className || im.className.indexOf('gf-aip__') !== 0) return;
-      if (im.dataset.fallback) { var f = im.dataset.fallback; im.removeAttribute('data-fallback'); im.src = f; }
+      var rest = (im.dataset.fallback || '').split(' ').filter(Boolean);
+      if (rest.length) { var next = rest.shift(); if (rest.length) im.dataset.fallback = rest.join(' '); else im.removeAttribute('data-fallback'); im.src = next; }
       else im.style.visibility = 'hidden';
     }
 

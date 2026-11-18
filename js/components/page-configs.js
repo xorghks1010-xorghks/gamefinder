@@ -52,6 +52,13 @@
         { label: '플레이 방식 선택 (여러 개 선택 가능)', title: '플레이 방식', param: 'mode', multi: true, options: [
           { id: 'single', label: '싱글플레이' }, { id: 'multi', label: '멀티플레이' }, { id: 'coop', label: '협동' }, { id: 'pvp', label: 'PvP' }
         ] },
+        { label: '세부 분류 선택 (여러 개 선택 가능)', title: '세부 분류', param: 'sub', multi: true, options: [
+          { id: 'fps', label: 'FPS' }, { id: 'tps', label: '3인칭 슈터' }, { id: 'shooter', label: '슈터' }, { id: 'battleroyale', label: '배틀로얄' },
+          { id: 'horror', label: '공포' }, { id: 'puzzle', label: '퍼즐' }, { id: 'platformer', label: '플랫폼' }, { id: 'fighting', label: '격투' },
+          { id: 'roguelike', label: '로그라이크' }, { id: 'soulslike', label: '소울라이크' }, { id: 'metroidvania', label: '메트로배니아' },
+          { id: 'openworld', label: '오픈 월드' }, { id: 'survival', label: '생존' }, { id: 'sandbox', label: '샌드박스' },
+          { id: 'turnbased', label: '턴제' }, { id: 'citybuilder', label: '도시 건설' }, { id: 'storyrich', label: '스토리 중심' }
+        ] },
         { label: '가격 선택', title: '가격', param: 'price', def: 'all', options: [
           { id: 'all', label: '전체' }, { id: 'free', label: '무료' }, { id: 'paid', label: '유료' }
         ] }
@@ -83,7 +90,8 @@
       note: '데이터: Steam · CheapShark. 장르·플레이 방식·가격 필터는 인기 PC 게임 약 600개(Steam 인기 차트와 Metacritic 상위 게임)를 미리 받아 둔 목록에만 적용되며, 기준일 시점의 정보입니다. ' +
             '게임명 키워드만 입력하면 이 목록에 없는 게임도 함께 찾아 보여드립니다. ' +
             '같은 그룹에서 여러 개를 고르면 하나라도 해당되는 게임을, 다른 그룹과는 모두 만족하는 게임을 보여줍니다. ' +
-            '콘솔 플랫폼, 공포·FPS·퍼즐 같은 세부 장르는 데이터가 없어 아직 제공하지 않습니다.',
+            '세부 분류(FPS·공포·오픈 월드 등)는 Steam 사용자들이 투표로 붙인 태그(SteamSpy)에서 가져왔으며, 투표가 많은 태그만 반영해 정확한 분류가 아닐 수 있습니다. ' +
+            '콘솔 플랫폼은 데이터가 없어 아직 제공하지 않습니다.',
       load: function (f, cursor) { return svc.getFindList(f, cursor); }
     },
 
