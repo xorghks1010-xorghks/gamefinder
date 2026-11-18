@@ -13,7 +13,7 @@
     var el = document.createElement('div');
     el.className = 'gf-notice';
     el.setAttribute('role', 'status');
-    el.textContent = '준비 중인 페이지입니다. AI 추천은 아직 준비 중이며, 그 외 메뉴는 모두 이용할 수 있습니다.';
+    el.textContent = '준비 중인 페이지입니다. 준비 중인 페이지입니다.';
     document.body.appendChild(el);
 
     var timer = null;
@@ -29,7 +29,8 @@
       if (!a || a.classList.contains('skip-link')) return;
       var href = a.getAttribute('href');
       var path = href.split('?')[0];   // '#/sale?store=1' 처럼 쿼리가 붙어도 같은 페이지
-      var isList = !!(GF.pageConfigs && GF.pageConfigs[path.replace('#/', '')]);
+      var key = path.replace('#/', '');
+      var isList = !!((GF.pageConfigs && GF.pageConfigs[key]) || (GF.pageFactories && GF.pageFactories[key]));
       if (IMPLEMENTED.indexOf(path) === -1 && !isList && href.indexOf('#/game/') !== 0) show();   // 게임 상세는 구현됨
     }
 

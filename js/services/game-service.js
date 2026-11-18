@@ -932,6 +932,8 @@
     getRankList:     getRankList,
     getSearchList:   getSearchList,
     getFindList:     getFindList,
+    getCatalog:      getCatalog,       // AI 추천(#/ai): 카탈로그 원본 항목 [{id,name,genres,tags,free,released,metacritic,reviews}]
+    catalogGame:     catalogGame,
     isMock: function () { return !!mockMode(); },
     getPlatforms:    function () { return GF.mockData.platforms; },
     getGenres:       function () { return GF.mockData.genres; },

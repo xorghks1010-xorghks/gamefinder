@@ -60,7 +60,10 @@
   var listPages = {};            // route → createListPage 인스턴스 (화면 이름도 route 와 같음: 'sale', 'new' …)
   var scrollOf = { main: 0 };    // 화면을 떠날 때의 스크롤 위치 — 상세에서 "돌아올 때"만 복원
   var anchor = viewEls.detail;
-  Object.keys(GF.pageConfigs).forEach(function (route) {
+  // 페이지 인스턴스는 show(params, {focus}) / hide() / destroy() 를 가진 객체여야 함.
+  //   - GF.pageConfigs[route]  → 공통 목록 페이지(createListPage) 설정
+  //   - GF.pageFactories[route] → 목록 형태가 아닌 맞춤 페이지(예: AI 추천 4단계)를 만드는 함수 (rootEl) → 인스턴스
+  function addPage(route, create) {
     var el = document.createElement('main');
     el.id = 'page-' + route;
     el.className = 'gf-page';
@@ -68,8 +71,14 @@
     anchor.insertAdjacentElement('afterend', el);
     anchor = el;
     viewEls[route] = el;
-    listPages[route] = GF.createListPage(el, GF.pageConfigs[route]);
+    listPages[route] = create(el);
     scrollOf[route] = 0;
+  }
+  Object.keys(GF.pageConfigs).forEach(function (route) {
+    addPage(route, function (el) { return GF.createListPage(el, GF.pageConfigs[route]); });
+  });
+  Object.keys(GF.pageFactories || {}).forEach(function (route) {
+    addPage(route, GF.pageFactories[route]);
   });
   var view = 'main';
 

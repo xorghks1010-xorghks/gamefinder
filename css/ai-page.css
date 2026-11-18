@@ -1,0 +1,162 @@
+/* AI 추천 페이지(#/ai) — 4단계 마법사. 다크 톤 변수(base.css) + AI 포인트 컬러(--ai, 보라) 사용. 크기는 clamp() 로 화면 폭에 따라 같이 줄어듦 */
+
+/* ============ 상단 + 단계 표시 ============ */
+.gf-aip__head {
+  padding: 56px 0 24px;
+  background:
+    radial-gradient(60% 120% at 85% -20%, rgba(139, 92, 246, 0.22), transparent 70%),
+    radial-gradient(50% 100% at 10% 0%, rgba(52, 104, 245, 0.16), transparent 70%),
+    var(--bg);
+}
+.gf-aip__head .container, .gf-aip__body { max-width: 1040px; }
+
+.gf-aip__steps { display: flex; gap: clamp(8px, 2vw, 28px); margin: 28px 0 0; padding: 0; list-style: none; }
+.gf-aip__step { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; color: var(--muted); font-size: 15px; font-weight: 700; }
+.gf-aip__step + .gf-aip__step::before { content: ""; flex: 0 0 auto; width: clamp(8px, 3vw, 40px); height: 2px; margin-right: 4px; background: var(--line); }
+.gf-aip__dot {
+  display: grid; place-items: center; flex: 0 0 auto;
+  width: 30px; height: 30px; border: 2px solid var(--line); border-radius: 50%;
+  font-size: 14px; font-weight: 800; background: var(--bg);
+}
+.gf-aip__stepname { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gf-aip__step.is-current { color: #fff; }
+.gf-aip__step.is-current .gf-aip__dot { border-color: var(--ai); background: var(--ai); color: #fff; }
+.gf-aip__step.is-done { color: var(--blue-soft); }
+.gf-aip__step.is-done .gf-aip__dot { border-color: var(--blue-soft); color: var(--blue-soft); }
+
+/* ============ 본문 패널 ============ */
+.gf-aip__body { padding-top: 32px; padding-bottom: 96px; }
+.gf-aip__panel { min-height: 320px; }
+.gf-aip__title { margin: 0 0 8px; color: var(--heading); font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -0.03em; }
+.gf-aip__title:focus { outline: none; }
+.gf-aip__hint { margin: 0 0 24px; color: var(--muted); font-size: 16px; }
+.gf-aip__alert { margin: 0 0 18px; padding: 12px 16px; border: 1px solid var(--sale); border-radius: 12px; color: var(--sale); font-size: 15px; font-weight: 600; }
+.gf-aip__empty { margin: 0; padding: 18px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); font-size: 15px; }
+.gf-aip__sub { margin: 18px 0 10px; color: var(--heading); font-size: 16px; font-weight: 800; }
+.gf-aip__count { margin-left: 6px; color: var(--ai); font-variant-numeric: tabular-nums; }
+.gf-aip__count { color: #b79bff; }
+
+/* ============ 1단계: 플랫폼 카드 ============ */
+.gf-aip__plats { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 14px; margin: 0 0 28px; padding: 0; list-style: none; }
+.gf-aip__plat {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 6px;
+  width: 100%; min-height: 104px; padding: 18px 20px; border: 2px solid var(--line); border-radius: 16px;
+  background: var(--bg-soft); color: var(--text); text-align: left;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.gf-aip__plat:hover:not(:disabled) { border-color: var(--blue-soft); }
+.gf-aip__plat.is-on { border-color: var(--blue); background: rgba(52, 104, 245, 0.16); }          /* 선택: 파란 테두리 + 체크 표시 */
+.gf-aip__plat:disabled { opacity: 0.55; cursor: not-allowed; }
+.gf-aip__platname { font-size: 19px; font-weight: 800; color: #fff; }
+.gf-aip__soon { font-size: 14px; color: var(--muted); }
+.gf-aip__check {
+  position: absolute; top: 14px; right: 14px; display: grid; place-items: center;
+  width: 26px; height: 26px; border: 2px solid var(--line); border-radius: 50%; color: #fff; font-size: 14px; font-weight: 900;
+}
+.gf-aip__plat.is-on .gf-aip__check { border-color: var(--blue); background: var(--blue); }
+
+/* ============ 2단계: 게임 고르기 ============ */
+.gf-aip__cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 36px); align-items: start; }
+.gf-aip__input {
+  width: 100%; min-height: 48px; padding: 0 18px; border: 1px solid var(--line); border-radius: 12px;
+  background: var(--bg-soft); color: var(--text); font-size: 16px;
+}
+.gf-aip__input::placeholder { color: var(--muted); }
+.gf-aip__input:hover { border-color: var(--blue-soft); }
+.gf-aip__input:focus { border-color: var(--blue-soft); outline: 2px solid var(--blue-soft); outline-offset: 2px; }
+
+.gf-aip__list, .gf-aip__chosen { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.gf-aip__item {
+  display: flex; align-items: center; gap: 14px; width: 100%; padding: 8px 14px 8px 8px; border: 1px solid var(--line); border-radius: 12px;
+  background: var(--bg-soft); color: var(--text); text-align: left;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.gf-aip__item:hover:not(:disabled) { border-color: var(--blue-soft); }
+.gf-aip__item.is-on { border-color: var(--ai); background: rgba(139, 92, 246, 0.16); }
+.gf-aip__item:disabled { opacity: 0.45; cursor: not-allowed; }
+.gf-aip__thumb { flex: 0 0 auto; width: 44px; height: 58px; border-radius: 8px; background: var(--navy); object-fit: cover; }
+.gf-aip__itext { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 2px; }
+.gf-aip__itext b { overflow: hidden; color: #fff; font-size: 16px; text-overflow: ellipsis; white-space: nowrap; }
+.gf-aip__itext small { overflow: hidden; color: var(--muted); font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+.gf-aip__tog { flex: 0 0 auto; color: var(--blue-soft); font-size: 14px; font-weight: 800; white-space: nowrap; }
+.gf-aip__item.is-on .gf-aip__tog { color: #b79bff; }
+
+.gf-aip__col--sel { position: sticky; top: calc(var(--header-h) + 16px); padding: 4px 18px 18px; border: 1px solid var(--line); border-radius: 16px; background: rgba(17, 31, 63, 0.6); }
+.gf-aip__pick { display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 6px; border-radius: 10px; background: var(--bg-soft); color: #fff; font-size: 15px; font-weight: 600; }
+.gf-aip__pick span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gf-aip__pthumb { flex: 0 0 auto; width: 32px; height: 42px; border-radius: 6px; background: var(--navy); object-fit: cover; }
+.gf-aip__rm { flex: 0 0 auto; width: 44px; height: 44px; margin: -6px -6px -6px 0; border: 0; border-radius: 10px; background: transparent; color: var(--muted); font-size: 22px; line-height: 1; }
+.gf-aip__rm:hover { color: #fff; background: rgba(255, 255, 255, 0.08); }
+
+/* ============ 공통 버튼·하단 줄 ============ */
+.gf-aip__actions { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
+.gf-aip__actions--end { justify-content: flex-end; }
+.gf-aip__help { flex: 1; min-width: 0; color: var(--muted); font-size: 15px; text-align: center; }
+.gf-aip__btn {
+  min-width: 112px; min-height: 48px; padding: 0 24px; border: 1px solid var(--line); border-radius: 12px;
+  background: var(--bg-soft); color: var(--text); font-size: 16px; font-weight: 700;
+  transition: background var(--t-fast), border-color var(--t-fast), opacity var(--t-fast);
+}
+.gf-aip__btn:hover:not(:disabled) { border-color: var(--blue-soft); }
+.gf-aip__btn--main { border-color: transparent; background: linear-gradient(90deg, var(--blue), var(--ai)); color: #fff; }
+.gf-aip__btn--main:hover:not(:disabled) { border-color: transparent; opacity: 0.92; }
+.gf-aip__btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ============ 3단계: 분석 ============ */
+.gf-aip__analysis { display: flex; align-items: center; gap: 28px; margin-top: 28px; padding: clamp(18px, 4vw, 36px); border: 1px solid var(--line); border-radius: 16px; background: rgba(17, 31, 63, 0.6); }
+.gf-aip__analysis .gf-spinner { flex: 0 0 auto; width: 56px; height: 56px; border-top-color: var(--ai); }
+.gf-aip__alist { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.gf-aip__alist li { position: relative; padding-left: 30px; color: var(--muted); font-size: 16px; opacity: 0.55; transition: opacity 0.3s, color 0.3s; }
+.gf-aip__alist li::before { content: "○"; position: absolute; left: 0; color: var(--muted); }
+.gf-aip__alist li.is-on { color: #fff; opacity: 1; }
+.gf-aip__alist li.is-on::before { content: "✓"; color: #b79bff; font-weight: 900; }
+
+/* ============ 4단계: 결과 ============ */
+.gf-aip__results { display: grid; gap: clamp(10px, 1.4vw, 14px); margin: 0; padding: 0; list-style: none; }
+.gf-rows.gf-aip__results .gf-item { min-height: 0; }
+.gf-aip__results .gf-card--airec {
+  grid-template-columns: clamp(28px, 5vw, 52px) clamp(64px, 11vw, 104px) minmax(0, 1fr) auto;
+  align-items: start;
+  gap: clamp(10px, 2vw, 22px);
+  padding: clamp(12px, 1.8vw, 18px);
+}
+.gf-aip__results .gf-card--airec .gf-card__no { align-self: center; font-size: clamp(22px, 4.2vw, 38px); color: #b79bff; }
+.gf-aip__results .gf-card--airec .gf-card__media { width: 100%; }
+.gf-aip__results .gf-card--airec .gf-card__title { margin: 2px 0 4px; font-size: clamp(16px, 2.4vw, 20px); white-space: normal; }
+.gf-airec__why { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.gf-airec__why li { position: relative; padding-left: 16px; color: var(--text); font-size: clamp(14px, 1.6vw, 15px); line-height: 1.55; }
+.gf-airec__why li::before { content: ""; position: absolute; left: 2px; top: 0.7em; width: 6px; height: 6px; border-radius: 50%; background: var(--ai); }
+.gf-airec__go { display: inline-block; margin-top: 12px; color: var(--blue-soft); font-size: 14px; font-weight: 800; }
+.gf-airec__fitbox { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; min-width: clamp(62px, 9vw, 96px); }
+.gf-airec__pct { color: #fff; font-size: clamp(20px, 3.4vw, 30px); font-weight: 900; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.gf-airec__bar { display: block; width: 100%; height: 8px; overflow: hidden; border-radius: 4px; background: var(--line); }
+.gf-airec__bar i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--blue), var(--ai)); }
+.gf-aip__fitnote { margin: 22px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* ============ 반응형 ============ */
+@media (max-width: 960px) {
+  .gf-aip__head { padding: 40px 0 20px; }
+  .gf-aip__body { padding-bottom: 72px; }
+}
+@media (max-width: 800px) {
+  .gf-aip__cols { grid-template-columns: minmax(0, 1fr); }
+  .gf-aip__col--sel { position: static; order: -1; }          /* 모바일: 고른 게임을 먼저 보여줌 */
+}
+@media (max-width: 600px) {
+  .gf-aip__head { padding: 32px 0 16px; }
+  .gf-aip__steps { margin-top: 20px; }
+  .gf-aip__step { flex-direction: column; gap: 6px; text-align: center; font-size: 13px; }
+  .gf-aip__step + .gf-aip__step::before { display: none; }
+  .gf-aip__stepname { max-width: 100%; font-size: 14px; }
+  .gf-aip__analysis { flex-direction: column; align-items: flex-start; }
+  .gf-aip__actions { flex-wrap: nowrap; }
+  .gf-aip__help { font-size: 14px; }
+  .gf-aip__btn { min-width: 88px; padding: 0 16px; }
+  /* 결과 카드: 적합도를 제목 아래 줄로 내려 본문 폭을 확보 */
+  .gf-aip__results .gf-card--airec { grid-template-columns: 28px 64px minmax(0, 1fr); }
+  .gf-aip__results .gf-card--airec .gf-airec__fitbox { grid-column: 2 / -1; flex-direction: row; align-items: center; justify-content: space-between; min-width: 0; }
+  .gf-airec__bar { flex: 1; margin-left: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gf-aip__alist li { transition: none; }
+}
