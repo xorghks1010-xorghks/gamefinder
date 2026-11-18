@@ -36,7 +36,7 @@
 .gf-footer :focus-visible { outline-color: #fff; }
 
 .gf-footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-top: 24px; }
-.gf-footer__copy, .gf-footer__credit { margin: 0; font-size: 13px; color: rgba(255, 255, 255, 0.5); }
+.gf-footer__copy, .gf-footer__credit { margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.5); }
 
 @media (max-width: 960px) {
   .gf-footer__top { flex-direction: column; gap: 24px; }

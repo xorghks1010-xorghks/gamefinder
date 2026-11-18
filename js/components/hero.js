@@ -12,6 +12,8 @@
   var ICONS = {
     prev: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>',
     next: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>',
+    pause: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
+    play: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.8l-10-6.5A1 1 0 0 0 8 5.5Z"/></svg>',
     arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
     sparkle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.500" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.800 5.200L19 10l-5.200 1.800L12 17l-1.800-5.200L5 10l5.200-1.800L12 3Z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2Z"/></svg>',
     tag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.500" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9-9-9Z"/><circle cx="8" cy="8" r="1.500"/></svg>',
@@ -83,7 +85,8 @@
       '<button type="button" class="gf-hero__arrow gf-hero__arrow--prev" aria-label="이전 슬라이드">' + ICONS.prev + '</button>' +
       '<button type="button" class="gf-hero__arrow gf-hero__arrow--next" aria-label="다음 슬라이드">' + ICONS.next + '</button>' +
       '<div class="gf-hero__dots"><div class="container gf-hero__dots-inner">' + dotsHtml +
-        '<span class="gf-hero__count" aria-hidden="true"></span></div></div>';
+        '<span class="gf-hero__count" aria-hidden="true"></span>' +
+        '<button type="button" class="gf-hero__pause" aria-label="자동 전환 멈춤">' + ICONS.pause + '</button></div></div>';
 
     var section = root;
     section.style.setProperty('--gf-interval', interval + 'ms');
@@ -93,6 +96,7 @@
     var dotEls = Array.prototype.slice.call(root.querySelectorAll('.gf-hero__dot'));
     var prevBtn = root.querySelector('.gf-hero__arrow--prev');
     var nextBtn = root.querySelector('.gf-hero__arrow--next');
+    var pauseBtn = root.querySelector('.gf-hero__pause');
 
     // 이미지 로딩 실패 시 폴백 비주얼만 남김
     Array.prototype.forEach.call(root.querySelectorAll('.gf-slide__img'), function (img) {
@@ -110,6 +114,7 @@
     var suppressClick = false;
     var hovering = false;
     var focusing = false;
+    var userPaused = false;   // 사용자가 일시정지 버튼으로 멈춘 상태 (WCAG 2.2.2)
     var timer = null;
     var lastPos = slideEls.map(function (_, i) { return relPos(i); });
 
@@ -155,7 +160,7 @@
 
     // ---------- 자동 전환 ----------
     function canAutoplay() {
-      return count > 1 && !hovering && !focusing && !pressed && !dragging &&
+      return count > 1 && !userPaused && !hovering && !focusing && !pressed && !dragging &&
              !document.hidden && !reduceMotion.matches;
     }
 
@@ -187,6 +192,13 @@
     function onPrev() { prev(); }
     function onNext() { next(); }
     var dotHandlers = dotEls.map(function (_, i) { return function () { goTo(i); }; });
+
+    function onTogglePause() {
+      userPaused = !userPaused;
+      pauseBtn.innerHTML = userPaused ? ICONS.play : ICONS.pause;
+      pauseBtn.setAttribute('aria-label', userPaused ? '자동 전환 재생' : '자동 전환 멈춤');
+      schedule();
+    }
 
     function onKeydown(e) {
       if (e.key === 'ArrowLeft') { prev(); e.preventDefault(); }
@@ -269,6 +281,7 @@
     var bindings = [
       [prevBtn, 'click', onPrev],
       [nextBtn, 'click', onNext],
+      [pauseBtn, 'click', onTogglePause],
       [section, 'keydown', onKeydown],
       [section, 'pointerenter', onEnter],
       [section, 'pointerleave', onLeave],

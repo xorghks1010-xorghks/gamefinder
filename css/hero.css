@@ -216,14 +216,14 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 44px;
+  bottom: 34px;   /* 점 높이를 24→44px로 키운 만큼 낮춰 보이는 위치는 그대로 */
   z-index: 5;
 }
 .gf-hero__dots-inner { display: flex; align-items: center; gap: 4px; }
 .gf-hero__dot {
   position: relative;
   width: 56px;
-  height: 24px;
+  height: 44px;   /* 터치 영역 44px 확보 (보이는 바는 가운데 4px) */
   padding: 0;
   border: 0;
   background: transparent;
@@ -233,7 +233,7 @@
   position: absolute;
   left: 2px;
   right: 2px;
-  top: 10px;
+  top: 20px;
   height: 4px;
   border-radius: 2px;
   background: rgba(255, 255, 255, 0.3);
@@ -247,7 +247,7 @@
   position: absolute;
   left: 2px;
   right: 2px;
-  top: 10px;
+  top: 20px;
   height: 4px;
   border-radius: 2px;
   background: #fff;
@@ -260,6 +260,21 @@
   animation: gf-progress var(--gf-interval, 5000ms) linear both;
 }
 @keyframes gf-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.gf-hero__pause {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: 0 0 0 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.gf-hero__pause:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
+.gf-hero__pause svg { width: 18px; height: 18px; }
 .gf-hero__count {
   margin-left: 16px;
   color: rgba(255, 255, 255, 0.7);
@@ -309,6 +324,6 @@
       linear-gradient(180deg, rgba(13, 24, 48, 0.55) 0%, rgba(13, 24, 48, 0) 20%);
   }
   .gf-hero__arrow { display: none; }
-  .gf-hero__dots { bottom: 36px; }
+  .gf-hero__dots { bottom: 26px; }
   .gf-hero__dot { width: 44px; }
 }

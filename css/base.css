@@ -23,6 +23,7 @@
 
   --container: 1264px;      /* 좌우 여백 32px 제외 시 콘텐츠 폭 1200px */
   --gutter: 32px;
+  --gutter-in: 32px;
   --header-h: 72px;
 
   /* 모션 (200~500ms) */
@@ -98,9 +99,11 @@ img { max-width: 100%; }
   .gf-reveal { opacity: 1; transform: none; transition: none; }
 }
 
+/* 반응형 좌우 여백은 % (화면 폭 비례). 데스크톱은 px 고정.
+   --gutter-in : 컨테이너 안쪽 콘텐츠 폭 기준으로 환산한 같은 여백 (갤러리 bleed용) */
 @media (max-width: 960px) {
-  :root { --gutter: 24px; --header-h: 64px; }
+  :root { --gutter: 4%; --gutter-in: calc(4% / 0.92); --header-h: 64px; }
 }
 @media (max-width: 600px) {
-  :root { --gutter: 16px; }
+  :root { --gutter: 5%; --gutter-in: calc(5% / 0.9); }
 }

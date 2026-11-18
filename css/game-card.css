@@ -96,16 +96,25 @@
   transition: opacity var(--t-base) var(--ease);
   pointer-events: none;
 }
-.gf-card--rank:hover::after, .gf-card--rank:focus-visible::after { opacity: 1; }
+/* 링크가 제목 안으로 들어갔으므로 포커스는 :focus-within 으로 감지 */
+.gf-card--rank:hover::after, .gf-card--rank:focus-within::after { opacity: 1; }
+/* 클릭 영역은 이미지·정보 레이어(z-index 3~4)보다 위, 포커스 링은 어두운 카드 위라 흰색 */
+/* 정보 영역(.gf-card__info)이 position:absolute 라 ::after 가 그 안에 갇히므로, 크게 늘려서 카드(overflow:hidden)까지 덮음 */
+.gf-card--rank .gf-card__stretch::after { z-index: 5; inset: -1000px; }
+/* 클릭 영역을 늘려서 포커스 링이 잘리므로, 링은 카드 자체에 그림 */
+.gf-card--rank .gf-card__stretch:focus-visible::after { outline: none; }
+/* outline 은 이미지(z-index) 레이어 밑에 깔려 안 보이므로 맨 위(z-index 6) 가상 요소로 그림 */
+.gf-card--rank::before { content: ""; position: absolute; inset: 0; z-index: 6; border-radius: inherit; pointer-events: none; }
+.gf-card--rank:has(.gf-card__stretch:focus-visible)::before { box-shadow: inset 0 0 0 3px #fff; }
 
 /* 순위 숫자: 이미지 위에 겹치는 큰 외곽선 숫자 */
 .gf-card__rank {
   position: absolute;
-  top: 8px;
-  left: 14px;
+  top: clamp(4px, 0.63vw, 8px);
+  left: clamp(8px, 1.1vw, 14px);
   z-index: 4;
   color: transparent;
-  font-size: 54px;
+  font-size: clamp(30px, 4.3vw, 54px);
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.05em;
@@ -117,17 +126,17 @@
 .gf-card--rank:hover .gf-card__rank { color: rgba(255, 255, 255, 0.95); transform: translateY(2px); }
 .gf-card__chip {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: clamp(8px, 1.1vw, 14px);
+  right: clamp(8px, 1.1vw, 14px);
   z-index: 4;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 4px 10px;
+  padding: 0.3em 0.75em;
   border-radius: 999px;
   background: rgba(13, 24, 48, 0.62);
   color: #fff;
-  font-size: 13px;
+  font-size: clamp(12px, 1.03vw, 13px);
   font-weight: 700;
   backdrop-filter: blur(6px);
 }
@@ -153,14 +162,14 @@
 .gf-card--rank:hover .gf-card__meta { color: #fff; }
 
 /* 1위 대표 카드 / 2위 와이드 카드 */
-.gf-item--r1 .gf-card__rank { top: 14px; left: 24px; font-size: 132px; color: transparent; }
+.gf-item--r1 .gf-card__rank { top: clamp(8px, 1.1vw, 14px); left: clamp(14px, 1.9vw, 24px); font-size: clamp(72px, 10.4vw, 132px); color: transparent; }
 .gf-item--r1 .gf-card__rank { background: linear-gradient(180deg, #fff 10%, var(--blue-soft) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-stroke: 0; }
 .gf-item--r1 .gf-card--rank:hover .gf-card__rank { color: transparent; }
 .gf-item--r1 .gf-card__info { padding: 32px; }
 .gf-item--r1 .gf-card__title { font-size: 34px; letter-spacing: -0.03em; }
 .gf-item--r1 .gf-card__meta { font-size: 15px; margin-top: 8px; }
-.gf-item--r1 .gf-card__chip { top: 22px; right: 22px; padding: 6px 14px; font-size: 15px; background: var(--blue); }
-.gf-item--r2 .gf-card__rank { font-size: 84px; }
+.gf-item--r1 .gf-card__chip { top: clamp(12px, 1.7vw, 22px); right: clamp(12px, 1.7vw, 22px); padding: 0.4em 0.95em; font-size: clamp(12px, 1.2vw, 15px); background: var(--blue); }
+.gf-item--r2 .gf-card__rank { font-size: clamp(48px, 6.6vw, 84px); }
 .gf-item--r2 .gf-card__info { padding: 24px; }
 .gf-item--r2 .gf-card__title { font-size: 24px; }
 
@@ -170,29 +179,30 @@
 .gf-card--latest .gf-card__shade { background: linear-gradient(0deg, rgba(8, 14, 30, 0.55) 0%, rgba(8, 14, 30, 0) 50%); }
 .gf-card__date-badge {
   position: absolute;
-  left: 12px;
-  top: 12px;
+  left: 0.75em;
+  top: 0.75em;
   z-index: 4;
-  padding: 6px 12px;
-  border-radius: 10px;
+  padding: 0.375em 0.75em;
+  border-radius: 0.625em;
+  font-size: clamp(11px, 1.25vw, 16px);
   background: #fff;
   color: var(--navy);
   text-align: center;
   line-height: 1.15;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
 }
-.gf-card__date-badge b { display: block; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.gf-card__date-badge small { display: block; color: var(--muted); font-size: 11px; font-weight: 700; }
+.gf-card__date-badge b { display: block; font-size: 1.25em; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.gf-card__date-badge small { display: block; color: #475569; font-size: max(11px, 0.6875em); font-weight: 700; }
 .gf-card__new {
   position: absolute;
-  right: 12px;
-  top: 12px;
+  right: clamp(8px, 1vw, 12px);
+  top: clamp(8px, 1vw, 12px);
   z-index: 4;
-  padding: 4px 10px;
+  padding: 0.35em 0.85em;
   border-radius: 999px;
   background: var(--blue);
   color: #fff;
-  font-size: 12px;
+  font-size: clamp(11px, 0.95vw, 12px);
   font-weight: 800;
   letter-spacing: 0.06em;
 }
@@ -205,6 +215,10 @@
   transition: color var(--t-fast);
 }
 .gf-card--latest:hover .gf-card__title { color: var(--blue-soft); }
+.gf-card--latest:focus-within .gf-card__title { color: var(--blue-soft); }
+/* 링크가 제목 안으로 들어갔으므로: 클릭 영역은 배지(z-index 4)보다 위, 포커스 링은 어두운 배경 위라 밝은 색 */
+.gf-card--latest .gf-card__stretch::after { z-index: 5; }
+.gf-card--latest .gf-card__stretch:focus-visible::after { outline-color: var(--blue-soft); outline-offset: 4px; border-radius: 14px; }
 .gf-card--latest .gf-card__meta { color: var(--on-dark-muted); }
 
 /* ============ 대표 할인 카드 ============ */
@@ -264,7 +278,7 @@
 .gf-btn:focus-visible { outline-color: #fff; }
 
 /* ============ 스토어 구분 ============ */
-.gf-store { --store-color: #94a3b8; display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: 0.02em; }
+.gf-store { --store-color: #94a3b8; display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 14px; font-weight: 700; letter-spacing: 0.02em; }
 .gf-store[data-store="Steam"] { --store-color: #4aa8e0; }
 .gf-store[data-store="Epic Games"] { --store-color: #e5e7eb; }
 .gf-store__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--store-color); }
@@ -309,6 +323,10 @@
 .gf-card--default .gf-card__body { padding: 10px 2px 0; }
 .gf-card--default .gf-card__title { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; transition: color var(--t-fast); }
 .gf-card--default:hover .gf-card__title { color: var(--blue-soft); }
+.gf-card--default:focus-within .gf-card__title { color: var(--blue-soft); }
+/* 링크가 제목 안으로 들어갔으므로: 클릭 영역은 이미지 레이어(z-index 2~4)보다 위 */
+.gf-card--default .gf-card__stretch::after { z-index: 5; }
+.gf-card--default .gf-card__stretch:focus-visible::after { outline-offset: 4px; border-radius: 12px; }
 .gf-card--default .gf-card__meta { color: var(--muted); }
 
 /* ============ 로딩 스켈레톤 ============ */
@@ -338,11 +356,8 @@
 @media (max-width: 600px) {
   .gf-card--rank .gf-card__info { padding: 14px; }
   .gf-card--rank .gf-card__title { font-size: 15px; }
-  .gf-card__rank { font-size: 42px; top: 6px; left: 10px; }
-  .gf-item--r1 .gf-card__rank { font-size: 130px; left: 16px; }
   .gf-item--r1 .gf-card__info { padding: 22px; }
   .gf-item--r1 .gf-card__title { font-size: 26px; }
-  .gf-item--r2 .gf-card__rank { font-size: 76px; }
   .gf-item--r2 .gf-card__title { font-size: 20px; }
   .gf-card--feature { min-height: 440px; }
   .gf-card__content { padding: 22px; }

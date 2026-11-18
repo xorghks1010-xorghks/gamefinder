@@ -145,12 +145,12 @@
 .gf-dtable-wrap { overflow-x: auto; }
 .gf-dtable { width: 100%; border-collapse: collapse; font-size: 14px; }
 .gf-dtable th, .gf-dtable td { padding: 11px 6px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
-.gf-dtable thead th { color: var(--muted); font-size: 12px; font-weight: 700; }
+.gf-dtable thead th { color: var(--muted); font-size: 14px; font-weight: 700; }
 .gf-dtable tbody th { color: var(--heading); font-weight: 700; white-space: nowrap; }
-.gf-dtable tbody th em { margin-left: 6px; padding: 2px 7px; border-radius: 999px; background: rgba(255, 176, 32, 0.18); color: var(--sale); font-size: 11px; font-style: normal; font-weight: 800; }
+.gf-dtable tbody th em { margin-left: 6px; padding: 2px 7px; border-radius: 999px; background: rgba(255, 176, 32, 0.18); color: var(--sale); font-size: 12px; font-style: normal; font-weight: 800; }
 .gf-dtable s { color: var(--muted); font-size: 13px; }
 .gf-dprice__now { color: #fff; font-weight: 800; white-space: nowrap; }
-.gf-dprice__now small { margin-left: 4px; color: var(--sale); font-size: 12px; }
+.gf-dprice__now small { margin-left: 4px; color: var(--sale); font-size: 14px; }
 .gf-dtable tr.is-best .gf-dprice__now { color: var(--sale); }
 .gf-dbuy {
   display: inline-flex;
@@ -168,7 +168,7 @@
 .gf-dbuy svg { width: 13px; height: 13px; }
 .gf-dbuy:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
 
-.gf-dsource { margin: 8px 0 72px; color: var(--muted); font-size: 12.5px; }
+.gf-dsource { margin: 8px 0 72px; color: var(--muted); font-size: 14px; }
 
 /* 로딩 스켈레톤 */
 .gf-dskel { border-radius: 10px; background: linear-gradient(90deg, rgba(128, 140, 175, 0.16) 25%, rgba(128, 140, 175, 0.3) 50%, rgba(128, 140, 175, 0.16) 75%); background-size: 200% 100%; animation: gf-shimmer 1.4s linear infinite; }

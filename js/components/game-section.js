@@ -56,11 +56,14 @@
             '</a>' +
           '</div>' +
         '</div>' +
-        '<div class="gf-section__body" aria-live="polite"></div>' +
+        '<div class="gf-section__body"></div>' +
+        // 목록 전체가 아니라 이 짧은 상태 문구만 스크린리더에 알림 (aria-live 범위 최소화)
+        '<p class="sr-only gf-section__status" role="status"></p>' +
         (cfg.sampleNote || cfg.note ? '<p class="gf-section__note">' + esc(cfg.sampleNote || cfg.note) + '</p>' : '') +
       '</div>';
 
     var body = root.querySelector('.gf-section__body');
+    var statusEl = root.querySelector('.gf-section__status');
     var unbindImages = card.bindImageFallback(body);
 
     // ---------- 레이아웃별 마크업 ----------
@@ -133,12 +136,14 @@
     function showLoading() {
       unbindEdges();
       body.setAttribute('aria-busy', 'true');
+      statusEl.textContent = '';
       body.innerHTML = skeletonHtml();
     }
 
     function showSuccess(items) {
       body.removeAttribute('aria-busy');
       body.innerHTML = listHtml(items);
+      statusEl.textContent = cfg.title + ' ' + items.length + '개를 불러왔습니다.';
       GF.motion.countUp(body.querySelectorAll('.gf-card__off'));   // 할인율 숫자 카운트업
       bindEdges();
     }
@@ -146,6 +151,7 @@
     function showMessage(text, withRetry) {
       unbindEdges();
       body.removeAttribute('aria-busy');
+      statusEl.textContent = cfg.title + ': ' + text;
       body.innerHTML = '<div class="gf-state">' +
         '<p class="gf-state__text">' + esc(text) + '</p>' +
         (withRetry ? '<button type="button" class="gf-state__retry">다시 시도</button>' : '') +

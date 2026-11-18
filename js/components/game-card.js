@@ -82,16 +82,17 @@
     var score = scoreText(g);
     return (
       '<li class="gf-item gf-item--rank gf-item--r' + (i + 1) + '">' +
-        '<a class="gf-card gf-card--rank" href="' + href(g) + '" data-game-id="' + esc(g.id) + '">' +
+        '<article class="gf-card gf-card--rank" data-game-id="' + esc(g.id) + '">' +
           media(g, 'rank', i) +
           '<span class="gf-card__shade"></span>' +
           '<span class="gf-card__rank" aria-hidden="true">' + (kr ? 'KR' : pad(n)) + '</span>' +
           (score ? '<span class="gf-card__chip"><span class="gf-card__star">' + STAR + '</span>' + score + '</span>' : '') +
           '<div class="gf-card__info">' +
-            '<h3 class="gf-card__title"><span class="sr-only">' + (kr ? '국내 인기작 ' : n + '위 ') + '</span>' + esc(g.title) + '</h3>' +
+            // 링크는 제목에만 걸고 카드 전체는 ::after 로 클릭 영역을 넓힘 (링크 이름이 길어지지 않게)
+            '<h3 class="gf-card__title"><a class="gf-card__stretch" href="' + href(g) + '"><span class="sr-only">' + (kr ? '국내 인기작 ' : n + '위 ') + '</span>' + esc(g.title) + '</a></h3>' +
             '<p class="gf-card__meta">' + metaLine(g) + '</p>' +
           '</div>' +
-        '</a>' +
+        '</article>' +
       '</li>'
     );
   }
@@ -99,22 +100,25 @@
   // ---------- 최신 게임 카드 ----------
   function latest(g, i) {
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(g.releaseDate || '');
-    var badge = '<span class="gf-card__date-badge"><small>출시일 미정</small></span>';
+    // 배지는 시각용(aria-hidden). 날짜·신작 여부는 제목 뒤 sr-only 텍스트로 읽어줌
+    var badge = '<span class="gf-card__date-badge" aria-hidden="true"><small>출시일 미정</small></span>';
     var isNew = '';
+    var srInfo = ' — 출시일 미정';
     if (m) {
-      badge = '<span class="gf-card__date-badge"><b>' + m[2] + '.' + m[3] + '</b><small>' + m[1] + '</small></span>';
+      badge = '<span class="gf-card__date-badge" aria-hidden="true"><b>' + m[2] + '.' + m[3] + '</b><small>' + m[1] + '</small></span>';
+      srInfo = ' — ' + m[1] + '년 ' + Number(m[2]) + '월 ' + Number(m[3]) + '일 출시';
       var days = (Date.now() - new Date(g.releaseDate + 'T00:00:00').getTime()) / 86400000;
-      if (days >= 0 && days <= 14) isNew = '<span class="gf-card__new">NEW</span>';
+      if (days >= 0 && days <= 14) { isNew = '<span class="gf-card__new" aria-hidden="true">NEW</span>'; srInfo += ', 신작'; }
     }
     return (
       '<li class="gf-item gf-item--latest">' +
-        '<a class="gf-card gf-card--latest" href="' + href(g) + '" data-game-id="' + esc(g.id) + '">' +
+        '<article class="gf-card gf-card--latest" data-game-id="' + esc(g.id) + '">' +
           media(g, 'latest', i, '<span class="gf-card__shade"></span>' + badge + isNew) +
           '<div class="gf-card__body">' +
-            '<h3 class="gf-card__title">' + esc(g.title) + '</h3>' +
+            '<h3 class="gf-card__title"><a class="gf-card__stretch" href="' + href(g) + '">' + esc(g.title) + '<span class="sr-only">' + srInfo + '</span></a></h3>' +
             '<p class="gf-card__meta">' + metaLine(g) + '</p>' +
           '</div>' +
-        '</a>' +
+        '</article>' +
       '</li>'
     );
   }
@@ -172,13 +176,13 @@
   function plain(g, i) {
     return (
       '<li class="gf-item gf-item--default">' +
-        '<a class="gf-card gf-card--default" href="' + href(g) + '" data-game-id="' + esc(g.id) + '">' +
+        '<article class="gf-card gf-card--default" data-game-id="' + esc(g.id) + '">' +
           media(g, 'default', i) +
           '<div class="gf-card__body">' +
-            '<h3 class="gf-card__title">' + esc(g.title) + '</h3>' +
+            '<h3 class="gf-card__title"><a class="gf-card__stretch" href="' + href(g) + '">' + esc(g.title) + '</a></h3>' +
             '<p class="gf-card__meta">' + metaLine(g) + '</p>' +
           '</div>' +
-        '</a>' +
+        '</article>' +
       '</li>'
     );
   }
