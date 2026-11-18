@@ -317,6 +317,11 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* 신작 카드의 출시일 배지: 할인 배지(.gf-card__off-badge) 틀을 쓰되 날짜를 두 줄(월.일 / 연도)로 */
+.gf-card__date-tag { display: flex; flex-direction: column; align-items: center; color: var(--blue-soft); line-height: 1.15; text-align: center; }
+.gf-card__date-tag b { font-size: 1em; }
+.gf-card__date-tag small { color: var(--on-dark-muted); font-size: max(11px, 0.6em); font-weight: 700; }
+
 /* ============ 일반 카드 (게임 찾기·상세 등에서 재사용) ============ */
 .gf-card--default { border-radius: 0; overflow: visible; }
 .gf-card--default .gf-card__media { aspect-ratio: 3 / 4; border-radius: 12px; }

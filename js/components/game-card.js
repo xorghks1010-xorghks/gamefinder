@@ -6,6 +6,7 @@
  *           'feature' 대표 할인 카드 — 큰 키아트 + 할인율·가격·스토어 이동 버튼
  *           'row'     가로형 할인 카드 — 작은 커버 + 스토어·가격·할인율
  *           'default' 일반 카드 — 3:4 커버 + 제목/메타
+ *           'release' 가로형 신작 카드 — 작은 커버 + 출처·제목·장르 + 출시일 배지 (신작 목록 페이지용)
  *     ('popular' → 'rank', 'sale' → 'row' 별칭 지원)
  *   GameFinder.gameCard.skeleton(type, index) → 로딩용 HTML
  *   GameFinder.gameCard.bindImageFallback(containerEl) → 이미지 실패 시 대체 이미지 → 디자인된 Fallback
@@ -172,6 +173,31 @@
     );
   }
 
+  // ---------- 가로형 신작 카드 (신작 목록 페이지) ----------
+  function release(g, i) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(g.releaseDate || '');
+    var tag = '<span class="gf-card__off-badge gf-card__date-tag" aria-hidden="true"><small>미정</small></span>';
+    var srInfo = ' — 출시일 미정';
+    // 신작 목록은 전부 최근 출시작이라 NEW 배지는 붙이지 않음 (전부 NEW 면 의미가 없음)
+    if (m) {
+      tag = '<span class="gf-card__off-badge gf-card__date-tag" aria-hidden="true"><b>' + m[2] + '.' + m[3] + '</b><small>' + m[1] + '</small></span>';
+      srInfo = ' — ' + m[1] + '년 ' + Number(m[2]) + '월 ' + Number(m[3]) + '일 출시';
+    }
+    return (
+      '<li class="gf-item gf-item--row">' +
+        '<article class="gf-card gf-card--row gf-card--release" data-game-id="' + esc(g.id) + '">' +
+          media(g, 'row', i) +
+          '<div class="gf-card__body">' +
+            storeChip('Steam', 'gf-store') +
+            '<h3 class="gf-card__title"><a class="gf-card__stretch" href="' + href(g) + '">' + esc(g.title) + '<span class="sr-only">' + srInfo + '</span></a></h3>' +
+            '<p class="gf-card__meta">' + metaLine(g) + '</p>' +
+          '</div>' +
+          tag +
+        '</article>' +
+      '</li>'
+    );
+  }
+
   // ---------- 일반 카드 ----------
   function plain(g, i) {
     return (
@@ -187,7 +213,7 @@
     );
   }
 
-  var RENDER = { rank: rank, latest: latest, feature: feature, row: row, 'default': plain };
+  var RENDER = { rank: rank, latest: latest, feature: feature, row: row, release: release, 'default': plain };
 
   function render(game, type, index) {
     var t = ALIAS[type] || type;
@@ -202,7 +228,7 @@
       return '<li class="gf-item gf-item--rank gf-item--r' + (i + 1) + '" aria-hidden="true"><div class="gf-card gf-card--rank gf-skel"></div></li>';
     }
     if (t === 'feature') return '<div class="gf-card gf-card--feature gf-skel" aria-hidden="true"></div>';
-    if (t === 'row') return '<li class="gf-item gf-item--row" aria-hidden="true"><div class="gf-card gf-card--row gf-skel"></div></li>';
+    if (t === 'row' || t === 'release') return '<li class="gf-item gf-item--row" aria-hidden="true"><div class="gf-card gf-card--row gf-skel"></div></li>';
     return '<li class="gf-item gf-item--' + t + '" aria-hidden="true"><div class="gf-card gf-card--' + t + '">' +
       '<div class="gf-card__media gf-skel"></div>' +
       '<div class="gf-card__body"><span class="gf-skel gf-skel__line gf-skel__line--title"></span><span class="gf-skel gf-skel__line"></span></div>' +

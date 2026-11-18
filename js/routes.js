@@ -39,6 +39,19 @@
     return ROUTES.find.path + (qs ? '?' + qs : '');
   }
 
+  /** 현재 hash 의 쿼리를 객체로: '#/sale?store=1&sort=savings' → { store: '1', sort: 'savings' } */
+  function currentQuery() {
+    var i = window.location.hash.indexOf('?');
+    var out = {};
+    if (i === -1) return out;
+    window.location.hash.slice(i + 1).split('&').forEach(function (pair) {
+      if (!pair) return;
+      var kv = pair.split('=');
+      try { out[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || ''); } catch (e) { /* 잘못된 인코딩은 무시 */ }
+    });
+    return out;
+  }
+
   /** 현재 hash 가 게임 상세면 게임 id, 아니면 null: '#/game/730' → '730' */
   function currentGameId() {
     var m = /^#\/game\/([^?]+)/.exec(window.location.hash);
@@ -65,6 +78,7 @@
     gameHref: gameHref,
     findHref: findHref,
     currentRouteId: currentRouteId,
+    currentQuery: currentQuery,
     currentGameId: currentGameId
   };
 })(window.GameFinder = window.GameFinder || {});

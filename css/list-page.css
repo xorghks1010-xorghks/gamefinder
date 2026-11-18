@@ -1,0 +1,117 @@
+/* 목록 페이지(할인 게임 #/sale) — 상단 제목 + 필터 줄 + 카드 그리드. 다크 톤 변수(base.css) 사용 */
+.gf-page[hidden] { display: none; }
+
+/* ============ 상단: 제목 + 필터 ============ */
+.gf-page__head {
+  padding: 56px 0 28px;
+  background: var(--bg);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);   /* 메인 할인 섹션과 같은 점 패턴 */
+  background-size: 22px 22px;
+}
+.gf-page__title:focus { outline: none; }
+
+.gf-page__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin-top: 32px;
+}
+
+/* 스토어 필터 칩 */
+.gf-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.gf-chip {
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+.gf-chip:hover { border-color: var(--blue-soft); }
+.gf-chip[aria-pressed="true"] { border-color: var(--blue); background: var(--blue); color: #fff; }   /* 흰 글씨 / 파랑 4.7:1 */
+
+/* 정렬 select */
+.gf-select { display: flex; align-items: center; gap: 10px; }
+.gf-select label { color: var(--muted); font-size: 15px; font-weight: 600; }
+.gf-select select {
+  min-height: 44px;
+  padding: 0 40px 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.500 11 1.500' fill='none' stroke='%239aa7c0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 16px center;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.gf-select select:hover { border-color: var(--blue-soft); }
+
+/* ============ 본문 ============ */
+.gf-page__body { padding-top: 28px; padding-bottom: 96px; }
+.gf-page__count { margin: 0 0 16px; color: var(--muted); font-size: 15px; font-weight: 600; }
+.gf-page__count:empty { display: none; }
+
+/* 한 줄에 한 게임. 카드 안의 이미지·글씨·간격이 화면 폭에 따라 같이 줄어듦 (clamp: 최소값 ~ 화면 비례 ~ 최대값).
+   좌우 여백은 base.css 의 --gutter(%) 를 그대로 씀. 가로로 너무 퍼지지 않게 목록 영역 폭은 제한. */
+.gf-page .container { max-width: 1040px; }
+
+.gf-rows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(10px, 1.4vw, 14px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.gf-rows .gf-item { min-height: 0; }
+.gf-rows .gf-card--row {
+  grid-template-columns: clamp(72px, 13vw, 124px) minmax(0, 1fr) auto;
+  gap: clamp(12px, 2.2vw, 24px);
+  padding: clamp(10px, 1.6vw, 16px);
+  padding-right: clamp(12px, 2.4vw, 28px);
+}
+.gf-rows .gf-card--row .gf-card__media { width: 100%; }
+.gf-rows .gf-card--row .gf-card__title { margin: 4px 0 clamp(6px, 1vw, 10px); font-size: clamp(15px, 2.6vw, 21px); }
+.gf-rows .gf-card--row .gf-card__price-now { font-size: clamp(18px, 3.4vw, 28px); }
+.gf-rows .gf-card--row .gf-card__price-old { font-size: clamp(14px, 1.9vw, 16px); }
+.gf-rows .gf-card--row .gf-store { font-size: clamp(14px, 1.8vw, 15px); }
+.gf-rows .gf-card--row .gf-card__off-badge { padding: 0.45em 0.7em; border-radius: 0.6em; font-size: clamp(15px, 2.6vw, 24px); }
+
+/* 더 보기 */
+.gf-page__more { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 36px; }
+.gf-more {
+  min-width: 180px;
+  min-height: 48px;
+  padding: 0 28px;
+  border: 1px solid var(--blue-soft);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--blue-soft);
+  font-size: 16px;
+  font-weight: 700;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.gf-more:hover:not(:disabled) { background: var(--blue); border-color: var(--blue); color: #fff; }
+.gf-more:disabled { opacity: 0.6; cursor: default; }
+.gf-more__error { margin: 0; color: var(--sale); font-size: 15px; }
+
+/* ============ 반응형 ============ */
+@media (max-width: 960px) {
+  .gf-page__head { padding: 40px 0 24px; }
+  .gf-page__body { padding-bottom: 72px; }
+}
+@media (max-width: 600px) {
+  .gf-page__head { padding: 32px 0 20px; }
+  .gf-page__tools { margin-top: 24px; }
+  .gf-select { width: 100%; }
+  .gf-select select { flex: 1; }
+  .gf-chip { flex: 1 1 auto; padding: 0 12px; white-space: nowrap; }   /* 칩 3개가 한 줄에, 글자는 줄바꿈 없이 */
+}

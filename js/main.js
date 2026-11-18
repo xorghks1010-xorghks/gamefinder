@@ -49,41 +49,66 @@
   var toTop = GF.createToTop();
   var motion = GF.createMotion(document.getElementById('hero'));   // Hero 시차 · 카드 틸트 (마우스 전용)
 
-  // ---------- 화면 전환: 메인 ↔ 게임 상세(#/game/<id>) ----------
-  // 같은 페이지 안에서 메인(<main id="main">)과 상세(<main id="detail">) 중 하나만 보여줍니다.
-  var mainEl = document.getElementById('main');
-  var detailEl = document.getElementById('detail');
-  var detail = GF.createGameDetail(detailEl);
-  var showingDetail = false;
-  var mainScrollY = 0;   // 메인에서 상세로 갈 때의 스크롤 위치 (돌아올 때 복원)
+  // ---------- 화면 전환: 메인 / 목록 페이지(#/sale, #/new …) / 게임 상세(#/game/<id>) ----------
+  // 같은 페이지 안에서 <main id="main"> · <main id="page-…"> · <main id="detail"> 중 하나만 보여줍니다.
+  // 목록 페이지는 page-configs.js 의 설정마다 <main id="page-<route>"> 를 만들어 상세 화면 뒤에 붙입니다.
+  var viewEls = {
+    main: document.getElementById('main'),
+    detail: document.getElementById('detail')
+  };
+  var detail = GF.createGameDetail(viewEls.detail);
+  var listPages = {};            // route → createListPage 인스턴스 (화면 이름도 route 와 같음: 'sale', 'new' …)
+  var scrollOf = { main: 0 };    // 화면을 떠날 때의 스크롤 위치 — 상세에서 "돌아올 때"만 복원
+  var anchor = viewEls.detail;
+  Object.keys(GF.pageConfigs).forEach(function (route) {
+    var el = document.createElement('main');
+    el.id = 'page-' + route;
+    el.className = 'gf-page';
+    el.hidden = true;
+    anchor.insertAdjacentElement('afterend', el);
+    anchor = el;
+    viewEls[route] = el;
+    listPages[route] = GF.createListPage(el, GF.pageConfigs[route]);
+    scrollOf[route] = 0;
+  });
+  var view = 'main';
+
+  function viewFor() {
+    if (GF.routes.currentGameId()) return 'detail';
+    var routeId = GF.routes.currentRouteId();
+    return listPages[routeId] ? routeId : 'main';
+  }
 
   function onRoute() {
-    var gameId = GF.routes.currentGameId();
-    if (gameId) {
-      if (!showingDetail) mainScrollY = window.scrollY;
-      showingDetail = true;
-      mainEl.hidden = true;
-      detailEl.hidden = false;
+    var prev = view;
+    var next = viewFor();
+    if (prev !== next && scrollOf[prev] !== undefined) scrollOf[prev] = window.scrollY;
+    if (prev === 'detail' && next !== 'detail') detail.hide();
+    if (listPages[prev] && prev !== next) listPages[prev].hide();
+
+    view = next;
+    Object.keys(viewEls).forEach(function (k) { viewEls[k].hidden = k !== next; });
+
+    if (next === 'detail') {
       window.scrollTo(0, 0);
-      detail.show(gameId);
-    } else if (showingDetail) {
-      showingDetail = false;
-      detail.hide();
-      detailEl.hidden = true;
-      mainEl.hidden = false;
-      window.scrollTo(0, mainScrollY);
+      detail.show(GF.routes.currentGameId());
+    } else if (listPages[next]) {
+      if (prev !== next) window.scrollTo(0, prev === 'detail' ? scrollOf[next] : 0);   // 필터만 바꿀 때는 스크롤 유지
+      listPages[next].show(GF.routes.currentQuery(), { focus: prev !== next });
+    } else if (prev !== 'main') {
+      window.scrollTo(0, prev === 'detail' ? scrollOf.main : 0);
     }
   }
   window.addEventListener('hashchange', onRoute);
-  onRoute();   // 주소창에 #/game/... 을 직접 입력해 들어온 경우
+  onRoute();   // 주소창에 #/game/..., #/sale 등을 직접 입력해 들어온 경우
 
   // 로고·Home 은 "처음으로": 상세에서 누르면 메인 맨 위로, 이미 메인이면 부드럽게 맨 위로 올라감.
-  // (뒤로가기·"← 목록으로"는 보던 위치로 복원 — 위 mainScrollY)
+  // (뒤로가기·"← 목록으로"는 보던 위치로 복원 — 위 scrollOf)
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   function onHomeClick(e) {
     var a = e.target.closest && e.target.closest('.gf-logo, .gf-nav__link[data-route="home"], .gf-footer__logo, .gf-footer__nav a[href="#/"]');
     if (!a) return;
-    if (showingDetail) { mainScrollY = 0; return; }   // 주소는 그대로 #/ 로 이동, 복원할 위치만 맨 위로
+    if (view !== 'main') { scrollOf.main = 0; return; }   // 주소는 그대로 #/ 로 이동, 복원할 위치만 맨 위로
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
   }
@@ -105,6 +130,7 @@
     window.removeEventListener('hashchange', onRoute);
     document.removeEventListener('click', onHomeClick);
     detail.destroy();
+    Object.keys(listPages).forEach(function (r) { listPages[r].destroy(); });
     reveal.destroy();
   });
 })(window.GameFinder);

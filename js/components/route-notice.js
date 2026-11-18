@@ -6,14 +6,14 @@
 (function (GF) {
   'use strict';
 
-  var IMPLEMENTED = ['#/', '#'];
+  var IMPLEMENTED = ['#/', '#'];   // 여기에 더해 page-configs.js 에 있는 목록 페이지(#/sale, #/new …)도 구현된 것으로 취급
   var HIDE_MS = 3000;
 
   function createRouteNotice() {
     var el = document.createElement('div');
     el.className = 'gf-notice';
     el.setAttribute('role', 'status');
-    el.textContent = '준비 중인 페이지입니다. 현재는 메인 화면과 게임 상세만 제공됩니다.';
+    el.textContent = '준비 중인 페이지입니다. 현재는 메인 화면, 신작, 할인 게임, 게임 상세만 제공됩니다.';
     document.body.appendChild(el);
 
     var timer = null;
@@ -28,7 +28,9 @@
       var a = e.target.closest && e.target.closest('a[href^="#"]');
       if (!a || a.classList.contains('skip-link')) return;
       var href = a.getAttribute('href');
-      if (IMPLEMENTED.indexOf(href) === -1 && href.indexOf('#/game/') !== 0) show();   // 게임 상세는 구현됨
+      var path = href.split('?')[0];   // '#/sale?store=1' 처럼 쿼리가 붙어도 같은 페이지
+      var isList = !!(GF.pageConfigs && GF.pageConfigs[path.replace('#/', '')]);
+      if (IMPLEMENTED.indexOf(path) === -1 && !isList && href.indexOf('#/game/') !== 0) show();   // 게임 상세는 구현됨
     }
 
     function onSearch() { show(); }

@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/to-top.css">
   <link rel="stylesheet" href="css/motion.css">
   <link rel="stylesheet" href="css/game-detail.css">
+  <link rel="stylesheet" href="css/list-page.css">
 </head>
 <body>
   <a class="skip-link" href="#main">본문 바로가기</a>
@@ -43,6 +44,8 @@
   <!-- 게임 상세(#/game/<id>)일 때만 보임. 내용은 js/components/game-detail.js 가 채웁니다 -->
   <main id="detail" class="gf-detail" hidden></main>
 
+  <!-- 목록 페이지(#/sale, #/new …)는 main.js 가 page-configs.js 의 설정마다 <main id="page-경로" class="gf-page"> 를 이 뒤에 만듭니다 -->
+
   <div id="footer-root"></div>
 
   <script src="js/routes.js"></script>
@@ -55,6 +58,8 @@
   <script src="js/components/game-card.js"></script>
   <script src="js/components/motion.js"></script>
   <script src="js/components/game-detail.js"></script>
+  <script src="js/components/list-page.js"></script>
+  <script src="js/components/page-configs.js"></script>
   <script src="js/components/game-section.js"></script>
   <script src="js/components/ai-intro.js"></script>
   <script src="js/components/explore.js"></script>

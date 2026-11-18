@@ -85,7 +85,7 @@
   }
 
   // 최근 1년 내 출시된 국내 PC 게임 → 목록용 Game 객체 (최신 순, steamTitles 와 겹치면 제외)
-  function domesticRecent(ftg, steamTitles) {
+  function domesticRecent(ftg, steamTitles, max) {
     var now = Date.now();
     return ftg.filter(function (x) {
       if (!/Windows/.test(x.platform || '')) return false;
@@ -95,7 +95,7 @@
       var t = new Date(x.release_date + 'T00:00:00').getTime();
       return t <= now && now - t <= DOMESTIC_WINDOW_DAYS * 86400000;
     }).sort(function (a, b) { return a.release_date < b.release_date ? 1 : -1; })
-      .slice(0, DOMESTIC_MAX).map(function (x) {
+      .slice(0, max || DOMESTIC_MAX).map(function (x) {
         return {
           id: 'ftg-' + x.id,
           title: x.title,
@@ -235,21 +235,101 @@
     });
   }
 
+  // CheapShark deal 한 줄 → 앱 공통 game 객체
+  function dealGame(d) {
+    var g = baseGame(d);
+    g.deal = {
+      store: STORE_NAMES[d.storeID] || '스토어',
+      regularPrice: parseFloat(d.normalPrice),
+      salePrice: parseFloat(d.salePrice),
+      discountRate: Math.round(parseFloat(d.savings)),
+      currency: 'USD',
+      url: dealUrl(d.dealID)   // 해당 스토어의 실제 상품 페이지로 이동
+    };
+    return g;
+  }
+
   function liveSale() {
     var q = '/deals?storeID=1,25&onSale=1&sortBy=DealRating&lowerPrice=5&steamRating=75&pageSize=40';
     return getJson(q).then(function (deals) {
-      return uniqueGames(deals).slice(0, 5).map(function (d) {
-        var g = baseGame(d);
-        g.deal = {
-          store: STORE_NAMES[d.storeID] || '스토어',
-          regularPrice: parseFloat(d.normalPrice),
-          salePrice: parseFloat(d.salePrice),
-          discountRate: Math.round(parseFloat(d.savings)),
-          currency: 'USD',
-          url: dealUrl(d.dealID)   // 해당 스토어의 실제 상품 페이지로 이동
-        };
-        return g;
+      return uniqueGames(deals).slice(0, 5).map(dealGame);
+    });
+  }
+
+  // ---------- 할인 게임 전체 목록 (#/sale) ----------
+  // 정렬: CheapShark 의 desc=1 은 "기본 방향을 뒤집는" 옵션입니다.
+  //   추천순(DealRating)·할인율(Savings)은 기본이 높은 순, 가격(Price)은 기본이 낮은 순 → 가격 높은 순일 때만 desc=1.
+  var SALE_PAGE_SIZE = 24;
+  var SALE_SORTS = {
+    rating:       'sortBy=DealRating',
+    savings:      'sortBy=Savings',
+    'price-asc':  'sortBy=Price',
+    'price-desc': 'sortBy=Price&desc=1'
+  };
+  var SALE_STORES = { all: '1,25', '1': '1', '25': '25' };
+
+  /** getSaleList({ store: 'all'|'1'|'25', sort: 'rating'|'savings'|'price-asc'|'price-desc', page: 0.. }) → { items, hasMore } */
+  function getSaleList(opts) {
+    opts = opts || {};
+    var store = SALE_STORES[opts.store] ? opts.store : 'all';
+    var sort = SALE_SORTS[opts.sort] ? opts.sort : 'rating';
+    var page = Math.max(0, parseInt(opts.page, 10) || 0);
+    var mode = mockMode();
+    if (mode) {
+      return mockRespond(mockSaleList(store, sort, page), mode).then(function (r) {
+        return Array.isArray(r) ? { items: r, hasMore: false } : r;   // ?mock=empty 는 [] 로 응답함
       });
+    }
+    // 너무 싼 게임($1 미만)과 평가가 낮은 게임(Steam 긍정 70% 미만)은 제외 — 메인(5달러·75%)보다 느슨하게
+    var q = '/deals?storeID=' + SALE_STORES[store] + '&onSale=1&lowerPrice=1&steamRating=70&' + SALE_SORTS[sort] +
+            '&pageSize=' + SALE_PAGE_SIZE + '&pageNumber=' + page;
+    return getJson(q).then(function (deals) {
+      return { items: uniqueGames(deals).map(dealGame), hasMore: deals.length >= SALE_PAGE_SIZE };
+    });
+  }
+
+  // ---------- 신작 전체 목록 (#/new) ----------
+  // CheapShark 는 출시일 정렬(sortBy=Release)의 앞쪽에 "미래 날짜"(잘못된 값 포함)가 많고(첫 페이지 60개 중 출시된 것 16개, 그중 리뷰 50개 이상 5개),
+  // 한 페이지가 며칠치뿐이라 → 한 번 요청에 여러 API 페이지를 이어서 받아 최소 REL_MIN_ITEMS 개를 채움.
+  // cursor = { p: 다음 API 페이지 번호 }. (국내 온라인 게임은 신작 페이지에 넣지 않음 — 메인 '최신 게임'에서만 섞어 보여줌)
+  var REL_API_PAGE = 60, REL_MIN_ITEMS = 16, REL_MAX_FETCH = 3;
+
+  function steamReleaseChunk(cursor) {
+    var now = Date.now() / 1000, out = [], p = cursor.p, fetched = 0, more = true;
+    function step() {
+      return getJson('/deals?storeID=1&sortBy=Release&steamRating=70&pageSize=' + REL_API_PAGE + '&pageNumber=' + p).then(function (deals) {
+        fetched++; p++;
+        more = deals.length >= REL_API_PAGE;
+        deals.forEach(function (d) {
+          if (!(d.releaseDate > 0 && d.releaseDate <= now)) return;      // 미래·없는 날짜 제외
+          if (parseInt(d.steamRatingCount, 10) >= 50) out.push(d);       // 리뷰 50개 미만 제외 (메인 최신 게임과 같은 기준)
+        });
+        if (more && uniqueGames(out).length < REL_MIN_ITEMS && fetched < REL_MAX_FETCH) return step();
+      });
+    }
+    return step().then(function () { return { deals: uniqueGames(out), nextP: p, more: more }; });
+  }
+
+  /** getReleaseList(cursor) → Promise<{ items, hasMore, next }> — 처음엔 cursor 없이 호출 */
+  function getReleaseList(cursor) {
+    var mode = mockMode();
+    if (mode) {
+      return mockRespond({ items: GF.mockData.latest.slice(), hasMore: false }, mode).then(function (r) {
+        return Array.isArray(r) ? { items: r, hasMore: false } : r;   // ?mock=empty 는 [] 로 응답함
+      });
+    }
+    cursor = cursor || { p: 0 };
+    // FreeToGame 은 장르를 채우는 데만 씀 (실패하면 장르 없이 표시)
+    return Promise.all([steamReleaseChunk(cursor), getFtg()]).then(function (res) {
+      var chunk = res[0];
+      chunk.deals.sort(function (a, b) { return b.releaseDate - a.releaseDate; });
+      var items = fillGenres(chunk.deals.map(function (d) {
+        var g = baseGame(d);
+        g.releaseDate = toIsoDate(d.releaseDate);
+        g.note = reviewNote(d);
+        return g;
+      }), res[1]);
+      return { items: items, hasMore: chunk.more, next: { p: chunk.nextP } };
     });
   }
 
@@ -276,6 +356,19 @@
       currency: 'KRW'
     };
     return copy;
+  }
+
+  // 예시 데이터로 같은 필터·정렬을 흉내냄 (?mock=...)
+  function mockSaleList(store, sort, page) {
+    var storeName = store === '1' ? 'Steam' : store === '25' ? 'Epic Games' : null;
+    var items = GF.mockData.sale.map(withDiscount).filter(function (g) { return !storeName || g.deal.store === storeName; });
+    items.sort(function (a, b) {
+      if (sort === 'savings') return b.deal.discountRate - a.deal.discountRate;
+      if (sort === 'price-asc') return a.deal.salePrice - b.deal.salePrice;
+      if (sort === 'price-desc') return b.deal.salePrice - a.deal.salePrice;
+      return 0;   // 추천순: 원래 순서
+    });
+    return { items: page === 0 ? items : [], hasMore: false };
   }
 
   function pick(live, mockItems) {
@@ -423,6 +516,8 @@
     getPopularGames: pick(livePopular, function () { return GF.mockData.popular.slice(0, 5); }),
     getLatestGames:  pick(liveLatest,  function () { return GF.mockData.latest.slice(0, 8); }),
     getSaleGames:    pick(liveSale,    function () { return GF.mockData.sale.slice(0, 5).map(withDiscount); }),
+    getSaleList:     getSaleList,
+    getReleaseList:  getReleaseList,
     isMock: function () { return !!mockMode(); },
     getPlatforms:    function () { return GF.mockData.platforms; },
     getGenres:       function () { return GF.mockData.genres; },
