@@ -13,7 +13,7 @@
     var el = document.createElement('div');
     el.className = 'gf-notice';
     el.setAttribute('role', 'status');
-    el.textContent = '준비 중인 페이지입니다. 현재는 메인 화면, 인기 순위, 신작, 할인 게임, 게임 상세만 제공됩니다.';
+    el.textContent = '준비 중인 페이지입니다. AI 추천은 아직 준비 중이며, 그 외 메뉴는 모두 이용할 수 있습니다.';
     document.body.appendChild(el);
 
     var timer = null;
@@ -33,16 +33,12 @@
       if (IMPLEMENTED.indexOf(path) === -1 && !isList && href.indexOf('#/game/') !== 0) show();   // 게임 상세는 구현됨
     }
 
-    function onSearch() { show(); }
-
     document.addEventListener('click', onClick);
-    document.addEventListener('gamefinder:search', onSearch);
 
     return {
       destroy: function () {
         clearTimeout(timer);
         document.removeEventListener('click', onClick);
-        document.removeEventListener('gamefinder:search', onSearch);
         el.remove();
       }
     };

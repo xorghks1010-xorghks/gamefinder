@@ -85,7 +85,11 @@
       }
     }
 
-    function onRoute() { setActive(routes.currentRouteId()); }
+    function onRoute() {
+      var id = routes.currentRouteId();
+      setActive(id);
+      if (id === 'search') input.value = routes.currentQuery().q || '';   // 검색 결과 화면에서는 검색창에 현재 검색어를 보여줌
+    }
 
     function onBreakpoint() { if (!mq.matches) setOpen(false); }
 

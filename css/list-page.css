@@ -19,6 +19,13 @@
   margin-top: 32px;
 }
 
+/* 칩 그룹 여러 개 (게임 찾기): 그룹마다 이름 + 칩들을 한 줄씩 쌓음 */
+.gf-toolgroup { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; min-width: 0; }
+.gf-toolgroup__title { min-width: 5.6em; color: var(--muted); font-size: 15px; font-weight: 700; }
+.gf-page__tools.is-stacked { flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 14px; }
+.gf-page__tools.is-stacked .gf-select { align-self: flex-start; margin-top: 6px; }
+.gf-page__tools.is-stacked .gf-chip { min-height: 40px; padding: 0 16px; font-size: 14px; }
+
 /* 스토어 필터 칩 */
 .gf-chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .gf-chip {
@@ -94,6 +101,46 @@
 .gf-rows .gf-card--rankrow .gf-card__no { font-size: clamp(20px, 4.4vw, 40px); }
 .gf-rows .gf-card--rankrow .gf-card__score { font-size: clamp(15px, 2.4vw, 22px); }
 
+/* 검색 결과 카드: 오른쪽 가격 칸 크기도 화면 폭에 따라 줄어듦 */
+.gf-rows .gf-card--result .gf-card__price-now { font-size: clamp(17px, 2.8vw, 24px); }
+.gf-rows .gf-card--result .gf-card__price-old { font-size: clamp(14px, 1.8vw, 15px); }
+.gf-rows .gf-card--result .gf-card__free { font-size: clamp(16px, 2.4vw, 22px); }
+.gf-rows .gf-card--result .gf-card__pricebox .gf-card__off-badge { font-size: clamp(14px, 1.9vw, 17px); }
+
+.gf-rows .gf-card--result .gf-card__mc { font-size: clamp(15px, 2.2vw, 20px); }
+.gf-card__mc { color: #6ee7a8; }
+
+/* 페이지 안 검색창 (검색 페이지) */
+.gf-page__search { display: flex; gap: 10px; max-width: 640px; margin-top: 28px; }
+.gf-page__search input {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-soft);
+  color: var(--text);
+  font-size: 16px;
+}
+.gf-page__search input::placeholder { color: var(--muted); }
+.gf-page__search input:hover { border-color: var(--blue-soft); }
+.gf-page__search input:focus { border-color: var(--blue-soft); outline: 2px solid var(--blue-soft); outline-offset: 2px; }
+.gf-page__search button {
+  min-width: 88px;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  transition: background var(--t-fast);
+}
+.gf-page__search button:hover { background: var(--blue-dark); }
+.gf-page__search + .gf-page__tools { margin-top: 20px; }
+
 /* 더 보기 */
 .gf-page__more { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 36px; }
 .gf-more {
@@ -119,6 +166,9 @@
 }
 @media (max-width: 600px) {
   .gf-page__head { padding: 32px 0 20px; }
+  .gf-toolgroup:not(:only-child), .gf-page__tools.is-stacked .gf-toolgroup { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .gf-page__tools:not(.is-stacked) .gf-toolgroup, .gf-page__tools:not(.is-stacked) .gf-chips { width: 100%; }
+  .gf-page__tools.is-stacked .gf-chip { flex: 0 0 auto; }
   .gf-page__tools { margin-top: 24px; }
   .gf-select { width: 100%; }
   .gf-select select { flex: 1; }

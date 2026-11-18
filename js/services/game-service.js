@@ -437,6 +437,211 @@
     });
   }
 
+  // ---------- 게임 검색 (#/search) ----------
+  // 세 곳을 함께 찾아 합침: ① CheapShark 제목 검색(Steam·Epic 가격이 있는 게임) ② Steam 인기 차트의 이름(무료 게임은 CheapShark 에 없음: Dota 2·CS2 등)
+  // ③ FreeToGame 목록(무료 온라인 게임, 국내 게임 포함). 그리고 편집 선정 국내 인기작은 한글 별칭으로도 찾음.
+  // CheapShark 는 단어 중간까지 일치시키고(elden → Hirschfelden), 한글처럼 못 찾는 검색어엔 엉뚱한 목록을 돌려줘서 → 제목에 검색어가 실제로 들어 있는 것만 남기고 관련도순으로 정렬.
+  var SEARCH_STEP = 20;
+  var KR_ALIASES = {
+    '578080':  ['배틀그라운드', '배그', 'pubg'],
+    '1599340': ['로스트아크', '로아'],
+    '582660':  ['검은사막'],
+    '216150':  ['메이플스토리', '메이플'],
+    '495910':  ['던전앤파이터', '던파']
+  };
+  var searchCache = {};   // 정규화한 검색어 → Promise<게임[]> (더 보기·다시 방문할 때 재사용)
+
+  // 0 정확히 같음 / 1 제목이 검색어로 시작 / 2 단어가 검색어로 시작 / 3 단어 중간에 포함
+  function searchRelevance(title, nq) {
+    var n = normTitle(title);
+    if (n === nq) return 0;
+    if (n.indexOf(nq) === 0) return 1;
+    var words = String(title).toLowerCase().split(/[^a-z0-9가-힣]+/);
+    for (var i = 0; i < words.length; i++) if (words[i] && words[i].indexOf(nq) === 0) return 2;
+    return 3;
+  }
+
+  function searchAll(q) {
+    var nq = normTitle(q);
+    if (!nq) return Promise.resolve([]);
+    if (searchCache[nq]) return searchCache[nq];
+
+    var dealsFailed = false;
+    var p = Promise.all([
+      getJson('/deals?title=' + encodeURIComponent(q) + '&storeID=1,25&pageSize=60').catch(function () { dealsFailed = true; return []; }),
+      getChart(),
+      getFtg()
+    ]).then(function (res) {
+      var deals = res[0], chart = res[1], ftg = res[2], lower = q.toLowerCase();
+      var out = [], seenApp = {}, seenTitle = {};
+      function add(g, pop) {
+        var t = normTitle(g.title);
+        if ((g.steamApp && seenApp[g.steamApp]) || seenTitle[t]) return;
+        if (g.steamApp) seenApp[g.steamApp] = true;
+        seenTitle[t] = true;
+        g._pop = pop || 0;
+        g._rel = searchRelevance(g.title, nq);
+        out.push(g);
+      }
+
+      // ① CheapShark: 같은 게임(gameID)은 가장 싼 스토어 한 줄만, 제목에 검색어가 있는 것만
+      var byGame = {};
+      deals.forEach(function (d) {
+        if (!d.steamAppID || normTitle(d.title).indexOf(nq) === -1) return;
+        var cur = byGame[d.gameID];
+        if (!cur || parseFloat(d.salePrice) < parseFloat(cur.salePrice)) byGame[d.gameID] = d;
+      });
+      Object.keys(byGame).forEach(function (k) {
+        var d = byGame[k], g = dealGame(d);
+        g.note = reviewNote(d);
+        g.steamApp = String(d.steamAppID);
+        add(g, parseInt(d.steamRatingCount, 10));
+      });
+
+      // ② 인기 차트(무료 게임 포함) — 이미 ① 에 있으면 건너뜀
+      if (chart) chart.items.forEach(function (c) {
+        if (normTitle(c.name).indexOf(nq) === -1) return;
+        var g = chartGame(c);
+        g.free = !!c.isFree;
+        g.steamApp = String(c.appid);
+        g.note = 'Steam 인기 ' + c.rank + '위';
+        add(g, c.peak);
+      });
+
+      // ③ FreeToGame(무료 온라인 게임)
+      ftg.forEach(function (x) {
+        if (normTitle(x.title).indexOf(nq) === -1) return;
+        add({
+          id: 'ftg-' + x.id, title: x.title, coverImage: '', headerImage: x.thumbnail, thumbImage: '',
+          genres: x.genre ? [x.genre] : [], platforms: ['pc'], free: true,
+          origin: (KR_COMPANY.test(x.developer || '') || KR_COMPANY.test(x.publisher || '')) && !KR_EXCLUDE.test(x.title) ? 'KR' : '',
+          note: '무료 온라인 게임'
+        }, 0);
+      });
+
+      // 편집 선정 국내 인기작: 한글 별칭 또는 영문 제목으로
+      KR_PICKS.forEach(function (pk) {
+        var hit = (KR_ALIASES[pk.appId] || []).some(function (a) { return a.indexOf(lower) !== -1 || normTitle(a).indexOf(nq) !== -1; });
+        if (!hit) return;
+        var g = krGame(pk);
+        g.steamApp = pk.appId;
+        g._aliasHit = true;
+        add(g, 1e9);
+      });
+
+      out.sort(function (a, b) {
+        if (a._aliasHit !== b._aliasHit) return a._aliasHit ? -1 : 1;
+        return a._rel - b._rel || b._pop - a._pop || (a.title < b.title ? -1 : 1);
+      });
+      if (dealsFailed && !out.length) throw new Error('search failed');   // 가격 검색이 실패했고 다른 출처에도 없으면 오류로 알림
+      return fillGenres(out, ftg);
+    });
+    searchCache[nq] = p;
+    p.catch(function () { delete searchCache[nq]; });
+    return p;
+  }
+
+  /** getSearchList(q, offset) → Promise<{ items, hasMore, next }> — 관련도순 결과를 SEARCH_STEP 개씩 */
+  function getSearchList(q, offset) {
+    offset = offset || 0;
+    var mode = mockMode();
+    if (mode) {
+      var nq = normTitle(q), d = GF.mockData, seen = {}, all = [];
+      [d.popular, d.latest, d.sale].forEach(function (list) {
+        (list || []).forEach(function (g) {
+          if (seen[g.id] || normTitle(g.title).indexOf(nq) === -1) return;
+          seen[g.id] = true;
+          all.push(g.deal ? withDiscount(g) : g);
+        });
+      });
+      return mockRespond({ items: all.slice(offset, offset + SEARCH_STEP), hasMore: false }, mode).then(function (r) {
+        return Array.isArray(r) ? { items: r, hasMore: false } : r;   // ?mock=empty 는 [] 로 응답함
+      });
+    }
+    return searchAll(q).then(function (all) {
+      return { items: all.slice(offset, offset + SEARCH_STEP), hasMore: offset + SEARCH_STEP < all.length, next: offset + SEARCH_STEP };
+    });
+  }
+
+  // ---------- 게임 찾기 (#/find) ----------
+  // scripts/fetch-catalog.mjs 가 미리 받아 둔 인기 게임 카탈로그(약 600개: 장르·플레이 방식·출시일·Metacritic·리뷰 수)를 브라우저에서 거름.
+  // CheapShark 는 장르를 주지 않고 Steam API 는 CORS 로 못 읽어서 미리 받아 파일로 둠. 파일이 없으면 null → 페이지가 오류 상태를 보여줌.
+  var FIND_STEP = 24;
+  var GENRE_KO = { 'Action': '액션', 'Adventure': '어드벤처', 'RPG': 'RPG', 'Strategy': '전략', 'Simulation': '시뮬레이션',
+                   'Sports': '스포츠', 'Racing': '레이싱', 'Indie': '인디', 'Casual': '캐주얼', 'Massively Multiplayer': 'MMO' };
+  // 주소·칩에 쓰는 장르 id → 카탈로그(Steam)의 장르 이름
+  var GENRE_ID = { action: 'Action', adventure: 'Adventure', rpg: 'RPG', strategy: 'Strategy', simulation: 'Simulation',
+                   sports: 'Sports', racing: 'Racing', indie: 'Indie', casual: 'Casual', mmo: 'Massively Multiplayer' };
+
+  function getCatalog() {
+    return fetchCached('data/catalog/games.json', 'Catalog', null, true)
+      .then(function (j) { if (!j || !j.items || !j.items.length) throw new Error('no catalog'); return j; });
+  }
+
+  function catalogGame(c) {
+    var year = c.released ? c.released.slice(0, 4) + '년 출시' : '';
+    return {
+      id: c.id,
+      title: c.name,
+      coverImage: steamCover(c.id),
+      heroImage: steamArt(c.id, 'library_hero.jpg'),
+      headerImage: steamArt(c.id, 'header.jpg'),
+      thumbImage: '',
+      genres: c.genres.map(function (g) { return GENRE_KO[g] || g; }),
+      platforms: ['pc'],
+      free: !!c.free,
+      metacritic: c.metacritic || null,
+      note: [year, c.reviews ? 'Steam 리뷰 ' + countFormat.format(c.reviews) + '개' : ''].filter(Boolean).join(' · ')
+    };
+  }
+
+  /** getFindList({ genre: [id], mode: [tag], price: 'all'|'free'|'paid', q, sort }, offset) → Promise<{ items, hasMore, next, asOf }>
+   *  같은 그룹(장르끼리, 플레이 방식끼리)은 OR, 서로 다른 그룹은 AND. */
+  function getFindList(f, offset) {
+    offset = offset || 0;
+    var mode = mockMode();
+    if (mode) {
+      var seen = {}, all = [];
+      [GF.mockData.popular, GF.mockData.latest, GF.mockData.sale].forEach(function (list) {
+        (list || []).forEach(function (g) {
+          if (seen[g.id] || (f.q && normTitle(g.title).indexOf(normTitle(f.q)) === -1)) return;
+          seen[g.id] = true;
+          all.push(g.deal ? withDiscount(g) : g);
+        });
+      });
+      return mockRespond({ items: all.slice(offset, offset + FIND_STEP), hasMore: false }, mode).then(function (r) {
+        return Array.isArray(r) ? { items: r, hasMore: false } : r;   // ?mock=empty 는 [] 로 응답함
+      });
+    }
+    return getCatalog().then(function (cat) {
+      var genres = (f.genre || []).map(function (id) { return GENRE_ID[id]; }).filter(Boolean);
+      var tags = f.mode || [];
+      var nq = f.q ? normTitle(f.q) : '';
+      var list = cat.items.filter(function (c) {
+        if (genres.length && !c.genres.some(function (g) { return genres.indexOf(g) !== -1; })) return false;
+        if (tags.length && !c.tags.some(function (t) { return tags.indexOf(t) !== -1; })) return false;
+        if (f.price === 'free' && !c.free) return false;
+        if (f.price === 'paid' && c.free) return false;
+        if (nq && normTitle(c.name).indexOf(nq) === -1) return false;
+        return true;
+      });
+      var by = {
+        popular: function (a, b) { return b.reviews - a.reviews; },
+        score:   function (a, b) { return (b.metacritic || -1) - (a.metacritic || -1) || b.reviews - a.reviews; },
+        'new':   function (a, b) { return (b.released || '') < (a.released || '') ? -1 : (b.released || '') > (a.released || '') ? 1 : 0; },
+        name:    function (a, b) { return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1; }
+      };
+      list.sort(by[f.sort] || by.popular);
+      return {
+        items: list.slice(offset, offset + FIND_STEP).map(catalogGame),
+        hasMore: offset + FIND_STEP < list.length,
+        next: offset + FIND_STEP,
+        asOf: asOfText((cat.updatedAt || '').slice(0, 10)),
+        total: list.length
+      };
+    });
+  }
+
   // ---------- 개발용 mock (?mock=error|empty|slow) ----------
   function mockRespond(items, mode) {
     return new Promise(function (resolve, reject) {
@@ -628,6 +833,8 @@
     getSaleList:     getSaleList,
     getReleaseList:  getReleaseList,
     getRankList:     getRankList,
+    getSearchList:   getSearchList,
+    getFindList:     getFindList,
     isMock: function () { return !!mockMode(); },
     getPlatforms:    function () { return GF.mockData.platforms; },
     getGenres:       function () { return GF.mockData.genres; },
