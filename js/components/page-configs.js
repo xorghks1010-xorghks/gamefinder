@@ -41,7 +41,8 @@
       title: '게임 찾기',
       description: '장르와 플레이 방식을 골라 내 취향에 맞는 게임을 찾아보세요.',
       noun: '게임',
-      query: { param: 'q', label: '게임명으로 좁히기', placeholder: '게임명으로 좁히기 (영어)', max: 100 },
+      loadingText: '게임을 찾는 중…',
+      query: { param: 'q', label: '게임명으로 좁히기', placeholder: '게임명·분류로 좁히기 (영어)', max: 100 },
       groups: [
         { label: '장르 선택 (여러 개 선택 가능)', title: '장르', param: 'genre', multi: true, options: [
           { id: 'action', label: '액션' }, { id: 'adventure', label: '어드벤처' }, { id: 'rpg', label: 'RPG' },
@@ -79,7 +80,8 @@
       card: 'result',
       empty: '조건에 맞는 게임이 없습니다. 필터를 줄여 보세요.',
       mockNote: '개발 단계의 예시 데이터입니다.',
-      note: '데이터: Steam · CheapShark. 인기 PC 게임 약 600개(Steam 인기 차트와 Metacritic 상위 게임)를 미리 받아 둔 목록에서 찾으므로 전체 게임이 아니며, 기준일 시점의 정보입니다. ' +
+      note: '데이터: Steam · CheapShark. 장르·플레이 방식·가격 필터는 인기 PC 게임 약 600개(Steam 인기 차트와 Metacritic 상위 게임)를 미리 받아 둔 목록에만 적용되며, 기준일 시점의 정보입니다. ' +
+            '게임명 키워드만 입력하면 이 목록에 없는 게임도 함께 찾아 보여드립니다. ' +
             '같은 그룹에서 여러 개를 고르면 하나라도 해당되는 게임을, 다른 그룹과는 모두 만족하는 게임을 보여줍니다. ' +
             '콘솔 플랫폼, 공포·FPS·퍼즐 같은 세부 장르는 데이터가 없어 아직 제공하지 않습니다.',
       load: function (f, cursor) { return svc.getFindList(f, cursor); }
@@ -91,7 +93,8 @@
       title: '검색 결과',
       description: '게임 이름으로 찾아보세요.',
       noun: '검색 결과',
-      query: { param: 'q', label: '게임명 검색', required: true, placeholder: '게임명을 입력하세요 (예: elden, 로스트아크)', prompt: '검색어를 입력해 주세요. 게임 이름은 영어 또는 일부 국내 게임의 한글 이름으로 찾을 수 있습니다.', max: 100 },
+      loadingText: '검색 중…',
+      query: { param: 'q', label: '게임명 검색', required: true, placeholder: '게임명·장르를 입력하세요 (예: elden, rpg, 협동)', prompt: '검색어를 입력해 주세요. 게임 이름(영어)이나 장르·플레이 방식(예: RPG, 액션, 협동, 무료)으로 찾을 수 있습니다.', max: 100 },
       descFor: function (f) { return f.q ? '‘' + f.q + '’ 검색 결과입니다.' : '게임 이름으로 찾아보세요.'; },
       docTitleFor: function (f) { return f.q ? '‘' + f.q + '’ 검색' : '검색'; },
       card: 'result',
@@ -99,6 +102,7 @@
       mockNote: '개발 단계의 예시 데이터에서 찾은 결과입니다.',
       note: '데이터: CheapShark · Steam · FreeToGame. Steam·Epic Games에서 가격이 확인되는 게임, Steam 인기 차트의 게임, 무료 온라인 게임을 함께 찾습니다. ' +
             '게임 이름은 영어로 검색하며, 일부 국내 인기 게임(배틀그라운드·로스트아크·검은사막·메이플스토리·던전앤파이터)은 한글로도 찾을 수 있습니다. ' +
+            '장르·플레이 방식·무료 같은 분류 이름(RPG, 액션, 협동, 무료 등)을 입력하면 인기 게임 약 600개 중 해당 분류의 게임을 먼저 보여드립니다. ' +
             '결과는 이름이 검색어와 가까운 순서이며, 가격은 USD 기준입니다.',
       load: function (f, cursor) { return svc.getSearchList(f.q, cursor); }
     },

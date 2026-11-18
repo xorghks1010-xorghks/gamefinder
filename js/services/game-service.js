@@ -191,8 +191,27 @@
   // ---------- Steam 인기 차트 (메인 TOP 5 + 인기 순위 페이지) ----------
   // scripts/fetch-charts.mjs 가 미리 받아 둔 Steam 공식 차트(최대 동시접속자 기준 순위·지난주 순위). 브라우저는 Steam API 를 직접 못 읽음(CORS).
   // 파일이 없거나 읽기 실패하면 null → 아래 "인기 후보 풀"(Steam 리뷰 수 기준)로 대신 표시.
+  // 데이터 파일은 .json 이 아니라 .js(<script> 로 불러옴)로 둠: index.html 을 파일로 직접 열었을 때(file://)
+  // 브라우저가 로컬 .json 읽기(fetch)를 막기 때문. <script> 는 file:// 에서도 허용됨. (hero-slides.js 와 같은 방식)
+  var dataScripts = {};   // src → Promise (같은 파일을 두 번 받지 않음)
+  function loadDataScript(src, key) {
+    if (GF[key]) return Promise.resolve(GF[key]);
+    if (!dataScripts[src]) {
+      dataScripts[src] = new Promise(function (resolve, reject) {
+        var el = document.createElement('script');
+        el.src = src;
+        el.async = true;
+        el.onload = function () { GF[key] ? resolve(GF[key]) : reject(new Error('empty ' + src)); };
+        el.onerror = function () { reject(new Error('load ' + src)); };
+        document.head.appendChild(el);
+      });
+      dataScripts[src].catch(function () { delete dataScripts[src]; });   // 실패하면 다음에 다시 시도
+    }
+    return dataScripts[src];
+  }
+
   function getChart() {
-    return fetchCached('data/charts/steam-most-played.json', 'Charts', null, true)
+    return loadDataScript('data/charts/steam-most-played.js', 'chartData')
       .then(function (j) { return j && j.items && j.items.length ? j : null; }, function () { return null; });
   }
 
@@ -437,6 +456,45 @@
     });
   }
 
+  // ---------- 태그(장르·플레이 방식·무료) 단어 ----------
+  // 검색창에 "rpg", "액션", "협동", "무료" 같은 분류 이름을 입력해도 찾도록, 카탈로그의 분류와 연결하는 단어 사전.
+  // 비교는 공백·하이픈을 뺀 소문자 "정확히 같을 때"만 (예: 'free' 는 무료 태그, 'freeman' 은 아님).
+  var TAG_WORDS = [
+    { kind: 'genre', id: 'Action',     label: '액션 장르',       find: 'genre=action',     words: ['action', '액션'] },
+    { kind: 'genre', id: 'Adventure',  label: '어드벤처 장르',   find: 'genre=adventure',  words: ['adventure', '어드벤처', '모험'] },
+    { kind: 'genre', id: 'RPG',        label: 'RPG 장르',        find: 'genre=rpg',        words: ['rpg', '롤플레잉', '알피지'] },
+    { kind: 'genre', id: 'Strategy',   label: '전략 장르',       find: 'genre=strategy',   words: ['strategy', '전략'] },
+    { kind: 'genre', id: 'Simulation', label: '시뮬레이션 장르', find: 'genre=simulation', words: ['simulation', 'sim', '시뮬레이션', '시뮬'] },
+    { kind: 'genre', id: 'Sports',     label: '스포츠 장르',     find: 'genre=sports',     words: ['sports', 'sport', '스포츠'] },
+    { kind: 'genre', id: 'Racing',     label: '레이싱 장르',     find: 'genre=racing',     words: ['racing', 'race', '레이싱', '레이스'] },
+    { kind: 'genre', id: 'Indie',      label: '인디 장르',       find: 'genre=indie',      words: ['indie', '인디'] },
+    { kind: 'genre', id: 'Casual',     label: '캐주얼 장르',     find: 'genre=casual',     words: ['casual', '캐주얼'] },
+    { kind: 'genre', id: 'Massively Multiplayer', label: 'MMO 장르', find: 'genre=mmo', words: ['mmo', 'mmorpg', '엠엠오'] },
+    { kind: 'mode',  id: 'single',     label: '싱글플레이',      find: 'mode=single',      words: ['singleplayer', 'single', '싱글', '싱글플레이', '혼자'] },
+    { kind: 'mode',  id: 'multi',      label: '멀티플레이',      find: 'mode=multi',       words: ['multiplayer', 'multi', '멀티', '멀티플레이'] },
+    { kind: 'mode',  id: 'coop',       label: '협동 플레이',      find: 'mode=coop',        words: ['coop', 'cooperative', '협동', '협력', '협동플레이'] },
+    { kind: 'mode',  id: 'pvp',        label: 'PvP',             find: 'mode=pvp',         words: ['pvp', '대전'] },
+    { kind: 'price', id: 'free',       label: '무료',            find: 'price=free',       words: ['free', 'freetoplay', 'f2p', '무료', '무료게임'] }
+  ];
+
+  function tagKey(s) { return String(s).toLowerCase().replace(/[\s\-_]/g, ''); }
+
+  /** 검색어가 분류 이름이면 해당 항목, 아니면 null */
+  function tagOf(q) {
+    var k = tagKey(q);
+    if (!k) return null;
+    for (var i = 0; i < TAG_WORDS.length; i++) {
+      if (TAG_WORDS[i].words.some(function (w) { return tagKey(w) === k; })) return TAG_WORDS[i];
+    }
+    return null;
+  }
+
+  function catalogHasTag(c, tag) {
+    if (tag.kind === 'genre') return c.genres.indexOf(tag.id) !== -1;
+    if (tag.kind === 'mode') return c.tags.indexOf(tag.id) !== -1;
+    return !!c.free;
+  }
+
   // ---------- 게임 검색 (#/search) ----------
   // 세 곳을 함께 찾아 합침: ① CheapShark 제목 검색(Steam·Epic 가격이 있는 게임) ② Steam 인기 차트의 이름(무료 게임은 CheapShark 에 없음: Dota 2·CS2 등)
   // ③ FreeToGame 목록(무료 온라인 게임, 국내 게임 포함). 그리고 편집 선정 국내 인기작은 한글 별칭으로도 찾음.
@@ -470,9 +528,10 @@
     var p = Promise.all([
       getJson('/deals?title=' + encodeURIComponent(q) + '&storeID=1,25&pageSize=60').catch(function () { dealsFailed = true; return []; }),
       getChart(),
-      getFtg()
+      getFtg(),
+      tagOf(q) ? getCatalog().catch(function () { return null; }) : null    // 분류 이름(rpg·액션·협동·무료)을 입력한 경우에만 카탈로그 조회
     ]).then(function (res) {
-      var deals = res[0], chart = res[1], ftg = res[2], lower = q.toLowerCase();
+      var deals = res[0], chart = res[1], ftg = res[2], cat = res[3], lower = q.toLowerCase(), tag = tagOf(q);
       var out = [], seenApp = {}, seenTitle = {};
       function add(g, pop) {
         var t = normTitle(g.title);
@@ -519,6 +578,19 @@
         }, 0);
       });
 
+      // ④ 분류 이름이면 그 분류의 인기 게임들 (예: rpg → RPG 장르 게임을 리뷰 많은 순으로). 제목에 같은 글자가 든 게임(RPG Tycoon)보다 앞에 보여줌
+      if (tag && cat) {
+        cat.items.filter(function (c) { return catalogHasTag(c, tag); })
+          .sort(function (a, b) { return b.reviews - a.reviews; }).slice(0, 100)
+          .forEach(function (c) {
+            var g = catalogGame(c);
+            g.steamApp = c.id;
+            if (seenApp[c.id]) { out.forEach(function (o) { if (o.steamApp === c.id) { o._tag = true; o._pop = Math.max(o._pop, c.reviews); } }); return; }
+            add(g, c.reviews);
+            if (out[out.length - 1] === g) g._tag = true;   // 같은 제목이 이미 있어 추가되지 않았으면 표시하지 않음
+          });
+      }
+
       // 편집 선정 국내 인기작: 한글 별칭 또는 영문 제목으로
       KR_PICKS.forEach(function (pk) {
         var hit = (KR_ALIASES[pk.appId] || []).some(function (a) { return a.indexOf(lower) !== -1 || normTitle(a).indexOf(nq) !== -1; });
@@ -531,10 +603,15 @@
 
       out.sort(function (a, b) {
         if (a._aliasHit !== b._aliasHit) return a._aliasHit ? -1 : 1;
+        if (!!a._tag !== !!b._tag) return a._tag ? -1 : 1;
+        if (a._tag && b._tag) return b._pop - a._pop;
         return a._rel - b._rel || b._pop - a._pop || (a.title < b.title ? -1 : 1);
       });
       if (dealsFailed && !out.length) throw new Error('search failed');   // 가격 검색이 실패했고 다른 출처에도 없으면 오류로 알림
-      return fillGenres(out, ftg);
+      var list = fillGenres(out, ftg);
+      // 분류 이름으로 인식했으면 화면에 이유와 '게임 찾기' 링크를 알려줌 (목록 위 안내)
+      if (tag && cat) list.notice = { text: '분류로 검색했어요: ' + tag.label + ' 게임을 인기순으로 먼저 보여드려요.', href: '#/find?' + tag.find, label: '게임 찾기에서 조합해서 보기' };
+      return list;
     });
     searchCache[nq] = p;
     p.catch(function () { delete searchCache[nq]; });
@@ -559,7 +636,7 @@
       });
     }
     return searchAll(q).then(function (all) {
-      return { items: all.slice(offset, offset + SEARCH_STEP), hasMore: offset + SEARCH_STEP < all.length, next: offset + SEARCH_STEP };
+      return { items: all.slice(offset, offset + SEARCH_STEP), hasMore: offset + SEARCH_STEP < all.length, next: offset + SEARCH_STEP, notice: all.notice || null };
     });
   }
 
@@ -574,7 +651,7 @@
                    sports: 'Sports', racing: 'Racing', indie: 'Indie', casual: 'Casual', mmo: 'Massively Multiplayer' };
 
   function getCatalog() {
-    return fetchCached('data/catalog/games.json', 'Catalog', null, true)
+    return loadDataScript('data/catalog/games.js', 'catalogData')
       .then(function (j) { if (!j || !j.items || !j.items.length) throw new Error('no catalog'); return j; });
   }
 
@@ -613,16 +690,21 @@
         return Array.isArray(r) ? { items: r, hasMore: false } : r;   // ?mock=empty 는 [] 로 응답함
       });
     }
-    return getCatalog().then(function (cat) {
+    var hasChips = !!((f.genre && f.genre.length) || (f.mode && f.mode.length) || (f.price && f.price !== 'all'));
+    // 키워드만 있고(분류 이름이 아님) 칩 필터가 없으면, 카탈로그(약 600개)에 없는 게임도 전체 검색(CheapShark 등)으로 보충함
+    var broadP = (f.q && !tagOf(f.q) && !hasChips) ? searchAll(f.q).catch(function () { return []; }) : Promise.resolve([]);
+    return Promise.all([getCatalog(), broadP]).then(function (res) {
+      var cat = res[0], broad = res[1];
       var genres = (f.genre || []).map(function (id) { return GENRE_ID[id]; }).filter(Boolean);
       var tags = f.mode || [];
       var nq = f.q ? normTitle(f.q) : '';
+      var kwTag = f.q ? tagOf(f.q) : null;   // 키워드가 분류 이름('rpg'·'액션'·'협동'·'무료')이면 그 분류에 해당하는 게임도 포함
       var list = cat.items.filter(function (c) {
         if (genres.length && !c.genres.some(function (g) { return genres.indexOf(g) !== -1; })) return false;
         if (tags.length && !c.tags.some(function (t) { return tags.indexOf(t) !== -1; })) return false;
         if (f.price === 'free' && !c.free) return false;
         if (f.price === 'paid' && c.free) return false;
-        if (nq && normTitle(c.name).indexOf(nq) === -1) return false;
+        if (nq && normTitle(c.name).indexOf(nq) === -1 && !(kwTag && catalogHasTag(c, kwTag))) return false;
         return true;
       });
       var by = {
@@ -632,12 +714,27 @@
         name:    function (a, b) { return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1; }
       };
       list.sort(by[f.sort] || by.popular);
+      var shown = list.map(catalogGame);
+
+      // 카탈로그에 없는 게임(보충분): 장르·평점·출시일 정보가 없어 정렬하지 않고 맨 뒤에 붙임
+      var inCatalog = {}, titleSeen = {};
+      cat.items.forEach(function (c) { inCatalog[c.id] = true; titleSeen[normTitle(c.name)] = true; });
+      var extra = broad.filter(function (g) { return !inCatalog[g.steamApp || g.id] && !titleSeen[normTitle(g.title)]; }).slice(0, 40);
+      shown = shown.concat(extra);
+
+      var notice = null;
+      if (extra.length) {
+        notice = { text: '인기 게임 목록(약 600개)에 없는 게임도 함께 보여드려요. 이 게임들은 장르·평점 정보가 없어 목록 맨 뒤에 나와요.' };
+      } else if (f.q && hasChips) {
+        notice = { text: '장르·플레이 방식·가격 필터가 걸려 있어 인기 게임 약 600개 안에서만 찾았어요. 전체 게임에서 찾으려면', href: '#/search?q=' + encodeURIComponent(f.q), label: '검색에서 ‘' + f.q + '’ 찾기' };
+      }
       return {
-        items: list.slice(offset, offset + FIND_STEP).map(catalogGame),
-        hasMore: offset + FIND_STEP < list.length,
+        items: shown.slice(offset, offset + FIND_STEP),
+        hasMore: offset + FIND_STEP < shown.length,
         next: offset + FIND_STEP,
         asOf: asOfText((cat.updatedAt || '').slice(0, 10)),
-        total: list.length
+        total: shown.length,
+        notice: notice
       };
     });
   }

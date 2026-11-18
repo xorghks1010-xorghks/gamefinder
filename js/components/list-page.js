@@ -18,7 +18,9 @@
  *   descFor(filters), docTitleFor(filters),              // 선택 사항: 필터에 따라 바뀌는 설명·문서 제목
  *   card: 'row' | 'release' | 'rankrow' | 'result',      // game-card.js 의 카드 종류
  *   firstCursor,                                        // 선택 사항: 첫 요청의 cursor (기본 0)
- *   load(filters, cursor) → Promise<{ items, hasMore, next, asOf?, total? }>,   // next 가 없으면 cursor + 1. total 이 있으면 '전체 N개 중 M개'로 표시
+ *   load(filters, cursor) → Promise<{ items, hasMore, next, asOf?, total?, notice?: { text, href?, label? } }>,   // notice: 목록 위에 보이는 안내(링크 선택)
+ *          // next 가 없으면 cursor + 1. total 이 있으면 '전체 N개 중 M개'로 표시
+ *   loadingText,                                        // 선택 사항: 불러오는 동안 동그란 로딩 옆에 보이는 문구 (기본 '불러오는 중…')
  *   empty (문자열 또는 filters → 문자열), note, mockNote
  * }
  *
@@ -30,7 +32,6 @@
 
   var esc = GF.utils.escapeHtml;
   var BASE_TITLE = 'GameFinder';
-  var SKELETON_COUNT = 6;
 
   function has(options, id) { return options.some(function (x) { return x.id === id; }); }
   function sameValue(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
@@ -127,6 +128,7 @@
       '</div></div>' +
       '<div class="container gf-page__body">' +
         '<p class="gf-page__count" role="status"></p>' +
+        '<p class="gf-page__notice" hidden></p>' +
         '<div class="gf-page__list"></div>' +
         '<div class="gf-page__more"></div>' +
         '<p class="gf-section__note">' + (MOCK && cfg.mockNote ? esc(cfg.mockNote) + ' ' : '') + esc(cfg.note || '') + '</p>' +
@@ -139,6 +141,7 @@
     var chipEls = root.querySelectorAll('.gf-chip');
     var sortEl = root.querySelector('#' + sortId);
     var countEl = root.querySelector('.gf-page__count');
+    var noticeEl = root.querySelector('.gf-page__notice');
     var listEl = root.querySelector('.gf-page__list');
     var moreEl = root.querySelector('.gf-page__more');
     var unbindImages = card.bindImageFallback(listEl);
@@ -158,13 +161,21 @@
 
     function setCount(text) { countEl.textContent = text; }
 
-    function showSkeleton() {
-      var html = '';
-      for (var i = 0; i < SKELETON_COUNT; i++) html += card.skeleton(cfg.card, i);
+    // 목록 위 안내 (예: 검색어가 분류 이름일 때). 링크는 이 사이트의 # 주소만 허용
+    function setNotice(n) {
+      if (!n || !n.text) { noticeEl.hidden = true; noticeEl.textContent = ''; return; }
+      noticeEl.innerHTML = esc(n.text) + (n.href && /^#\//.test(n.href) ? ' <a href="' + esc(n.href) + '">' + esc(n.label || '자세히 보기') + '</a>' : '');
+      noticeEl.hidden = false;
+    }
+
+    // 불러오는 동안 동그란 로딩(스피너). 금방 끝나는 요청에서 깜빡이지 않도록 0.25초 뒤에 나타남(CSS)
+    function showLoading() {
       listEl.setAttribute('aria-busy', 'true');
-      listEl.innerHTML = '<ul class="gf-list gf-rows">' + html + '</ul>';
+      listEl.innerHTML = '<div class="gf-loading" role="status"><span class="gf-spinner" aria-hidden="true"></span>' +
+        '<span class="gf-loading__text">' + esc(cfg.loadingText || '불러오는 중…') + '</span></div>';
       moreEl.innerHTML = '';
       setCount('');
+      setNotice(null);
     }
 
     function stateHtml(text, buttonClass, buttonLabel) {
@@ -175,8 +186,8 @@
 
     function renderMore() {
       if (!hasMore) { moreEl.innerHTML = ''; return; }
-      moreEl.innerHTML = '<button type="button" class="gf-more"' + (loadingMore ? ' disabled' : '') + '>' +
-        (loadingMore ? '불러오는 중…' : '더 보기') + '</button>';
+      moreEl.innerHTML = '<button type="button" class="gf-more"' + (loadingMore ? ' disabled aria-busy="true"' : '') + '>' +
+        (loadingMore ? '<span class="gf-spinner gf-spinner--sm" aria-hidden="true"></span>불러오는 중…' : '더 보기') + '</button>';
     }
 
     function updateCount() {
@@ -224,12 +235,13 @@
         setCount('');
         return;
       }
-      showSkeleton();
+      showLoading();
       cfg.load(filters, cursor).then(function (res) {
         if (mine !== seq) return;
         listEl.removeAttribute('aria-busy');
         addItems(res.items);
         advance(res);
+        setNotice(res.notice);
         if (!items.length) {
           var emptyText = typeof cfg.empty === 'function' ? cfg.empty(filters) : cfg.empty;
           listEl.innerHTML = stateHtml(emptyText || '조건에 맞는 게임이 없습니다.', 'gf-reset', isFiltered() ? '필터 초기화' : '');

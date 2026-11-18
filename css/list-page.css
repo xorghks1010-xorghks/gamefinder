@@ -65,6 +65,10 @@
 .gf-page__body { padding-top: 28px; padding-bottom: 96px; }
 .gf-page__count { margin: 0 0 16px; color: var(--muted); font-size: 15px; font-weight: 600; }
 .gf-page__count:empty { display: none; }
+/* 목록 위 안내 (예: 검색어가 분류 이름일 때) */
+.gf-page__notice { margin: 0 0 16px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg-soft); color: var(--text); font-size: 15px; }
+.gf-page__notice[hidden] { display: none; }
+.gf-page__notice a { margin-left: 4px; color: var(--blue-soft); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 
 /* 한 줄에 한 게임. 카드 안의 이미지·글씨·간격이 화면 폭에 따라 같이 줄어듦 (clamp: 최소값 ~ 화면 비례 ~ 최대값).
    좌우 여백은 base.css 의 --gutter(%) 를 그대로 씀. 가로로 너무 퍼지지 않게 목록 영역 폭은 제한. */
@@ -141,6 +145,37 @@
 .gf-page__search button:hover { background: var(--blue-dark); }
 .gf-page__search + .gf-page__tools { margin-top: 20px; }
 
+/* 불러오는 동안의 동그란 로딩 */
+.gf-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 260px;
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0;
+  animation: gf-fade-in 0.2s ease 0.25s forwards;   /* 0.25초 안에 끝나면 아예 안 보임 */
+}
+.gf-spinner {
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  border: 4px solid var(--line);
+  border-top-color: var(--blue-soft);
+  border-radius: 50%;
+  animation: gf-spin 0.8s linear infinite;
+}
+.gf-spinner--sm { width: 18px; height: 18px; margin-right: 10px; border-width: 3px; vertical-align: -3px; }
+@keyframes gf-spin { to { transform: rotate(360deg); } }
+@keyframes gf-fade-in { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .gf-spinner { animation: none; }   /* 모션 줄이기: 돌지 않고 문구로만 알림 */
+  .gf-loading { animation-duration: 0.01s; }
+}
+
 /* 더 보기 */
 .gf-page__more { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 36px; }
 .gf-more {
@@ -156,7 +191,7 @@
   transition: background var(--t-fast), color var(--t-fast);
 }
 .gf-more:hover:not(:disabled) { background: var(--blue); border-color: var(--blue); color: #fff; }
-.gf-more:disabled { opacity: 0.6; cursor: default; }
+.gf-more:disabled { display: inline-flex; align-items: center; justify-content: center; opacity: 0.75; cursor: default; }
 .gf-more__error { margin: 0; color: var(--sale); font-size: 15px; }
 
 /* ============ 반응형 ============ */

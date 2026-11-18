@@ -2,7 +2,8 @@
  * 게임 카탈로그 수집 스크립트 — "게임 찾기(#/find)"가 장르·플레이 방식으로 거를 수 있도록,
  * 인기 게임들의 장르/플레이 방식/출시일/평점/리뷰 수를 미리 받아 data/catalog/games.json 으로 저장합니다.
  *   실행: node scripts/fetch-catalog.mjs          (Node 18+, 외부 패키지 없음. 처음엔 약 15분, 이후엔 새 게임만 받아 빠름)
- *   결과: data/catalog/games.json (사이트가 읽는 파일), data/catalog/known.json (다음 실행에서 이미 받은 게임을 건너뛰기 위한 내부 캐시 — 사이트는 읽지 않음)
+ *   결과: data/catalog/games.js (사이트가 <script> 로 읽는 파일 — 파일로 직접 열어도(file://) 동작하도록 .json 대신 씀),
+ *         data/catalog/known.json (다음 실행에서 이미 받은 게임을 건너뛰기 위한 내부 캐시 — 사이트는 읽지 않음)
  *
  * 왜 미리 받나: 브라우저는 Steam API 를 직접 못 읽고(CORS), CheapShark 는 장르를 주지 않음.
  * 어떤 게임을 받나(후보): ① Steam 인기 차트(data/charts) ② CheapShark Metacritic 상위 8페이지(약 480개, 사이트의 인기 후보 풀과 같음)
@@ -17,7 +18,8 @@ import path from 'node:path';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_DIR = path.join(ROOT, 'data', 'catalog');
-const OUT_FILE = path.join(OUT_DIR, 'games.json');
+const OUT_FILE = path.join(OUT_DIR, 'games.js');
+const OLD_JSON = path.join(OUT_DIR, 'games.json');         // 예전 형식 (이어받기용으로만 읽음)
 const KNOWN_FILE = path.join(OUT_DIR, 'known.json');
 const CHEAPSHARK = 'https://www.cheapshark.com/api/1.0';
 const UA = 'GameFinder-portfolio/1.0 (static site data refresh)';
@@ -94,14 +96,15 @@ async function fetchOne(appid) {
 async function save(map, candidates) {
   const items = candidates.map((id) => map[id]).filter((r) => r && !r.skip)
     .map(({ fetchedAt, ...rest }) => rest);                 // 사이트에는 필요한 필드만 (갱신 시각은 known.json 에만)
-  await writeFile(OUT_FILE, JSON.stringify({ updatedAt: new Date().toISOString(), items }) + '\n', 'utf8');
+  await writeFile(OUT_FILE, '// 자동 생성 파일 — scripts/fetch-catalog.mjs 가 만듭니다. 직접 고치지 마세요.\n(window.GameFinder = window.GameFinder || {}).catalogData = ' +
+    JSON.stringify({ updatedAt: new Date().toISOString(), items }) + ';\n', 'utf8');
   await writeFile(KNOWN_FILE, JSON.stringify(Object.values(map)) + '\n', 'utf8');
   return items.length;
 }
 
 async function main() {
   await mkdir(OUT_DIR, { recursive: true });
-  const known = await readJson(KNOWN_FILE, null) ?? (await readJson(OUT_FILE, { known: [] })).known ?? [];   // 예전 형식(games.json 안의 known)도 읽음
+  const known = await readJson(KNOWN_FILE, null) ?? (await readJson(OLD_JSON, { known: [] })).known ?? [];   // 예전 형식(games.json 안의 known)도 읽음
   const map = Object.fromEntries(known.map((r) => [r.id, r]));
   const candidates = await collectCandidates();
   const fresh = (r) => r && Date.now() - new Date(r.fetchedAt).getTime() < REFRESH_DAYS * 86400000;

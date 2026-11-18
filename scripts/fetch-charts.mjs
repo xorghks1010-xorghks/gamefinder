@@ -1,7 +1,8 @@
 /*
  * Steam 인기 차트 수집 스크립트 — 브라우저는 Steam API 를 직접 못 읽으므로(CORS), 미리 받아서 data/charts/steam-most-played.json 으로 저장합니다.
  *   실행: node scripts/fetch-charts.mjs          (Node 18+, 외부 패키지 없음)
- *   결과: data/charts/steam-most-played.json
+ *   결과: data/charts/steam-most-played.json (이 스크립트가 다음 실행에서 쓰는 원본·이름 캐시)
+ *         data/charts/steam-most-played.js   (사이트가 <script> 로 읽는 파일 — 파일로 직접 열어도(file://) 동작하도록 .json 대신 씀)
  *
  * 데이터 출처:
  *   - 순위·지난주 순위·최대 동시접속자: Steam 공식 차트 ISteamChartsService/GetMostPlayedGames (API 키 불필요, 하루 단위 집계)
@@ -16,6 +17,7 @@ import path from 'node:path';
 
 const OUT_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'data', 'charts');
 const OUT_FILE = path.join(OUT_DIR, 'steam-most-played.json');
+const OUT_JS = path.join(OUT_DIR, 'steam-most-played.js');
 const CHART_URL = 'https://api.steampowered.com/ISteamChartsService/GetMostPlayedGames/v1/';
 const UA = 'GameFinder-portfolio/1.0 (static site data refresh)';
 const DELAY_MS = 1500;
@@ -86,6 +88,8 @@ async function main() {
     known: Object.values(known)                           // 다음 실행에서 이름을 다시 받지 않도록 보관
   };
   await writeFile(OUT_FILE, JSON.stringify(out, null, 1) + '\n', 'utf8');
+  const { known: _cache, ...forSite } = out;                   // 사이트에는 이름 캐시를 빼고 보냄
+  await writeFile(OUT_JS, '// 자동 생성 파일 — scripts/fetch-charts.mjs 가 만듭니다. 직접 고치지 마세요.\n(window.GameFinder = window.GameFinder || {}).chartData = ' + JSON.stringify(forSite) + ';\n', 'utf8');
   console.log(`완료: ${items.length}개 저장 (이름 새로 받은 게임 ${fetched}개, 제외 ${ranks.length - items.length}개)`);
 }
 
